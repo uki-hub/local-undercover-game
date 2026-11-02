@@ -1,0 +1,136 @@
+.role-emblem { display: block; width: 100%; height: auto; flex: 0 0 auto; filter: drop-shadow(0 3px 2px #18224520); }
+.role-badge { display: inline-flex; gap: 7px; align-items: center; vertical-align: middle; }
+.role-badge .role-emblem { width: 34px; }
+.role-badge b { font-size: 14px; }
+.role-config { display: flex; gap: 12px; align-items: center; min-width: 0; }
+.role-config > .role-emblem { width: 48px; }
+.role-config > span { min-width: 0; }
+.civilian-count { padding: 10px 0; gap: 12px; }
+.civilian-count .role-emblem { width: 42px; }
+.private-role { display: flex; align-items: center; justify-content: center; gap: 7px; margin-bottom: 5px; }
+.private-role .role-emblem { width: 37px; }
+.private-role b { font-size: 15px; }
+.private-role.white-role b { font-size: 27px; }
+.private-role.white-role .role-emblem { width: 44px; }
+.reveal-body .secret-card.exposed .eye { display: none; }
+@media (min-height: 691px) {
+  .reveal-layout .reveal-body .secret-card { flex-basis: 350px; }
+}
+.ability .role-badge .role-emblem { width: 30px; }
+.ability .partner-name { font-weight: 900; }
+.score-role-icons { display: flex; gap: 2px; }
+.score-role-icons .role-emblem { width: 26px; }
+
+/* The whole phone changes scene, including its header and safe areas. */
+.phone[data-theme] { --scene-ink: #fff; --scene-muted: #ffffffd9; --scene-accent: #fff; color: var(--scene-ink); background: var(--scene-bg); }
+.phone[data-theme='village'] { --scene-bg: radial-gradient(ellipse at 50% 35%, #3cbb80, #13764e 70%, #0d5944); --scene-accent: #d3ffc4; }
+.phone[data-theme='shadow'] { --scene-bg: radial-gradient(ellipse at 50% 35%, #7557b3, #30254f 70%, #201c39); --scene-accent: #d3c0ff; }
+.phone[data-theme='frost'] { --scene-bg: radial-gradient(ellipse at 50% 35%, #f2fcff, #c8e5f5 70%, #94bdd8); --scene-ink: #213c61; --scene-muted: #3f5d7c; --scene-accent: #507b9c; }
+.phone[data-theme='gold'] { --scene-bg: radial-gradient(ellipse at 50% 35%, #ffe68a, #ffba39 65%, #f78b32); --scene-ink: #612c26; --scene-muted: #783728; --scene-accent: #ad4b28; }
+.phone[data-theme='rose'] { --scene-bg: radial-gradient(ellipse at 50% 35%, #fbb3d6, #d95898 70%, #a73575); --scene-ink: #4d1c43; --scene-muted: #5a2048; --scene-accent: #802251; }
+.phone[data-theme='justice'] { --scene-bg: radial-gradient(ellipse at 50% 35%, #a783e9, #6843a6 65%, #342653); --scene-accent: #ffe5a0; }
+.phone[data-theme='danger'] { --scene-bg: radial-gradient(ellipse at 50% 35%, #ec6261, #b52e48 65%, #691c36); --scene-accent: #ffd4a0; }
+.phone[data-theme='sky'] { --scene-bg: radial-gradient(ellipse at 50% 35%, #65c9ed, #1c83bf 65%, #165181); --scene-accent: #c7f6ff; }
+.phone[data-theme='night'] { --scene-bg: radial-gradient(ellipse at 50% 35%, #5c759e, #2f4264 65%, #202f4b); --scene-accent: #d2e8ff; }
+body:has(.phone[data-theme]) { background: #25263b; }
+.phone[data-theme] .brand em { color: var(--scene-accent); }
+.phone[data-theme] .heading p, .phone[data-theme] .muted { color: var(--scene-muted); }
+.phone[data-theme] .pill, .phone[data-theme] .note { background: #ffffff20; color: var(--scene-ink); border-color: #ffffff45; }
+.phone[data-theme] section, .phone[data-theme] .statement { background: #fff; color: #172b4b; }
+.phone[data-theme] .result-player { color: #172b4b; }
+.phone[data-theme] .result-player small { color: #52627a; }
+.phone[data-theme] .grid-players .player-card { color: #172b4b; }
+.phone[data-theme] .primary { background: #fff8ee; color: #273254; border-color: #ffffff; box-shadow: inset 0 -4px 0 #c8bbaa55, 0 7px 0 #1a183f30, 0 12px 25px #1a183f25; }
+.phone[data-theme] .secondary { color: var(--scene-ink); background: #ffffff1c; border-color: #ffffff70; }
+.phone[data-theme] .field input { color: #172b4b; }
+.phone[data-theme] .point-gain { background: #e6f3ff; color: #0860b3; }
+.phone[data-theme] .ballot-layout .heading { margin-top: 18px; }
+.event-scene { position: relative; isolation: isolate; flex: 1; display: flex; flex-direction: column; align-items: stretch; gap: 14px; min-height: min(660px, calc(100dvh - 100px)); text-align: center; }
+.event-kicker { display: flex; align-items: center; justify-content: center; gap: 12px; font-size: 12px; font-weight: 1000; text-transform: uppercase; letter-spacing: 2px; margin-top: 20px; color: var(--scene-accent); }
+.event-kicker span { width: 26px; height: 2px; background: currentColor; opacity: .7; }
+.event-scene .heading { margin: 0; }
+.event-scene .heading h1 { font-size: clamp(34px, 10vw, 49px); line-height: 1.05; text-wrap: balance; text-shadow: 0 3px 0 #00000012; letter-spacing: -1.4px; }
+.event-scene .heading p { max-width: 29ch; margin-top: 14px; font-size: 17px; line-height: 1.5; }
+.event-scene .footer { z-index: 1; width: 100%; padding-top: 28px; }
+.event-art { position: relative; width: 100%; height: clamp(180px, 32dvh, 290px); display: grid; place-items: center; margin: 0 auto; flex-shrink: 0; }
+.event-halo { position: absolute; width: min(73%, 250px); aspect-ratio: 1; border-radius: 50%; background: radial-gradient(circle, #ffffff40, #ffffff06 69%, transparent 70%); animation: halo-breathe 3.5s ease-in-out infinite; }
+.event-orbit { position: absolute; width: min(65%, 230px); aspect-ratio: 1; border: 1px dashed #ffffff60; border-radius: 50%; animation: orbit-turn 36s linear infinite; }
+.event-symbol { position: relative; width: clamp(130px, 44vw, 185px); filter: drop-shadow(0 18px 14px #261c493f); animation: emblem-arrive .65s cubic-bezier(.19,1.5,.4,1) both, emblem-hover 3s .65s ease-in-out infinite; }
+.event-symbol .choice-art { width: 100%; height: 170px; }
+.event-symbol > svg:not(.role-emblem):not(.choice-art) { margin: auto; }
+.justice-wings { position: absolute; width: 114%; max-width: 430px; fill: #fff6df; stroke: #edcfaf; stroke-width: 1.3px; filter: drop-shadow(0 8px 8px #34204a45); }
+.wing-left { transform-origin: 185px 147px; animation: wing-left 2.8s ease-in-out infinite; }
+.wing-right { transform-origin: 215px 147px; animation: wing-right 2.8s ease-in-out infinite; }
+.art-star { position: absolute; color: var(--scene-accent); text-shadow: 0 2px 10px #fff6; animation: star-twinkle 2.2s ease-in-out infinite alternate; }
+.star-a { left: 13%; top: 18%; font-size: 34px; }
+.star-b { right: 10%; top: 48%; font-size: 45px; animation-delay: -.9s; }
+.star-c { left: 22%; bottom: 12%; font-size: 19px; animation-delay: -1.5s; }
+.event-details { position: relative; display: flex; align-items: center; flex-direction: column; gap: 12px; }
+.event-details .role-badge { background: #ffffff2c; border: 1px solid #ffffff50; padding: 6px 14px 6px 7px; border-radius: 30px; }
+.event-details .role-badge b { font-size: 16px; }
+.event-player { display: flex; gap: 10px; align-items: center; justify-content: center; padding: 8px 18px 8px 8px; background: #ffffff24; border: 1px solid #ffffff40; border-radius: 44px; }
+.event-player > span:first-child { width: 46px; flex: 0 0 auto; }
+.event-player h2, .event-player b { font-size: 22px; font-weight: 950; }
+.event-details .chain { text-align: left; margin: 0; padding-left: 22px; font-size: 14px; }
+.event-followup { padding: 10px 14px; border-radius: 16px; border: 1px solid #ffffff50; background: #ffffff20; font-size: 15px; font-weight: 850; }
+.scene-effects { position: absolute; inset: -20px -18px 0; overflow: hidden; z-index: -1; pointer-events: none; border-radius: 20px; }
+.scene-effects i { position: absolute; left: var(--x); top: -25px; width: 8px; height: 16px; border-radius: 2px; opacity: .7; background: #fff0af; animation: particle-fall 5.5s linear infinite; animation-delay: var(--delay); }
+.effect-confetti i:nth-child(4n) { background: #a153d0; }
+.effect-confetti i:nth-child(4n + 1) { background: #ff6379; }
+.effect-confetti i:nth-child(4n + 2) { background: #62d4c2; border-radius: 50%; width: 10px; height: 10px; }
+.effect-blood i { width: 12px; height: 19px; border-radius: 70% 30% 65% 35%; background: #781c364a; animation-duration: 7s; }
+.effect-sparks i, .effect-wings i { background: #fff1bf; width: 5px; height: 5px; box-shadow: 0 0 12px #fff5c6; border-radius: 50%; animation-name: particle-rise; animation-duration: 7s; }
+.effect-hearts i { width: 12px; height: 12px; background: #fff0d8; transform: rotate(-45deg); animation-name: particle-rise; animation-duration: 7s; }
+.effect-hearts i::before, .effect-hearts i::after { content: ''; position: absolute; width: 12px; height: 12px; border-radius: 50%; background: inherit; }
+.effect-hearts i::before { top: -6px; }.effect-hearts i::after { left: 6px; }
+.scene-banner { display: flex; gap: 12px; align-items: center; background: #ffffff22; padding: 14px; border: 1px solid #ffffff50; border-radius: 20px; }
+.scene-banner .role-emblem { width: 60px; }.scene-banner p { font-size: 14px; }
+.victory-medallion { width: 100px; margin: 0 auto; }
+.result .role-badge { min-width: 0; }
+.result-word { display: flex; gap: 8px; align-items: center; min-width: 0; }
+.result-word .role-emblem { width: 28px; }
+@keyframes emblem-arrive { from { opacity: 0; transform: scale(.55) rotate(-12deg); } to { opacity: 1; transform: scale(1) rotate(0); } }
+@keyframes emblem-hover { 0%, 100% { transform: translateY(0) rotate(-3deg); } 50% { transform: translateY(-10px) rotate(3deg); } }
+@keyframes halo-breathe { 0%,100% { transform: scale(.92); opacity: .7; } 50% { transform: scale(1.1); opacity: 1; } }
+@keyframes orbit-turn { to { transform: rotate(360deg); } }
+@keyframes star-twinkle { from { transform: scale(.75) rotate(-12deg); opacity: .5; } to { transform: scale(1.1) rotate(10deg); opacity: 1; } }
+@keyframes wing-left { 0%,100% { transform: rotate(3deg); } 50% { transform: rotate(-7deg); } }
+@keyframes wing-right { 0%,100% { transform: rotate(-3deg); } 50% { transform: rotate(7deg); } }
+@keyframes particle-fall { 0% { transform: translate(0, -20px) rotate(var(--spin)); opacity: 0; } 12%,80% { opacity: .8; } 100% { transform: translate(var(--drift), 800px) rotate(calc(var(--spin) + 300deg)); opacity: 0; } }
+@keyframes particle-rise { 0% { transform: translate(0, 700px) rotate(45deg); opacity: 0; } 20%,70% { opacity: .6; } 100% { transform: translate(var(--drift), 40px) rotate(45deg); opacity: 0; } }
+@media (max-height: 650px) {
+  .event-scene { min-height: calc(100dvh - 100px); gap: 9px; }
+  .event-kicker { margin-top: 5px; font-size: 10px; }
+  .event-art { height: 175px; }
+  .event-symbol { width: 135px; }
+  .event-scene .heading h1 { font-size: 34px; }
+  .event-scene .heading p { font-size: 14px; margin-top: 7px; }
+  .event-scene .footer { padding-top: 14px; }
+  .event-player h2 { font-size: 18px; }
+  .event-player > span:first-child { width: 34px; }
+  .event-scene.round-scene { gap: 6px; }
+  .event-scene.round-scene .event-art { height: 88px; }
+  .event-scene.round-scene .event-symbol { width: 80px; }
+  .event-scene.round-scene .event-halo, .event-scene.round-scene .event-orbit { width: 100px; }
+  .event-scene.round-scene .heading h1 { font-size: 29px; }
+  .event-scene.round-scene .scene-banner { padding: 7px; gap: 7px; }
+  .event-scene.round-scene .scene-banner .role-emblem { width: 36px; }
+  .event-scene.round-scene .scene-banner p { font-size: 12px; }
+  .event-scene.round-scene .strip { padding: 3px 0; }
+  .event-scene.round-scene .secondary { min-height: 44px; padding: 8px; font-size: 15px; }
+  .private-role { margin-bottom: 3px; }
+  .private-role .role-emblem { width: 28px; }
+  .ability .role-badge .role-emblem { width: 24px; }
+  .private-role.white-role .role-emblem { width: 36px; }
+  .reveal-layout .reveal-body .secret-card p { font-size: 13px; line-height: 1.3; margin-top: 4px; }
+}
+@media (max-width: 350px) {
+  .phone[data-theme] .brand { font-size: 20px; white-space: nowrap; flex-shrink: 0; }
+  .phone[data-theme] .header-right .pill { font-size: 10px; padding: 5px 9px; white-space: nowrap; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .event-scene *, .event-art * { animation: none !important; }
+  .scene-effects { display: none; }
+}
+.reduce .event-scene *, .reduce .event-art * { animation: none !important; }
+.reduce .scene-effects { display: none; }

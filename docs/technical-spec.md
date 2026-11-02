@@ -20,7 +20,7 @@
   - Vite: development server, production bundling, static asset paths.
   - Tailwind CSS 4 + its Vite plugin: colors, spacing, depth, responsive layout. [Official setup](https://tailwindcss.com/docs/installation/using-vite).
   - Three.js + React Three Fiber 9: interactive low-poly avatars. Fiber 9 pairs with React 19. [Compatibility](https://r3f.docs.pmnd.rs/getting-started/installation).
-  - Motion for React: screen transitions, pressed states, springs, wheel animation; use the `motion` package and `motion/react` entry point. [Installation](https://motion.dev/docs/react-installation).
+  - Motion for React: screen transitions, pressed states and springs; use the `motion` package and `motion/react` entry point. The tie reel uses the native Web Animations API. [Installation](https://motion.dev/docs/react-installation).
   - Zustand: current match, preferences, roster, session scores; narrow selectors limit rerenders.
   - Pin compatible dependency versions in one committed lockfile; use a supported Node LTS satisfying build-tool requirements.
 
@@ -45,12 +45,13 @@
   - Animation completion never decides votes, random outcomes, or deaths.
 
 - **State machine**
-  - Home → player setup → rules setup → couple introductions → private word handoffs.
-  - Once everyone finishes: public ready screen → clue turns → discussion → private action ballot.
+  - Home → player setup → rules setup → private word handoffs (word/special ability/partner combined; Warga/Undercover identities hidden).
+  - Once everyone finishes: named `mimeReveal` splash when Mime is assigned, otherwise public ready screen → clue turns → discussion → private action ballot.
   - Another clue → one additional clue round → mandatory elimination ballot.
   - Eliminate → private target ballots → tie resolution → elimination → role effects → victory check.
-  - Ongoing match → rotate Mime → public ready screen → next clue round.
-  - Finished match → reveal roles/words → scores → rematch/setup.
+  - Ongoing match → rotate Mime → named `mimeReveal` splash (or public ready screen without Mime) → next clue round. Acknowledge the Mime splash directly into `clue` without an extra ready screen.
+  - Finished match → persisted victory splash → reveal roles/words and scores → rematch/setup.
+  - Justice ties enter `justiceCall` before the named Justice choice. Revenge enters `revengeCall` before the named revenge choice; both announcements persist.
   - Private interactions always begin with a named handoff screen.
   - Clue/discussion timers pause when the page becomes hidden; private reveals close immediately.
 
@@ -58,7 +59,7 @@
   - Player: stable ID, name, avatar ID, base role, permanent modifier, partner ID, alive status, assigned word.
   - Word pack: schema version, content version, locale, validated set collection.
   - Word triple: ID, category ID, difficulty, word A, word B, Fool word, optional aliases for A/B.
-  - Match settings: role counts, enabled modifiers, category filters, timers, reduced motion, audio preference, UI language, word language.
+  - Match settings: role counts, enabled modifiers, independent `foolHasWord`/`foolCanStart` booleans, category filters, timers, reduced motion, audio preference, UI language, word language.
   - Match: ID, rules version, phase, round, players, word language/pack version, chosen triple snapshot, A/B mapping, speaker order, current actor.
   - Ballot: kind, eligible voters, eligible targets/options, submitted votes, committed outcome.
   - Resolution: pending deaths/choices, processed player IDs, personal winners, terminal victory claims.
@@ -73,7 +74,7 @@
   - Couple requires two distinct players; Fool cannot be coupled.
   - Mime excludes Mr. White; skip assignment if no eligible survivor exists.
   - Reject impossible configurations before role assignment.
-  - Base word identity stays hidden from its recipient; explicitly disclose Mr. White and assigned special abilities.
+  - Held/reminder cards disclose the word and special abilities, but no Warga/Undercover label/emblem. Explicitly disclose Fool/White identity. No role-dependent art leaks through the concealed card.
 
 - **Language packs**
   - Ship Bahasa Indonesia with locale `id`; set initial and fallback UI language to `id` and enable only Indonesian initially.
@@ -92,7 +93,7 @@
   - JSON files are the content source of truth; TypeScript holds schemas/loaders/types, not duplicate word arrays.
   - Manual edits need content validation and a new build/deployment; apply updated packs between matches, preserving active snapshots.
   - A/B are close concepts; C is a distinct concept plausibly related to both.
-  - Randomly swap A/B between Civilian and Undercover; C remains Fool-only.
+  - Randomly swap A/B between Civilian and Undercover; C remains Fool-only when `foolHasWord` is on. Otherwise `assigned` returns null for Fool, and private cards/reminders show localized no-word instructions. Results show “Tanpa kata” for Fool. Triples still require all three words.
   - Mr. White receives no word; Mime uses the existing assigned word.
   - Filter by category/difficulty, exclude recent triples, then choose uniformly.
   - If the filtered pool is exhausted, reuse the least recently played available triple.
@@ -105,28 +106,30 @@
   - Elimination ballots exclude self-votes; submitted ballots cannot be reopened.
   - Hide individual choices and totals; reveal the resulting action or eliminated player only.
   - Action ballot: Eliminate versus Another clue; one extra clue round maximum per elimination cycle.
-  - Action tie: equal-probability wheel between those two choices; Justice does not intervene.
+  - Action tie: equal-probability draw between those two choices; Justice does not intervene. Present the committed choice through the suspense reel.
   - Elimination tie: living Justice chooses among tied leaders unless Justice is one of them.
-  - Otherwise choose uniformly among tied leaders; animate a wheel with matching equal segments.
+  - Otherwise choose uniformly among tied leaders; animate repeated public cards into the committed outcome, without changing the draw or showing secret roles.
   - Freeze candidates and commit the random result before animation; skipping/reloading cannot reroll it.
   - Central random service uses browser cryptographic randomness with unbiased sampling and Fisher–Yates shuffling; tests inject fixed outcomes.
+  - The initial speaker draw samples uniformly from eligible players: all players when `foolCanStart` is on, everyone except Fool when off. Rotate the complete circular roster from that index; do not remove Fool from clues or ballots. Later-cycle rotation and extra clues retain their existing rules.
 
 - **Death resolution and victories**
-  - Record direct vote elimination first; Fool receives a personal win only for that cause.
+  - Record direct vote elimination first; Fool receives the terminal solo win only for that cause.
   - Directly voted Mr. White receives one Civilian-word guess; a correct guess records a solo victory claim.
-  - Resolve that guess before draining queued deaths/choices; a White who is also Revenger still resolves their revenge effect.
+  - Resolve that guess before draining queued deaths/choices. Correct guesses cancel the queue; incorrect guesses continue it, including a White Revenger's choice.
   - Death queue processes each player once; enqueue linked partner death before their revenge choice.
   - Revenger chooses another living player; skip if no valid target remains.
   - Partner/revenge deaths trigger applicable death abilities, but never Fool victory or a Mr. White guess.
-  - Finish the queue before final victory evaluation, animation, and score updates.
-  - Priority: correct Mr. White claim → zero-survivor draw → final-two Couple → ordinary team victory.
+  - Direct Fool votes and correct White guesses terminate play and cancel the queue. Otherwise finish the queue before team victory evaluation and scoring.
+  - Priority: terminal solo win → zero-survivor draw → final-two Couple → ordinary team victory.
   - An intact Couple postpones ordinary team victories until the pair breaks or becomes the final two.
   - Civilian victory: at least one Civilian survives and no impostor survives.
   - Impostor victory: at least one Undercover/Mr. White survives and their count equals or exceeds living Civilians.
   - Fool is neutral, excluded from team counts; a surviving Fool alone produces a draw.
-  - Fool personal victory does not end the match; show it alongside the eventual match result.
+  - Directly voted Fool wins the match alone. The `winner` enum includes `fool`; solo scoring grants only that player a point.
   - Couple replaces its members’ ordinary team objectives; members score together only for Couple victory.
   - Rotate Mime once per completed elimination cycle, without repeats among eligible survivors until necessary.
+  - The persisted `mimeReveal` phase validates an enabled Mime, a living non-White owner and a coherent living-player order. Acknowledging does not invoke RNG; extra clues retain the committed owner.
 
 - **Persistence and secrecy**
   - localStorage: roster, preferences including UI language, scores, recent words, custom triples; namespace content history/custom triples by word language.
@@ -139,6 +142,7 @@
   - A shared storage adapter reports access/quota failures to a localized notice while retaining in-memory state. Timer persistence uses the same adapter.
   - Unsaved setup drafts live in a separate in-memory Zustand store (custom drafts keyed by word locale); panel unmounts do not discard them. They are never active-match secrets or persisted previews.
   - Score reset clears points but retains the scored-match ledger and is guarded against unfinished games. Old settings gain `wordSource: all` when parsed.
+  - Old profile/match settings gain `foolHasWord: true` and `foolCanStart: true` through schema defaults without reassigning roles, words or order. Both options are pinned in the match settings and reused for rematches; setup presets leave them unchanged.
   - Optional card reminders read the explicitly selected living player's pinned card, without engine transitions or additional persistence. Reminders reuse named handoffs and release/blur/hide concealment; public timers pause until the reminder closes.
   - Secrecy protects against accidental screen exposure; local state remains inspectable by the device owner.
   - Zustand supports partial persistence and versioned migrations. [Persistence documentation](https://zustand.docs.pmnd.rs/reference/middlewares/persist).
@@ -182,8 +186,11 @@
   - Portrait layout target: 360–480 CSS pixels; support 320-pixel widths and safe-area insets.
   - Minimum 44-pixel touch targets; native semantic buttons and visible focus states.
   - Press feedback: approximately 80–140 ms; normal transitions: 180–300 ms.
-  - Wheel: approximately 1.5–2.5 seconds; outcome already committed, skip preserves result.
+  - `Wheel.tsx` retains the persisted `wheel` phase but renders a horizontal suspense reel. A native 6.6-second Web Animation uses long deceleration; RAF reads its progress for focused cards and tension stages. ResizeObserver recomputes geometry while preserving elapsed time/outcome. A fixed pointer, card center and displayed result align at the committed candidate.
+  - Near-stop stages (3.3s/5.1s) trigger increasingly red double-beat background pulses and camera zoom/bounce; arrival adds a brief impact burst. Skip cancels only presentation and centers the saved choice. Acknowledgement alone advances the engine. OS/app reduced motion skips animation and exposes the same static result immediately. Cleanup cancels animation, RAF and observer on navigation.
   - Reduced motion simplifies movement; state changes remain understandable without animation.
+  - Original SVG role emblems are shared by setup, private held cards, public role disclosures, event art and score rows. `EventScene`/`EventArt` use CSS particles, winged scales, hover motion and distinct full-phone palettes; app/system reduced motion disables these effects.
+  - Engine phases, not animation completion, advance Justice/revenge/victory announcements. The victory acknowledgement is the only legal transition after a winner is committed; scores are idempotent before and after that acknowledgement.
   - Prevent duplicate commands through phase guards and stable command IDs.
   - Public screen selectors expose only information permitted for that phase.
 
@@ -206,7 +213,7 @@
   - No secrets or server runtime required. [Vite GitHub Pages deployment](https://vite.dev/guide/static-deploy#github-pages).
 
 - **Acceptance checks**
-  - Complete a normal match, Fool personal win, Mr. White solo win, Couple win, and zero-survivor draw.
+  - Complete a normal match, terminal Fool win, Mr. White solo win, Couple win, and zero-survivor draw.
   - Test impossible configurations, Justice ties, wheel outcomes, revenge/partner chains, Mime rotation, exhausted word pools.
   - Check double taps, duplicate events, interrupted holds, app switching, reload during private phases and wheel animation.
   - Verify saved games resume without exposed secrets or changed random outcomes.

@@ -15,6 +15,7 @@ import { defaults, presets, setupIssue, type Settings } from '../engine/model'
 import { saveCustom, useGame } from '../store/session'
 import { newId } from '../engine/random'
 import { useSetupDrafts } from '../store/setup'
+import { RoleEmblem } from '../components/RoleEmblem'
 
 export function Roster({ next, home }: { next: () => void; home: () => void }) {
   const { t } = useTranslation()
@@ -192,23 +193,27 @@ export function Config({
       <section>
         <h2>{t('game:composition')}</h2>
         <label className="row">
-          {t('roles:undercover.name')}
+          <span className="role-config"><RoleEmblem role="undercover" />{t('roles:undercover.name')}</span>
           <select value={s.undercover} onChange={(e) => set({ undercover: +e.target.value })}>
             {Array.from({ length: 9 }, (_, i) => (
               <option key={i}>{i + 1}</option>
             ))}
           </select>
         </label>
-        <p className="muted">
+        <p className="muted role-config civilian-count">
+          <RoleEmblem role="civilian" />
           {t('game:civilians', {
             count: p.roster.length - s.undercover - Number(s.white) - Number(s.fool),
           })}
         </p>
         {(['white', 'fool', 'couple', 'revenger', 'justice', 'mime'] as const).map((k) => (
           <label key={k} className="toggle">
-            <span>
+            <span className="role-config">
+              <RoleEmblem role={k} />
+              <span>
               <b>{t('roles:' + k + '.name')}</b>
               <small>{t('roles:' + k + '.description')}</small>
+              </span>
             </span>
             <input
               type="checkbox"
@@ -218,6 +223,24 @@ export function Config({
           </label>
         ))}
       </section>
+      {s.fool && (
+        <section>
+          <h2>{t('game:foolOptions')}</h2>
+          {(['foolHasWord', 'foolCanStart'] as const).map((k) => (
+            <label key={k} className="toggle">
+              <span>
+                <b>{t('game:' + k)}</b>
+                <small>{t('game:' + k + 'Hint')}</small>
+              </span>
+              <input
+                type="checkbox"
+                checked={s[k]}
+                onChange={(e) => set({ [k]: e.target.checked })}
+              />
+            </label>
+          ))}
+        </section>
+      )}
       <section>
         <h2>{t('game:content')}</h2>
         <label className="row">

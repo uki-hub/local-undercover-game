@@ -10,6 +10,8 @@ import manifest from './locales/manifest.json'
 import { enabled, localeFor } from './i18n'
 import { useOffline } from './services/offline'
 import { useStorageStatus } from './services/storage'
+import { matchTheme } from './components/EventScene'
+import './components/events.css'
 
 type Screen = 'home' | 'roster' | 'config' | 'match'
 type Panel = 'settings' | 'rules' | 'custom' | 'guide' | null
@@ -102,6 +104,7 @@ export function App() {
         tabIndex={-1}
         className={'phone ' + (reduced ? 'reduce' : '')}
         data-screen={current}
+        data-theme={current === 'match' && match ? matchTheme(match) : undefined}
         onClickCapture={(e) => {
           if (e.detail > 1) {
             e.preventDefault()

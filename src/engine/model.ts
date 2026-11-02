@@ -21,6 +21,8 @@ export const settingsSchema = z.object({
   undercover: z.number().int().min(1).max(9),
   white: z.boolean(),
   fool: z.boolean(),
+  foolHasWord: z.boolean().default(true),
+  foolCanStart: z.boolean().default(true),
   couple: z.boolean(),
   justice: z.boolean(),
   revenger: z.boolean(),
@@ -36,6 +38,8 @@ export const defaults: Settings = {
   undercover: 1,
   white: false,
   fool: false,
+  foolHasWord: true,
+  foolCanStart: true,
   couple: false,
   justice: false,
   revenger: false,
@@ -93,6 +97,7 @@ export type Player = z.infer<typeof playerSchema>
 export const phases = [
   'intro',
   'word',
+  'mimeReveal',
   'ready',
   'clue',
   'discussion',
@@ -101,10 +106,13 @@ export const phases = [
   'target',
   'wheel',
   'justice',
+  'justiceCall',
   'death',
   'guess',
   'guessResult',
   'revenge',
+  'revengeCall',
+  'victory',
   'result',
 ] as const
 const ids = z.array(z.string())
@@ -139,14 +147,14 @@ export const matchSchema = z.object({
   queue: z.array(effectSchema),
   foolWin: z.string().nullable(),
   whiteWin: z.string().nullable(),
-  winner: z.enum(['civilian', 'impostor', 'couple', 'white', 'draw']).nullable(),
+  winner: z.enum(['civilian', 'impostor', 'couple', 'white', 'fool', 'draw']).nullable(),
 })
 export type Match = z.infer<typeof matchSchema>
 export const living = (m: Match) => m.players.filter((p) => p.alive)
 export const player = (m: Match, id: string) => m.players.find((p) => p.id === id)!
 export function assigned(m: Match, p: Pick<Player, 'role'>) {
   if (p.role === 'white') return null
-  if (p.role === 'fool') return m.triple.foolWord
+  if (p.role === 'fool') return m.settings.foolHasWord ? m.triple.foolWord : null
   return (p.role === 'civilian') !== m.swapped ? m.triple.wordA : m.triple.wordB
 }
 export const isPrivate = (phase: Match['phase']) =>

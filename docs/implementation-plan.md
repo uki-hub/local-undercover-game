@@ -1,5 +1,7 @@
 # Undercover — implementation plan and verification
 
+Current role/event changes follow the [plan written before implementation](./event-scenes-plan.md). It supersedes the original introduction/hidden-role/nonterminal-Fool defaults below.
+
 - **Execution contract**
   - Start from [HANDOFF.md](../HANDOFF.md); follow [rules](./game-rules.md), [design](./design-spec.md), [technical spec](./technical-spec.md), [assets](./asset-plan.md), and [language/word packs](./language-and-word-packs.md).
   - Implementation checkpoints are tracked below. See [development log](./progress.md) and [verification evidence](./evidence/verification.md).
@@ -49,7 +51,7 @@
   - Exit: a 6-player classic match can be played to either faction's victory through the actual UI; engine scenario tests pass.
 
 - [x] **Milestone 3 — chaos rules and content**
-  - Add Fool personal wins, Mr. White one-shot guesses, Couple introductions/deaths/objective, Revenger choices, Justice ties, and rotating Mime.
+  - Add Fool solo wins, Mr. White one-shot guesses, combined Couple/word reveals, Couple deaths/objective, Revenger choices, Justice ties, and rotating Mime.
   - Implement FIFO death effects, pending interaction states, exact terminal priority, and idempotent match scoring.
   - Complete the rules/preset/custom-role UI and in-app explanations of the custom victory rules.
   - Expand the editable JSON pack to 100+ curated triples, with categories, difficulty, aliases, recent-set avoidance, and custom triple CRUD.
@@ -87,14 +89,14 @@
 
 - **Engine acceptance matrix**
   - R01: invalid role counts, duplicate/empty names, impossible modifier allocations, and empty content filters block start with a useful message.
-  - R02: all Civilians share one word, all Undercovers share the other, Fool receives C, White receives none; A/B swapping preserves these mappings.
+  - R02: all Civilians share one word, all Undercovers share the other, Fool receives C or no word according to `foolHasWord`, White receives none; A/B swapping preserves these mappings. Independently verify `foolCanStart` includes/excludes Fool from the first-round opener draw without removing clue turns or changing later-cycle rotation. Both options default on for older saves and persist through presets/reloads/rematches.
   - R03: an action tie draws between exactly two actions; an extra clue round always leads to elimination rather than another optional loop.
   - R04: target ballots reject self/dead/duplicate/out-of-turn votes; eliminated players never enter future voter lists.
-  - R05: Justice outside a tied set chooses only among tied leaders; dead/absent/tied Justice invokes the wheel.
-  - R06: predetermined wheel outcome survives skip, refresh, replay, and hidden-page transitions unchanged.
-  - R07: directly voted Fool records a personal win; revenge death does not. The match continues when no terminal condition applies.
+  - R05: Justice outside a tied set chooses only among tied leaders; dead/absent/tied Justice invokes the suspense reel around a uniform draw.
+  - R06: predetermined tie outcome survives skip, refresh, replay, resize and hidden-page transitions unchanged. Pointer/card/name align at the result; reduced motion shows it instantly.
+  - R07: directly voted Fool wins solo and cancels pending effects; revenge death grants no solo win.
   - R08: directly voted White receives one guess; aliases/normalization work, wrong guesses keep the answer hidden, non-vote death grants no guess.
-  - R09: correct White claim takes precedence after the pending death queue completes; repeated submission cannot create another guess or score.
+  - R09: correct White claim ends play and cancels the pending death queue; repeated submission cannot create another guess or score.
   - R10: intact Couple delays normal victories; exactly two surviving partners win; either partner's death kills the other once.
   - R11: voted Revenger chooses a living partner of a Couple; both partners die, all effects resolve once, and a zero-survivor setup produces a draw.
   - R12: Mime is assigned initially, excludes White, rotates only once per full death sequence, and avoids repeats where alternatives exist.

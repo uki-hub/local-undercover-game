@@ -709,47 +709,9 @@ section small,
 .statement h2 {
   font-size: 29px;
 }
-.chain,
-.legend {
+.chain {
   list-style: decimal;
   padding-left: 32px;
-}
-.wheel-box {
-  position: relative;
-  margin: 20px auto;
-}
-.wheel {
-  width: 220px;
-  height: 220px;
-  border: 5px solid white;
-  box-shadow: var(--lift);
-  border-radius: 50%;
-  position: relative;
-  animation: spin 1.85s cubic-bezier(0.18, 0.7, 0.18, 1) both;
-}
-.wheel b {
-  position: absolute;
-  left: calc(50% - 13px);
-  top: calc(50% - 13px);
-  width: 26px;
-  height: 26px;
-  border-radius: 50%;
-  display: grid;
-  place-items: center;
-  background: #fff;
-  color: #152e5d;
-}
-.wheel-box i {
-  position: absolute;
-  z-index: 1;
-  top: -12px;
-  left: calc(50% - 11px);
-  border-style: solid;
-  border-width: 20px 11px 0;
-  border-color: #112245 transparent transparent;
-}
-.legend {
-  columns: 2;
 }
 .landscape {
   display: none;
@@ -758,11 +720,6 @@ section small,
   color: #943748;
   font-weight: 750;
   margin: 4px;
-}
-@keyframes spin {
-  from {
-    transform: rotate(0deg);
-  }
 }
 @keyframes pop {
   from {
@@ -853,8 +810,7 @@ section small,
 .feature-art{display:grid;place-items:center;align-self:center;width:clamp(125px,39vw,180px);aspect-ratio:1;border-radius:50%;margin:24px auto;background:radial-gradient(circle at 42% 32%,#fff,#d9eaff);box-shadow:var(--raised)}
 .feature-art .choice-art{width:64%}
 .reveal-layout .secret-word.phrase{font-size:clamp(23px,7vw,33px)}
-.reduce *,
-.wheel.still {
+.reduce * {
   animation-duration: 0.01ms !important;
   transition-duration: 0.01ms !important;
 }

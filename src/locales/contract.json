@@ -113,6 +113,12 @@
       "full": []
     },
     "composition": [],
+    "foolOptions": [],
+    "foolHasWord": [],
+    "foolHasWordHint": [],
+    "foolCanStart": [],
+    "foolCanStartHint": [],
+    "noWord": [],
     "abilities": [],
     "civilians": [
       "count"
@@ -211,7 +217,8 @@
       "impostor": [],
       "couple": [],
       "white": [],
-      "draw": []
+      "draw": [],
+      "fool": []
     },
     "allWords": [],
     "scoreboard": [],
@@ -286,6 +293,109 @@
         "title": [],
         "body": []
       }
+    },
+    "events": {
+      "justiceCall": [],
+      "justiceCallSub": [
+        "name"
+      ],
+      "justiceChoose": [],
+      "revengeCall": [],
+      "revengeCallSub": [
+        "name"
+      ],
+      "revengeChoose": [],
+      "foolVoted": [],
+      "foolVotedSub": [],
+      "revengerVoted": [],
+      "revengerOut": [],
+      "deaths": {
+        "civilian": [],
+        "undercover": [],
+        "white": [],
+        "fool": []
+      },
+      "voteDeath": [],
+      "partnerDeath": [],
+      "revengeDeath": [],
+      "eliminate": [],
+      "extra": [],
+      "guessWin": [
+        "name"
+      ],
+      "guessMiss": [
+        "name"
+      ],
+      "mimeReveal": [
+        "name"
+      ],
+      "mimeRound": [
+        "count"
+      ],
+      "eliminated": [
+        "name"
+      ],
+      "eliminationSummary": {
+        "vote": [
+          "name",
+          "role"
+        ],
+        "partner": [
+          "name",
+          "role"
+        ],
+        "revengeKill": [
+          "name",
+          "role"
+        ]
+      },
+      "whiteGuessNext": [
+        "name"
+      ],
+      "partnerNext": [
+        "name"
+      ],
+      "deathChainLine": [
+        "cause",
+        "name",
+        "role"
+      ],
+      "seeScores": [],
+      "roundReady": [
+        "count"
+      ],
+      "newRound": [],
+      "winSub": {
+        "civilian": [],
+        "impostor": [],
+        "fool": [],
+        "white": [],
+        "couple": [],
+        "draw": []
+      }
+    },
+    "reel": {
+      "kicker": [],
+      "title": [],
+      "targetSub": [],
+      "actionSub": [],
+      "player": [],
+      "action": [],
+      "candidates": [],
+      "racingSub": [],
+      "tensionSub": [],
+      "targetResult": [
+        "name"
+      ],
+      "actionResult": [
+        "name"
+      ],
+      "stages": {
+        "racing": [],
+        "tension": [],
+        "critical": [],
+        "revealed": []
+      }
     }
   },
   "roles": {
@@ -304,7 +414,9 @@
     },
     "fool": {
       "name": [],
-      "description": []
+      "description": [],
+      "noWordHint": [],
+      "hint": []
     },
     "couple": {
       "name": [],

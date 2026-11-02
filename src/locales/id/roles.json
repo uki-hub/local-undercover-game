@@ -9,16 +9,18 @@
   },
   "white": {
     "name": "Mr. White",
-    "hint": "Tanpa kata. Berbaurlah. Jika tersingkir lewat voting, tebak kata warga sekali untuk menang sendiri.",
+    "hint": "Tanpa kata. Berbaurlah. Jika divoting, tebak kata warga sekali untuk menang sendiri.",
     "description": "Kamu tidak mendapat kata. Dengarkan petunjuk dan berbaurlah dengan warga. Jika tersingkir lewat voting, kamu punya satu kesempatan menebak kata warga untuk menang sendiri."
   },
   "fool": {
     "name": "Fool",
-    "description": "Katamu berbeda dari kata warga dan Undercover. Kamu mendapat satu poin pribadi jika tersingkir lewat voting. Pemain lain tetap bermain."
+    "hint": "Buat pemain lain memilihmu. Jika tersingkir lewat voting, kamu menang sendiri!",
+    "noWordHint": "Tanpa kata. Gertaklah agar pemain lain memilihmu. Jika tersingkir lewat voting, kamu menang sendiri!",
+    "description": "Bisa mendapat kata ketiga atau tanpa kata, sesuai pengaturan. Jika tersingkir langsung lewat voting, kamu menang sendiri dan permainan berakhir."
   },
   "couple": {
     "name": "Pasangan",
-    "hint": "Menang hanya jika kalian berdua yang tersisa. Jika satu tersingkir, pasangannya ikut tersingkir.",
+    "hint": "Menang jika hanya kalian berdua tersisa. Jika satu gugur, keduanya gugur.",
     "description": "Kalian menang berdua jika hanya kalian yang tersisa. Jika salah satu tersingkir, pasangannya ikut tersingkir. Kalian tidak mendapat poin kemenangan tim."
   },
   "revenger": {
@@ -28,7 +30,7 @@
   },
   "justice": {
     "name": "Hakim",
-    "hint": "Jika voting eliminasi seri dan kamu bukan calon, pilih siapa yang tersingkir dari calon yang seri.",
+    "hint": "Saat voting eliminasi seri, pilih satu calon jika kamu masih hidup dan bukan calon.",
     "description": "Jika voting eliminasi seri, kamu memilih siapa yang tersingkir dari para calon dengan suara terbanyak. Kamu hanya bisa memutuskan jika masih bermain dan namamu tidak termasuk calon."
   },
   "mime": {

@@ -10,7 +10,7 @@
   - Premium, playful, friendly; tactile depth from layered surfaces, rounded corners, lighting, and restrained shadows.
   - White and cool gray form the surfaces; saturated blue marks primary actions and selection.
   - Very dark navy/gray text, readable contrast, clear large headings, generous spacing.
-  - Animals may have natural warm colors as in the goal; the interface palette remains white/blue/gray.
+  - Animals use natural warm colors. Setup and ordinary input screens retain white/blue/gray; public event scenes use the role palettes described below.
   - Preserve the goal's raised blue buttons, thin luminous blue outlines, soft ambient shadows, and circular animal badges.
 
 - **Language and copy**
@@ -51,8 +51,8 @@
 - **Reference screen 2 — private reveal**
   - Entry state: named handoff only; explicit readiness action before exposing a personal card.
   - Personal screen: Giliran [name], prominent animal badge, secret card, hold-to-reveal control, Selesai, oper ponsel action.
-  - Concealed card shows neutral content. Held state displays the assigned word; no faction label for Civilian/Undercover/Fool.
-  - Mr. White sees their no-word instructions; permanent modifiers have short separate private instructions.
+  - Concealed card shows neutral content. Held Warga/Undercover cards display the assigned word with no base-role name, emblem or faction-colored art. Fool/White explicitly display their role. Include abilities and Couple partner in this same card; reminders use the same disclosure rules.
+  - Mr. White and a Fool configured without a word see their respective no-word instructions, without an empty word element; permanent modifiers have short separate private instructions.
   - Secret content disappears before any exit transition or handoff; animate card chrome rather than lingering text.
   - A faint pressed halo communicates the hold gesture without obstructing the word.
 
@@ -68,24 +68,29 @@
   - Home: resume available match, start setup, rules, offline-ready status, settings access.
   - Home also offers an optional four-step guide. Settings offers confirmed score reset outside unfinished games. Failed storage reads/writes show a localized in-memory-play notice outside held-card layouts.
   - Role settings: counts/toggles, preset descriptions, invalid-combination explanations, categories/difficulty, optional timers.
-  - Private introductions: partner name or neutral readiness text, with identical public handoff treatment for everyone.
+  - Enabling Fool reveals two independent toggles: “Fool mendapat kata” and “Fool boleh mulai dulu”. Both start on. Helper copy explains the third-word/no-word choice and first-round opener eligibility. Hiding Fool or applying a preset preserves these preferences.
+  - New matches skip the introduction round; private word handoffs contain all personal information together. Legacy introduction saves remain supported.
   - Public ready/clue/discussion: current speaker, Mime gesture cue, survivors, optional timer, advance controls.
+  - Dedicated Mime splash: prominent player name/portrait, Mime emblem, current round, gesture-only instructions and first speaker. Show after dealing and after each reassignment; its primary action starts clues directly.
   - Elimination ballot: living target cards, selection, confirm; exclude current voter.
-  - Tie wheel: equal candidate segments, selected result, quick skip preserving that result.
+  - Tie reel: public portraits/names or action art scroll past a fixed gold pointer. A fast start becomes a long deceleration. Dark burgundy turns red with double-beat pulses, subtle zoom/bounce, an ECG trace and an impact burst. The centered card and explicit named result agree.
   - Justice decision: tied candidates only and an explicit confirmation.
   - Elimination/effects: affected player, role reveal, understandable ordered death chain.
   - Revenge choice: valid living targets only. Mr. White guess: one text entry, clear confirmation and outcome.
-  - Results: main winner, Fool personal result, all roles/three words, scores, rematch/setup.
+  - Results: dedicated victory splash, then roles/assigned words, scores, rematch/setup. A no-word Fool shows “Tanpa kata” instead of the unused third word. Fool is a terminal solo winner.
   - Settings/rules/custom content: match the same component system and survive small-screen scrolling.
 
 - **Avatars and motion**
   - Follow the [asset plan](./asset-plan.md): actual low-poly 3D, expressive eyes, consistent camera/lighting, upper overflow and lower circular crop.
-  - Animate button compression, selected-card springs, screen entrance, avatar reactions, wheel movement, results celebration.
-  - Feedback around 80–140 ms; ordinary screen transitions around 180–300 ms; wheel around 1.5–2.5 seconds.
+  - Animate button compression, selected-card springs, screen entrance, avatar reactions, suspense-reel movement and results celebration.
+  - Feedback around 80–140 ms; ordinary screen transitions around 180–300 ms. Tie reel lasts 6.6 seconds; near-stop heartbeat effects begin at 3.3 seconds and intensify at 5.1. Skip remains available throughout and snaps to the committed card. Reduced motion bypasses all suspense movement/pulses.
   - Transitions support the current action; block duplicate submissions without blocking essential controls for long flourishes.
   - Featured animals blink/yawn/perform species idles; previews in lists stay inexpensive.
   - Reduced motion removes large movements and idle clips while keeping clear state changes.
-  - All motion remains independent of role, word, vote, and game outcome.
+  - Cosmetic animal motion remains independent of role, word, vote, and game outcome. Role/event animations illustrate already committed public events.
+  - Full-phone event palettes: green Warga victory, violet Undercover, ice-blue White, gold/orange Fool, rose Couple, purple Justice, red revenge/death, blue clues and slate draw/failed guess. Header and safe areas inherit the scene palette.
+  - Justice uses animated ivory wings behind floating scales; Fool and faction wins use confetti; deaths use stylized falling red droplets; Couple uses floating hearts. Emblems enter with a brief scale/tilt spring and gently hover. No flashing effects.
+  - Elimination scenes put the affected player's name in the heading and spell out role(s), cause and next effect in sentences; chain entries include each player's role. Justice/revenge/guess summaries name the actor. Continue actions are immediate. Never auto-dismiss. Motion preferences preserve static art, text and color.
 
 - **Visual acceptance**
   - Compare setup, held reveal, and action voting screenshots to the approved board at the same logical phone width.

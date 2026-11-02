@@ -24,6 +24,8 @@ import {
 } from '../engine/model'
 import { awardIds, choices } from '../engine/game'
 import { useGame } from '../store/session'
+import { RoleBadge, RoleEmblem, type RoleKind } from '../components/RoleEmblem'
+import { EventArt, EventScene, winnerRole } from '../components/EventScene'
 
 function person(p: Person): Person {
   return { id: p.id, name: p.name, avatar: p.avatar }
@@ -34,6 +36,7 @@ function privateInfo(id: string) {
   return {
     word: assigned(m, p),
     white: p.role === 'white',
+    role: p.role,
     modifier: p.modifier,
     partner:
       p.modifier === 'couple'
@@ -44,6 +47,9 @@ function privateInfo(id: string) {
 function HeldCard({ intro, id }: { intro: boolean; id: string }) {
   const { t } = useTranslation()
   const data = privateInfo(id)
+  const hint = data.white ? 'roles:white.hint'
+    : data.role === 'fool' ? data.word === null ? 'roles:fool.noWordHint' : 'roles:fool.hint'
+    : 'game:secretSub'
   return (
     <div className="held-content" data-private="true">
       {intro ? (
@@ -55,13 +61,15 @@ function HeldCard({ intro, id }: { intro: boolean; id: string }) {
         </>
       ) : (
         <>
-          <strong className={'secret-word' + ((data.word?.length ?? 0) > 12 ? ' phrase' : '') + ((data.word?.length ?? 0) > 24 ? ' long' : '')}>
-            {data.white ? t('roles:white.name') : data.word}
-          </strong>
-          <p>{t(data.white ? 'roles:white.hint' : 'game:secretSub')}</p>
+          {(data.white || data.role === 'fool') && <div className={'private-role' + (data.white ? ' white-role' : '')}><RoleEmblem role={data.role} /><b>{t('roles:' + data.role + '.name')}</b></div>}
+          {data.word !== null && <strong className={'secret-word' + (data.word.length > 12 ? ' phrase' : '') + (data.word.length > 24 ? ' long' : '')}>
+            {data.word}
+          </strong>}
+          <p>{t(hint)}</p>
           {data.modifier && (
             <div className="ability">
-              <b>{t('roles:' + data.modifier + '.name')}</b>
+              <RoleBadge role={data.modifier} />
+              {data.partner && <p className="partner-name">{t('game:partner', { name: data.partner })}</p>}
               <p>{t('roles:' + data.modifier + '.hint')}</p>
             </div>
           )}
@@ -208,6 +216,7 @@ function Ballot({
   return (
     <div className={'ballot-layout ' + (action ? 'action-ballot' : '')}>
       <Strip people={people} selected={p.id} />
+      {(phase === 'justice' || phase === 'revenge') && <div className="center"><RoleBadge role={phase === 'justice' ? 'justice' : 'revenger'} /></div>}
       <Title title={t('game:' + phase)} sub={t('game:' + phase + 'Sub')} />
       {action ? (
         <div className="action-options">
@@ -287,6 +296,34 @@ export function MatchScreen({
     id = actorId(m),
     p = id && player(m, id) ? person(player(m, id)) : null
   const canRemind = ['ready', 'clue', 'discussion'].includes(m.phase)
+  if (m.phase === 'mimeReveal' && m.mime) {
+    const mime = player(m, m.mime)
+    return <EventScene title={t('game:events.mimeReveal', { name: mime.name })}
+      tag={t('game:events.mimeRound', { count: m.round })} sub={t('game:mimeClue')}
+      role="mime" effect="sparks" compact next={next} action={t('game:beginClues')}>
+      <div className="event-player"><span><Portrait person={person(mime)} /></span><h2>{mime.name}</h2></div>
+      <p>{t('game:firstClue', { name: player(m, m.order[0]).name })}</p>
+    </EventScene>
+  }
+  if (m.phase === 'justiceCall' || m.phase === 'revengeCall') {
+    const justice = m.phase === 'justiceCall', role = justice ? 'justice' : 'revenger'
+    return <EventScene title={t('game:events.' + (justice ? 'justiceCall' : 'revengeCall'))}
+      tag={t('roles:' + role + '.name')} sub={t('game:events.' + (justice ? 'justiceCallSub' : 'revengeCallSub'), { name: p?.name })}
+      role={role} effect={justice ? 'wings' : 'blood'} next={next}
+      action={t('game:events.' + (justice ? 'justiceChoose' : 'revengeChoose'))}>
+      {p && <div className="event-player"><span><Portrait person={p} /></span><h2>{p.name}</h2></div>}
+    </EventScene>
+  }
+  if (m.phase === 'victory') {
+    const role = winnerRole(m.winner)
+    const solo = m.winner === 'white' ? m.whiteWin : m.winner === 'fool' ? m.foolWin : null
+    return <EventScene title={t('game:wins.' + m.winner)} tag={t('game:results')}
+      sub={t('game:events.winSub.' + m.winner)} role={role} art={role ? undefined : 'draw'}
+      effect={m.winner === 'draw' ? 'sparks' : m.winner === 'couple' ? 'hearts' : 'confetti'}
+      next={next} action={t('game:events.seeScores')}>
+      {solo && <div className="event-player"><span><Portrait person={person(player(m, solo))} /></span><h2>{player(m, solo).name}</h2></div>}
+    </EventScene>
+  }
   if (canRemind && reminder !== null) {
     const finish = () => { remind(null); openReminder(false) }
     if (!reminder) return <>
@@ -326,9 +363,9 @@ export function MatchScreen({
                   )
             }
           />
-          <div className="hero-avatar">
+          {['justice', 'revenge', 'guess'].includes(m.phase) ? <EventArt role={m.phase === 'justice' ? 'justice' : m.phase === 'revenge' ? 'revenger' : 'white'} effect={m.phase === 'justice' ? 'wings' : 'sparks'} /> : <div className="hero-avatar">
             <Portrait person={p} live selected />
-          </div>
+          </div>}
           <div className="note">
             <Icon name="phone" />
             <p>{t('game:handoffSub')}</p>
@@ -354,9 +391,10 @@ export function MatchScreen({
   if (m.phase === 'wheel')
     return (
       <Wheel
-        names={m.candidates.map((c) =>
-          m.ballot === 'action' ? t('game:' + c) : player(m, c).name,
-        )}
+        entries={m.candidates.map((c) => m.ballot === 'action'
+          ? { id: c, name: t('game:' + c) }
+          : { id: c, name: player(m, c).name, person: person(player(m, c)) })}
+        kind={m.ballot}
         index={m.candidates.indexOf(m.outcome)}
         next={next}
         reduced={profile.reduced || matchMedia('(prefers-reduced-motion: reduce)').matches}
@@ -367,18 +405,15 @@ export function MatchScreen({
     return (
       <>
         <Title title={t('game:wins.' + m.winner)} tag={t('game:results')} />
-        <div className="medal">
-          <Icon name="trophy" size={50} />
+        <div className="victory-medallion">
+          {winnerRole(m.winner) ? <RoleEmblem role={winnerRole(m.winner)!} /> : <Icon name="trophy" size={50} />}
         </div>
-        {m.foolWin && (
-          <p className="note">{t('game:foolClaim', { name: player(m, m.foolWin).name })}</p>
-        )}
         <section>
           <h2>{t('game:allWords')}</h2>
           {(['civilian', 'undercover', 'fool'] as const).map((role) => (
             <div className="row" key={role}>
-              <span>{t('roles:' + role + '.name')}</span>
-              <b>{assigned(m, { role })}</b>
+              <span className="result-word"><RoleEmblem role={role} />{t('roles:' + role + '.name')}</span>
+              <b>{assigned(m, { role }) ?? t('game:noWord')}</b>
             </div>
           ))}
         </section>
@@ -391,6 +426,7 @@ export function MatchScreen({
               </span>
               <span>
                 <b>{o.name}</b>
+                <span className="score-role-icons"><RoleEmblem role={o.role} />{o.modifier && <RoleEmblem role={o.modifier} />}{m.mime === o.id && <RoleEmblem role="mime" />}</span>
                 <small>
                   {[
                     t('roles:' + o.role + '.name'),
@@ -424,50 +460,38 @@ export function MatchScreen({
   if (m.phase === 'death') {
     const last = m.deaths.at(-1)!,
       dead = player(m, last.id)
-    return (
-      <>
-        <Title title={t('game:death')} tag={t('game:causes.' + last.cause)} />
-        <div className="hero-avatar">
-          <Portrait person={person(dead)} live />
-        </div>
-        <div className="statement">
-          <h2>{dead.name}</h2>
-          <p>
-            {[
-              t('roles:' + dead.role + '.name'),
-              dead.modifier && t('roles:' + dead.modifier + '.name'),
-              dead.id === m.mime && t('roles:mime.name'),
-            ]
-              .filter(Boolean)
-              .join(' · ')}
-          </p>
-        </div>
-        {dead.id === m.foolWin && (
-          <p className="note">{t('game:foolClaim', { name: dead.name })}</p>
-        )}
+    const fool = dead.id === m.foolWin
+    const role: RoleKind = fool ? 'fool' : dead.modifier === 'revenger' ? 'revenger' : last.cause === 'partner' ? 'couple' : dead.role
+    const revealedRoles = [t('roles:' + dead.role + '.name'), dead.modifier && t('roles:' + dead.modifier + '.name'), dead.id === m.mime && t('roles:mime.name')].filter(Boolean).join(' · ')
+    const partner = dead.modifier === 'couple' ? living(m).find((o) => o.modifier === 'couple') : undefined
+    const followUp = fool ? t('game:events.foolVotedSub')
+      : last.cause === 'vote' && dead.role === 'white' ? t('game:events.whiteGuessNext', { name: dead.name })
+      : dead.modifier === 'revenger' && people.length ? t('game:events.revengeCallSub', { name: dead.name })
+      : partner ? t('game:events.partnerNext', { name: partner.name }) : null
+    return <EventScene title={t('game:events.eliminated', { name: dead.name })}
+      tag={t('game:causes.' + last.cause)} role={role}
+      sub={t('game:events.eliminationSummary.' + last.cause, { name: dead.name, role: revealedRoles })}
+      effect={fool ? 'confetti' : last.cause === 'partner' ? 'hearts' : 'blood'} compact next={next}>
+        <div><RoleBadge role={dead.role} />{dead.modifier && <RoleBadge role={dead.modifier} />}{dead.id === m.mime && <RoleBadge role="mime" />}</div>
+        {followUp && <p className="event-followup">{followUp}</p>}
         {m.deaths.length > 1 && (
           <ol className="chain">
             {m.deaths.map((d) => (
               <li key={d.id}>
-                {t('game:deathLine', {
+                {t('game:events.deathChainLine', {
                   name: player(m, d.id).name,
+                  role: t('roles:' + player(m, d.id).role + '.name'),
                   cause: t('game:causes.' + d.cause),
                 })}
               </li>
             ))}
           </ol>
         )}
-        <Footer>
-          <Action onClick={next}>{t('next')}</Action>
-        </Footer>
-      </>
-    )
+      </EventScene>
   }
   if (m.phase === 'guessResult' || m.phase === 'actionResult')
     return (
-      <>
-        <Strip people={people} />
-        <Title
+        <EventScene
           title={t(
             m.phase === 'actionResult'
               ? 'game:' + m.outcome
@@ -476,15 +500,11 @@ export function MatchScreen({
                 : 'game:incorrect',
           )}
           tag={t(m.phase === 'actionResult' ? 'game:actionResult' : 'game:guess')}
-          sub={t(m.phase === 'actionResult' ? 'game:' + m.outcome + 'Sub' : 'game:guessResultSub')}
+          sub={t(m.phase === 'actionResult' ? 'game:events.' + m.outcome : m.whiteWin ? 'game:events.guessWin' : 'game:events.guessMiss', { name: p?.name })}
+          art={m.phase === 'actionResult' ? m.outcome === 'extra' ? 'extra' : 'vote' : undefined}
+          role={m.phase === 'guessResult' ? 'white' : undefined}
+          effect={m.whiteWin ? 'confetti' : 'sparks'} next={next}
         />
-        {m.phase === 'actionResult' ? (
-          <div className="feature-art"><ChoiceArt chat={m.outcome === 'extra'} /></div>
-        ) : p && <div className="hero-avatar"><Portrait person={p} live /></div>}
-        <Footer>
-          <Action onClick={next}>{t('next')}</Action>
-        </Footer>
-      </>
     )
   if (m.phase === 'clue' && p)
     return (
@@ -497,6 +517,7 @@ export function MatchScreen({
         <div className="hero-avatar">
           <Portrait person={p} live selected />
         </div>
+        {m.mime === p.id && <div className="center"><RoleBadge role="mime" /></div>}
         <p className="note">{t(m.mime === p.id ? 'game:mimeClue' : 'game:clueSub')}</p>
         <Timer seconds={m.settings.clueSeconds} token={m.id + '-' + m.revision} />
         <Footer>
@@ -506,29 +527,23 @@ export function MatchScreen({
       </>
     )
   const ready = m.phase === 'ready'
+  if (ready) return <EventScene title={t('game:events.roundReady', { count: m.round })}
+    tag={t('game:events.newRound')} sub={t('game:firstClue', { name: player(m, m.order[0]).name })}
+    role={m.mime ? 'mime' : 'civilian'} effect="sparks" compact next={next} action={t('game:beginClues')}>
+    {m.mime && <div className="scene-banner"><RoleEmblem role="mime" /><p><b>{t('game:mime', { name: player(m, m.mime).name })}</b><br />{t('game:mimeClue')}</p></div>}
+    <Strip people={people} />
+    <button className="secondary" onClick={() => remind('')}>{t('game:reminder')}</button>
+  </EventScene>
   return (
     <>
       <Strip people={people} />
-      <Title
-        title={t(ready ? 'game:ready' : 'game:discussion')}
-        sub={t(ready ? 'game:readySub' : 'game:discussionSub')}
-      />
-      {ready ? <>
-        <div className="hero-avatar"><Portrait person={person(player(m,m.order[0]))} live selected /></div>
-        <p className="center"><span className="pill">{t('game:firstClue',{name:player(m,m.order[0]).name})}</span></p>
-      </> : <div className="feature-art"><ChoiceArt chat /></div>}
-      {ready && m.mime && (
-        <div className="note">{t('game:mime', { name: player(m, m.mime).name })}</div>
-      )}
-      {!ready && (
-        <>
+      <Title title={t('game:discussion')} sub={t('game:discussionSub')} />
+      <div className="feature-art"><ChoiceArt chat /></div>
           <Timer token={m.id + '-' + m.revision} seconds={m.settings.discussionSeconds} />
           {m.extra && <p className="note">{t('game:mandatory')}</p>}
-        </>
-      )}
       <Footer>
         <Action onClick={next}>
-          {t(ready ? 'game:beginClues' : m.extra ? 'game:toTarget' : 'game:toAction')}
+          {t(m.extra ? 'game:toTarget' : 'game:toAction')}
         </Action>
         <Action secondary onClick={() => remind('')}>{t('game:reminder')}</Action>
       </Footer>

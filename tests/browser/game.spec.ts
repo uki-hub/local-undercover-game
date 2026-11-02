@@ -79,7 +79,8 @@ test('classic match, sealed interruptions, cold offline reopen, rematch and Page
   await resume(page)
   let m = await snapshot(page)
   const triple = m.triple
-  for (const phase of ['intro', 'word']) {
+  expect(m.phase).toBe('word')
+  for (const phase of ['word']) {
     for (let i = 0; i < 6; i++) {
       await handoff(page)
       await expect(page.locator('[data-private]')).toHaveCount(0)
@@ -140,10 +141,11 @@ test('classic match, sealed interruptions, cold offline reopen, rematch and Page
     await button(page, spy.id === id ? m.players.find((p) => p.id !== id)!.name : spy.name).click()
     await button(page, 'Konfirmasi pilihan').click()
   }
-  await expect(page.getByRole('heading', { name: 'Pemain tersingkir' })).toBeVisible()
+  await expect(page.getByRole('heading', { name: spy.name + ' tersingkir!' })).toBeVisible()
   await shot(page, 'elimination-390')
   await button(page, 'Lanjut').click()
   await expect(page.getByRole('heading', { name: 'Warga menang!' })).toBeVisible()
+  await button(page, 'Lihat peran dan skor').click()
   await shot(page, 'results-390')
   const profile = await page.evaluate((k) => JSON.parse(localStorage.getItem(k)!), local)
   expect(Object.values(profile.scores)).toEqual(Array(5).fill(1))
@@ -155,7 +157,7 @@ test('classic match, sealed interruptions, cold offline reopen, rematch and Page
   const rematch = await snapshot(page)
   expect(rematch.triple.id).not.toBe(triple.id)
   expect(rematch.players.map((p) => p.name)).toEqual(m.players.map((p) => p.name))
-  expect(rematch.phase).toBe('intro')
+  expect(rematch.phase).toBe('word')
   expect(errors).toEqual([])
   // A new tab has no session snapshot and can still start from the precached shell.
   const cold = await context.newPage()
@@ -338,7 +340,7 @@ test('classic impostor victory through repeated cycles and the one extra clue ro
 }) => {
   await page.goto('./')
   for (const name of ['Mulai bermain', 'Lanjut', 'Bagikan peran']) await button(page, name).click()
-  for (let i = 0; i < 12; i++) {
+  for (let i = 0; i < 6; i++) {
     await handoff(page)
     await hold(page)
     await page.keyboard.up('Space')
@@ -373,7 +375,7 @@ test('classic impostor victory through repeated cycles and the one extra clue ro
   await expect(page.getByRole('heading', { name: 'Penyusup menang!' })).toBeVisible()
 })
 
-test('White guesses before revenge, both partners fall, Fool and solo points survive reload', async ({
+test('correct White guess cancels revenge and solo points survive splash and scoreboard reload', async ({
   page,
 }) => {
   const m = fresh()
@@ -386,7 +388,6 @@ test('White guesses before revenge, both partners fall, Fool and solo points sur
   m.players[1].modifier = m.players[2].modifier = 'couple'
   m.players[3].role = 'fool'
   m.players[3].alive = false
-  m.foolWin = m.players[3].id
   m.players[5].role = 'undercover'
   m.phase = 'death'
   m.deaths = [{ id: 'p1', cause: 'vote' }]
@@ -399,18 +400,15 @@ test('White guesses before revenge, both partners fall, Fool and solo points sur
   await expect(page.getByRole('heading', { name: 'Tebakan tepat!' })).toBeVisible()
   await button(page, 'Lanjut').click()
   await resume(page)
-  await handoff(page)
-  await button(page, 'Bima').click()
-  await button(page, 'Konfirmasi pilihan').click()
-  await button(page, 'Lanjut').click()
-  await expect(page.getByRole('heading', { name: 'Citra' })).toBeVisible()
-  await button(page, 'Lanjut').click()
+  await expect(page.getByRole('heading', { name: 'Mr. White menang!' })).toBeVisible()
+  expect((await snapshot(page)).queue).toEqual([])
+  expect((await snapshot(page)).players.filter(p => p.alive)).toHaveLength(4)
+  await expect(page.getByText(assigned(m, { role: 'civilian' })!, { exact: true })).toHaveCount(0)
+  await button(page, 'Lihat peran dan skor').click()
   await resume(page)
   await expect(page.getByRole('heading', { name: 'Mr. White menang!' })).toBeVisible()
-  await expect(page.getByText('Dina meraih kemenangan pribadi Fool.')).toBeVisible()
   expect((await page.evaluate((k) => JSON.parse(localStorage.getItem(k)!), local)).scores).toEqual({
     p1: 1,
-    p4: 1,
   })
 })
 
@@ -472,6 +470,7 @@ test('every screen renders at phone size, including private abilities and long m
   for (const phase of [
     'intro',
     'word',
+    'mimeReveal',
     'ready',
     'clue',
     'discussion',
@@ -479,12 +478,15 @@ test('every screen renders at phone size, including private abilities and long m
     'target',
     'wheel',
     'justice',
+    'justiceCall',
     'death',
     'revenge',
+    'revengeCall',
     'guess',
     'guessResult',
     'actionResult',
     'result',
+    'victory',
   ] as const) {
     const m = fresh()
     m.phase = phase
@@ -494,7 +496,7 @@ test('every screen renders at phone size, including private abilities and long m
     m.players[0].modifier = m.players[2].modifier = 'couple'
     m.triple.wordA =
       m.triple.wordB === 'stasiun kereta bawah tanah' ? 'uji' : 'stasiun kereta bawah tanah'
-    if (phase === 'justice' || phase === 'wheel') {
+    if (phase === 'justice' || phase === 'justiceCall' || phase === 'wheel') {
       m.ballot = 'target'
       m.candidates = ['p1', 'p3', 'p4']
       m.outcome = 'p3'
@@ -506,7 +508,7 @@ test('every screen renders at phone size, including private abilities and long m
       m.players[1].modifier = 'revenger'
       m.deaths = [{ id: 'p2', cause: 'vote' }]
     }
-    if (phase === 'result') m.winner = 'couple'
+    if (phase === 'result' || phase === 'victory') m.winner = 'couple'
     if (phase === 'actionResult') m.outcome = 'extra'
     await seed(page, m)
     if (['intro', 'word', 'action', 'justice', 'revenge', 'guess', 'target'].includes(phase)) {

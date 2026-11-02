@@ -31,6 +31,12 @@
     "full": "Semua peran dan kemampuan aktif."
   },
   "composition": "Susunan peran",
+  "foolOptions": "Pengaturan Fool",
+  "foolHasWord": "Fool mendapat kata",
+  "foolHasWordHint": "Aktif: mendapat kata ketiga. Nonaktif: bermain tanpa kata.",
+  "foolCanStart": "Fool boleh mulai dulu",
+  "foolCanStartHint": "Ikut undian pembuka ronde pertama. Jika nonaktif, pemain lain membuka; Fool tetap mendapat giliran.",
+  "noWord": "Tanpa kata",
   "abilities": "Kemampuan tambahan",
   "civilians": "{{count}} warga",
   "content": "Pilihan kata",
@@ -93,20 +99,21 @@
     "revengeKill": "Pilihan Pembalas"
   },
   "deathLine": "{{name}} · {{cause}}",
-  "foolClaim": "{{name}} meraih kemenangan pribadi Fool.",
+  "foolClaim": "{{name}} menang sebagai Fool. Permainan berakhir.",
   "guess": "Tebakan terakhir",
   "guessSub": "Tebak kata warga. Kamu hanya mendapat satu kesempatan.",
   "guessLabel": "Kata tebakanmu",
   "guessConfirm": "Kunci tebakan",
   "correct": "Tebakan tepat!",
   "incorrect": "Tebakan belum tepat",
-  "guessResultSub": "Selesaikan seluruh efek eliminasi sebelum melihat hasil.",
+  "guessResultSub": "Tebakan benar langsung mengakhiri permainan. Jika salah, efek eliminasi berlanjut.",
   "results": "Hasil permainan",
   "wins": {
     "civilian": "Warga menang!",
     "impostor": "Penyusup menang!",
     "couple": "Pasangan menang!",
     "white": "Mr. White menang!",
+    "fool": "Fool menang!",
     "draw": "Permainan seri"
   },
   "allWords": "Tiga kata rahasia",
@@ -142,6 +149,25 @@
   "waiting": "Menyiapkan paket kata…",
   "customPreset": "Susunan sendiri",
   "wheelResult": "Hasil roda",
+  "reel": {
+    "kicker": "DETIK PENENTU",
+    "title": "Suara seri!",
+    "targetSub": "Satu nama akan terpilih. Siapa yang harus tersingkir?",
+    "actionSub": "Dua pilihan sama kuat. Apa langkah kelompok selanjutnya?",
+    "player": "Calon terpilih",
+    "action": "Pilihan aksi",
+    "candidates": "Pilihan yang seri",
+    "racingSub": "Pilihan berputar. Nasib belum diumumkan…",
+    "tensionSub": "Makin pelan. Makin dekat. Tahan napas…",
+    "targetResult": "{{name}} terpilih untuk dieliminasi. Lanjutkan untuk membuka perannya.",
+    "actionResult": "Keputusan kelompok: {{name}}. Lanjutkan ke aksi berikutnya.",
+    "stages": {
+      "racing": "Menentukan nasib…",
+      "tension": "Mulai melambat…",
+      "critical": "Tahan napas!",
+      "revealed": "Pilihan terkunci!"
+    }
+  },
   "secretInfo": "Informasi pribadi",
   "wordSource": "Sumber kata",
   "allSources": "Bawaan dan pribadi",
@@ -154,8 +180,55 @@
   "guideProgress": "Langkah {{current}} dari {{total}}",
   "guideSteps": [
     { "title": "Siapkan kelompokmu", "body": "Gunakan satu ponsel untuk 3–20 pemain. Pilih nama unik dan avatar. Mulai dari mode Klasik untuk enam pemain, atau atur jumlah peran sendiri." },
-    { "title": "Baca kartu secara pribadi", "body": "Oper ke nama di layar. Setelah siap, tahan tombol untuk membaca dan lepaskan sebelum mengoper. Semua mendapat perkenalan dahulu, lalu kartu kata. Jangan perlihatkan kartumu kepada orang lain." },
+    { "title": "Baca kartu secara pribadi", "body": "Langsung oper ke nama di layar. Tahan tombol untuk membaca kata dan kemampuanmu; lepaskan sebelum mengoper. Identitas Warga dan Undercover tetap rahasia, sedangkan Fool, Mr. White, dan kemampuan tambahan ditampilkan. Jika punya Pasangan, namanya ada di kartu yang sama." },
     { "title": "Beri petunjuk dan berdiskusi", "body": "Ikuti giliran di layar. Beri satu petunjuk tanpa menyebut, mengeja, menerjemahkan, atau menulis kata. Pantomim hanya memakai gerakan. Lihat kartu pribadi tersedia jika lupa kata; pengingat waktu tidak memajukan permainan otomatis." },
-    { "title": "Pilih dan main lagi", "body": "Pilih aksi secara rahasia lalu konfirmasi. Petunjuk tambahan hanya sekali per ronde; sesudahnya eliminasi wajib. Selesaikan efek peran sebelum hasil muncul. Main lagi mempertahankan pemain dan skor dengan pembagian kata dan peran baru. Aturan lengkap tersedia di Cara bermain." }
-  ]
+    { "title": "Pilih dan main lagi", "body": "Pilih aksi secara rahasia lalu konfirmasi. Petunjuk tambahan hanya sekali per ronde; sesudahnya eliminasi wajib. Fool yang terpilih atau tebakan Mr. White yang benar langsung mengakhiri permainan. Main lagi mempertahankan pemain dan skor dengan pembagian kata dan peran baru. Aturan lengkap tersedia di Cara bermain." }
+  ],
+  "events": {
+    "justiceCall": "Hakim dipanggil!",
+    "justiceCallSub": "Voting seri. {{name}} adalah Hakim dan memilih satu calon yang tersingkir.",
+    "justiceChoose": "Serahkan ke Hakim",
+    "revengeCall": "Saatnya membalas!",
+    "revengeCallSub": "{{name}} adalah Pembalas dan memilih satu pemain yang masih bertahan untuk ikut tersingkir.",
+    "revengeChoose": "Pilih korban balasan",
+    "foolVoted": "Fool terpilih!",
+    "foolVotedSub": "Jebakannya berhasil. Fool menang sendiri dan permainan berakhir!",
+    "revengerVoted": "Pembalas terpilih!",
+    "revengerOut": "Pembalas gugur!",
+    "deaths": {
+      "civilian": "Warga gugur!",
+      "undercover": "Undercover terbongkar!",
+      "white": "Mr. White tersingkir!",
+      "fool": "Fool gugur!"
+    },
+    "voteDeath": "Pilihan sudah dikunci. Inilah pemain yang tersingkir dan peran aslinya.",
+    "partnerDeath": "Ikatan Pasangan terputus. Sang pasangan ikut tersingkir.",
+    "revengeDeath": "Balasan sudah dijatuhkan. Pemain ini ikut tersingkir.",
+    "eliminate": "Keputusan dibuat! Saatnya memilih siapa yang harus tersingkir.",
+    "extra": "Satu kesempatan lagi! Semua pemain memberi petunjuk tambahan sebelum eliminasi wajib.",
+    "guessWin": "{{name}} (Mr. White) berhasil menebak kata warga dan menang sendiri. Permainan berakhir!",
+    "guessMiss": "Tebakan {{name}} (Mr. White) salah. Kata warga tetap rahasia; efek eliminasi berlanjut.",
+    "mimeReveal": "{{name}} jadi Pantomim!",
+    "mimeRound": "Pantomim ronde {{count}}",
+    "eliminated": "{{name}} tersingkir!",
+    "eliminationSummary": {
+      "vote": "{{name}} dieliminasi lewat voting. Perannya: {{role}}.",
+      "partner": "{{name}} ikut tersingkir karena pasangannya gugur. Perannya: {{role}}.",
+      "revengeKill": "{{name}} menjadi korban balasan Pembalas. Perannya: {{role}}."
+    },
+    "whiteGuessNext": "{{name}} (Mr. White) mendapat satu kesempatan menebak kata warga.",
+    "partnerNext": "{{name}} juga akan tersingkir karena ikatan Pasangan.",
+    "deathChainLine": "{{name}} · {{role}} · {{cause}}",
+    "seeScores": "Lihat peran dan skor",
+    "roundReady": "Ronde {{count}} dimulai!",
+    "newRound": "Panggung petunjuk",
+    "winSub": {
+      "civilian": "Semua penyusup tersingkir. Desa kembali aman. Rayakan kemenangan warga!",
+      "impostor": "Penyamaran berhasil. Penyusup menguasai permainan!",
+      "fool": "Mereka memilihmu, kamu yang tertawa terakhir. Kemenangan ini hanya milik Fool!",
+      "white": "Tanpa kartu kata, tetap juara. Mr. White berhasil menebak rahasia warga!",
+      "couple": "Hanya kalian berdua yang bertahan. Cinta memenangkan permainan!",
+      "draw": "Tak ada tim yang menang kali ini. Coba lagi dengan peran dan kata baru!"
+    }
+  }
 }

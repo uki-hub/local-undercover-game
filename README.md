@@ -21,11 +21,11 @@ npm run preview
 ## Play
 
 1. Tap **Mulai bermain**. Tap a player to edit their name or animal. Add up to 20 players. Names must be unique.
-2. Choose a preset for the matching roster size, or configure counts, modifiers, filters and optional timers. Civilians must initially outnumber Undercover and Mr. White combined.
-3. Everyone gets a named private introduction, then a separate word handoff. Tap **Saya …, siap** and hold **Tahan untuk melihat**. Release before passing. A keyboard user can focus the same control and hold Space or Enter.
-4. Each survivor gives one clue. Pantomim gestures. Discuss, then vote privately for elimination or one extra clue round. Confirm every choice. After the extra round, elimination is mandatory.
-5. Elimination votes exclude the voter. Action ties use an equal wheel. A living, untied Hakim breaks elimination ties. Other elimination ties use the wheel. Skipping the animation preserves its committed result.
-6. Resolve the entire elimination chain. Score once at match end. **Main lagi** keeps players, avatars, settings and scores, then deals new roles and selects a triple using recent history.
+2. Choose a preset for the matching roster size, or configure counts, modifiers, filters and optional timers. With Fool enabled, **Fool mendapat kata** chooses the third word or no word; **Fool boleh mulai dulu** includes/excludes Fool from the first-round opener draw. Both default on, including older saves, and stay selected across presets/reloads/rematches. Later rounds rotate normally. Civilians must initially outnumber Undercover and Mr. White combined.
+3. Go straight to named word handoffs. Tap **Saya …, siap** and hold **Tahan untuk melihat** to see your secret word, special ability and any partner's name. Warga/Undercover identities stay hidden, including their emblems; Fool and Mr. White identify themselves explicitly. Release before passing. A keyboard user can hold Space or Enter on the same control.
+4. If enabled, a dedicated splash announces this round's Pantomim by name after word dealing and after each reassignment. Tap **Mulai petunjuk** to begin clues; Pantomim gestures. Discuss, then vote privately for elimination or one extra clue round. Confirm every choice. After the extra round, elimination is mandatory.
+5. Elimination votes exclude the voter. Action ties use an equal-chance draw. A living, untied Hakim breaks elimination ties. Other ties use the same fair draw, presented as a case-opening-style reel: fast cards, a slow approach, red heartbeat pulses, zoom/bounce and an impact reveal. **Lewati putaran** snaps to the committed choice; **Lihat hasil** applies it. Reduced motion shows the static result immediately.
+6. Follow the colored event scenes through elimination effects. A directly voted Fool or a correct Mr. White guess ends play immediately, canceling pending effects. Other eliminations finish the chain before team victory checks. The victory splash precedes the word/score summary. **Main lagi** keeps players, avatars, settings and scores, then deals new roles and words.
 
 **Panduan singkat** on Home offers an optional four-step introduction. **Beranda** returns from the roster to Home. Unsaved player edits and custom-word drafts (including aliases and filters) survive Settings/rules/Back/Escape within the open page; **Simpan** commits them and **Batal** discards them. Drafts do not survive reload or closing the page.
 
@@ -37,14 +37,16 @@ Survivor strips show names even when avatars repeat. During ready, clues or disc
 | --- | --- |
 | Warga | Share one word. Win with a living civilian and no living impostors. |
 | Undercover | Share the related word. The impostor team wins at parity with living civilians. |
-| Mr. White | Gets no word. A direct vote elimination grants one typed guess of the civilian word. A correct canonical answer or curated alias claims a solo win after all death effects. |
-| Fool | Gets the third word. A direct vote elimination earns one personal point. Play continues. |
+| Mr. White | Gets no word. A direct vote elimination grants one typed guess of the civilian word. A correct canonical answer or curated alias ends the game with a solo win; pending effects are canceled. |
+| Fool | Gets the third word or no word, according to setup. No-word cards/reminders explain bluffing; results show “Tanpa kata”. A direct vote elimination ends the game with a solo win. Indirect deaths grant no win. |
 | Pasangan | Partners learn one another's names. One death takes both. An intact pair postpones faction wins and wins together as the final two. |
 | Pembalas | On death, chooses a living target. Linked deaths and revenge deaths trigger applicable abilities. |
 | Hakim | Chooses among tied elimination leaders when alive and outside the tie. |
 | Pantomim | A public, rotating gesture-only clue giver. Mr. White is ineligible. |
 
 Fool is neutral for parity. Faction points include eliminated teammates and exclude partners and Fool. A draw gives no faction points. See the full [rulebook](docs/game-rules.md) or **Cara bermain** in the game.
+
+All eight roles/modifiers have original SVG emblems, separate from animal avatars. Warga/Undercover emblems appear in setup, public eliminations and final results, never on their private word/reminder cards. Decisions, deaths, dedicated Mime announcements, Justice and revenge summons, guesses and victories use themed animated scenes. Elimination summaries explicitly name the player, revealed roles and cause (voting, partner or revenge), plus any next effect. Continue buttons work immediately. **Kurangi gerakan** and the OS preference remove decorative motion; words stay hidden until **Lihat peran dan skor**. [Implementation plan](docs/event-scenes-plan.md)
 
 ## Privacy, resume and offline
 

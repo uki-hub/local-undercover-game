@@ -51,12 +51,14 @@ export function start(
   )
   if (settings.justice) free.pop()!.modifier = 'justice'
   if (settings.revenger) free.pop()!.modifier = 'revenger'
-  const first = rng(players.length)
+  // Choose uniformly among eligible openers, preserving the circular roster order.
+  const starters = players.filter((p) => settings.foolCanStart || p.role !== 'fool')
+  const first = players.indexOf(starters[rng(starters.length)])
   return {
     version: 1,
     id: newId(),
     revision: 0,
-    phase: 'intro',
+    phase: 'word',
     round: 1,
     settings: { ...settings },
     players,
@@ -85,6 +87,7 @@ export function start(
 export function victory(m: Match): Match['winner'] {
   const alive = living(m)
   if (m.whiteWin) return 'white'
+  if (m.foolWin) return 'fool'
   if (!alive.length) return 'draw'
   if (alive.filter((p) => p.modifier === 'couple').length === 2)
     return alive.length === 2 ? 'couple' : null
@@ -98,7 +101,7 @@ export function awardIds(m: Match) {
   if (!m.winner) return []
   return m.players
     .filter((p) => {
-      if (p.id === m.foolWin) return true
+      if (m.winner === 'fool') return p.id === m.foolWin
       if (m.winner === 'white') return p.id === m.whiteWin
       if (p.modifier === 'couple') return m.winner === 'couple'
       if (m.winner === 'civilian') return p.role === 'civilian'
@@ -121,7 +124,12 @@ function recordDeath(m: Match, id: string, cause: Match['deaths'][number]['cause
   const p = player(m, id)
   p.alive = false
   m.deaths.push({ id, cause })
-  if (cause === 'vote' && p.role === 'fool') m.foolWin = id
+  if (cause === 'vote' && p.role === 'fool') {
+    m.foolWin = id
+    m.queue = []
+    m.phase = 'death'
+    return
+  }
   if (p.modifier === 'couple') {
     const partner = living(m).find((other) => other.modifier === 'couple')
     if (partner) m.queue.push({ kind: 'partner', id: partner.id })
@@ -130,12 +138,14 @@ function recordDeath(m: Match, id: string, cause: Match['deaths'][number]['cause
   m.phase = 'death'
 }
 function drain(m: Match, rng: Random) {
+  // Solo victories end play before any remaining death abilities.
+  if (m.whiteWin || m.foolWin) m.queue = []
   while (m.queue.length) {
     const e = m.queue.shift()!
     if (e.kind === 'revengeChoice') {
       if (!living(m).length) continue
       m.actor = e.id
-      m.phase = 'revenge'
+      m.phase = 'revengeCall'
       return
     }
     if (player(m, e.id).alive) {
@@ -145,7 +155,7 @@ function drain(m: Match, rng: Random) {
   }
   m.winner = victory(m)
   if (m.winner) {
-    m.phase = 'result'
+    m.phase = 'victory'
     return
   }
   const rotated = [...m.order.slice(1), m.order[0]]
@@ -155,7 +165,7 @@ function drain(m: Match, rng: Random) {
   m.extra = false
   m.deaths = []
   rotateMime(m, rng)
-  m.phase = 'ready'
+  m.phase = m.mime ? 'mimeReveal' : 'ready'
 }
 function beginBallot(m: Match, kind: Match['ballot']) {
   m.phase = m.ballot = kind
@@ -176,7 +186,7 @@ function finalizeBallot(m: Match, rng: Random) {
   if (m.candidates.length > 1) {
     const justice = living(m).find((p) => p.modifier === 'justice')
     if (m.ballot === 'target' && justice && !m.candidates.includes(justice.id)) {
-      m.phase = 'justice'
+      m.phase = 'justiceCall'
       m.actor = justice.id
       return
     }
@@ -206,16 +216,24 @@ export function transition(
   cmd: Command,
   rng: Random = random,
 ): Match {
-  if (current.revision !== revision || current.winner) return current
+  if (current.revision !== revision || (current.winner && current.phase !== 'victory')) return current
   const m = structuredClone(current)
+  if (m.phase === 'victory') {
+    if (cmd.type !== 'next') return current
+    m.phase = 'result'
+    m.revision++
+    return m
+  }
   if (cmd.type === 'choose') {
     if (cmd.actor !== actorId(m)) return current
     if (m.phase === 'guess') {
       const guess = normalize(cmd.value)
       if (!guess || guess.length > 160) return current
       const aliases = (m.swapped ? m.triple.aliasesB : m.triple.aliasesA) || []
-      if ([assigned(m, { role: 'civilian' })!, ...aliases].some((w) => normalize(w) === guess))
+      if ([assigned(m, { role: 'civilian' })!, ...aliases].some((w) => normalize(w) === guess)) {
         m.whiteWin = m.actor
+        m.queue = []
+      }
       m.phase = 'guessResult'
     } else {
       if (!choices(m).includes(cmd.value)) return current
@@ -236,13 +254,20 @@ export function transition(
           if (m.phase === 'intro') m.phase = 'word'
           else {
             rotateMime(m, rng)
-            m.phase = 'ready'
+            m.phase = m.mime ? 'mimeReveal' : 'ready'
           }
         }
         break
       case 'ready':
+      case 'mimeReveal':
         m.phase = 'clue'
         m.cursor = 0
+        break
+      case 'justiceCall':
+        m.phase = 'justice'
+        break
+      case 'revengeCall':
+        m.phase = 'revenge'
         break
       case 'clue':
         if (++m.cursor === m.order.length) {

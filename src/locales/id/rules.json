@@ -11,43 +11,43 @@
     },
     {
       "title": "Baca kartumu diam-diam",
-      "body": "Semua pemain menjalani perkenalan pribadi terlebih dahulu. Dua anggota Pasangan akan mengetahui nama satu sama lain. Setelah itu, oper ponsel lagi untuk melihat kata. Tahan tombol untuk membaca, lalu lepaskan sebelum mengoper. Dengan papan ketik, tahan Spasi atau Enter."
+      "body": "Langsung oper ponsel ke nama di layar. Tahan tombol untuk membaca kata dan kemampuanmu sekaligus. Anggota Pasangan juga melihat nama pasangannya di kartu yang sama. Identitas Warga dan Undercover tetap rahasia. Lepaskan sebelum mengoper. Dengan papan ketik, tahan Spasi atau Enter."
     },
     {
       "title": "Kenali petunjuknya",
-      "body": "Warga mendapat kata yang sama. Para Undercover mendapat kata lain yang mirip. Fool mendapat kata ketiga yang masih berhubungan. Pemegang kata hanya melihat kata dan kemampuan tambahannya. Mr. White mendapat petunjuk untuk menggertak tanpa kata."
+      "body": "Warga mendapat kata yang sama. Para Undercover mendapat kata lain yang mirip. Kedua peran ini hanya melihat kata, tanpa nama atau ikon peran dasarnya. Fool mengetahui perannya dan mendapat kata ketiga atau tanpa kata, sesuai pengaturan. Mr. White mengetahui perannya serta mendapat petunjuk untuk menggertak tanpa kata. Kemampuan tambahan tetap ditampilkan secara pribadi."
     },
     {
       "title": "Beri satu petunjuk",
-      "body": "Pemain pertama ditentukan secara acak. Ikuti urutan di layar, lalu berikan satu petunjuk lisan per orang. Jangan sebut, eja, terjemahkan, atau tulis kata rahasiamu. Setelah satu putaran, diskusikan petunjuk yang mencurigakan. Jika pengatur waktu berbunyi, pemain tetap menekan tombol untuk melanjutkan."
+      "body": "Pemain pertama ditentukan secara acak. Pengaturan Fool boleh mulai dulu menentukan apakah Fool ikut undian pembuka ronde pertama. Jika nonaktif, Fool tetap mendapat giliran setelah pembuka. Ronde berikutnya memakai rotasi biasa. Ikuti urutan di layar, lalu berikan satu petunjuk lisan per orang. Jangan sebut, eja, terjemahkan, atau tulis kata rahasiamu. Setelah satu putaran, diskusikan petunjuk yang mencurigakan. Jika pengatur waktu berbunyi, pemain tetap menekan tombol untuk melanjutkan."
     },
     {
       "title": "Giliran Pantomim",
-      "body": "Pantomim diumumkan kepada semua pemain dan hanya boleh memberi petunjuk lewat gerakan. Setelah seluruh rangkaian eliminasi selesai, tugas diundi di antara pemain yang masih bertahan selain Mr. White. Giliran mengutamakan yang belum kebagian. Peran tambahan tetap dan kata pemiliknya tidak berubah."
+      "body": "Setelah semua kartu dibaca, layar khusus mengumumkan nama Pantomim ronde ini beserta aturan gerakan saja, tanpa suara atau tulisan. Setelah seluruh rangkaian eliminasi selesai, tugas diundi di antara pemain yang masih bertahan selain Mr. White lalu diumumkan lagi sebelum petunjuk dimulai. Giliran mengutamakan yang belum kebagian. Petunjuk tambahan mempertahankan Pantomim yang sama. Peran tetap dan kata pemiliknya tidak berubah."
     },
     {
       "title": "Voting atau petunjuk lagi?",
-      "body": "Setiap pemain yang masih bertahan memilih secara rahasia, lalu mengonfirmasi. Pilihan mayoritas berlaku. Jika seri, roda memilih salah satu tindakan dengan peluang sama. Petunjuk tambahan memakai urutan sebelumnya. Setelahnya, kalian langsung memilih pemain untuk dieliminasi. Setiap ronde hanya punya satu putaran tambahan."
+      "body": "Setiap pemain yang masih bertahan memilih secara rahasia, lalu mengonfirmasi. Pilihan mayoritas berlaku. Jika seri, undian bergulir menampilkan satu tindakan dengan peluang sama. Hasil sudah dikunci sebelum animasi; melewati putaran tidak mengubahnya. Petunjuk tambahan memakai urutan sebelumnya. Setelahnya, kalian langsung memilih pemain untuk dieliminasi. Setiap ronde hanya punya satu putaran tambahan."
     },
     {
       "title": "Pilih siapa yang tersingkir",
-      "body": "Pilih satu pemain lain yang masih bertahan. Pilihan yang sudah dikonfirmasi tidak bisa diubah. Pemain dengan suara terbanyak tersingkir. Jika seri, Hakim yang masih bermain memilih di antara calon yang seri. Jika Hakim ikut seri, sudah tersingkir, atau tidak ikut bermain, roda mengundi satu calon dengan peluang sama. Layar hanya mengumumkan hasil."
+      "body": "Pilih satu pemain lain yang masih bertahan. Pilihan yang sudah dikonfirmasi tidak bisa diubah. Pemain dengan suara terbanyak tersingkir. Jika seri, Hakim yang masih bermain memilih di antara calon yang seri. Jika Hakim ikut seri, sudah tersingkir, atau tidak ikut bermain, undian bergulir menampilkan satu calon dengan peluang sama. Lewati putaran membuka pilihan yang sudah dikunci; Lihat hasil melanjutkan eliminasi. Kurangi gerakan langsung menampilkan pilihan tanpa animasi."
     },
     {
       "title": "Selesaikan efek eliminasi",
-      "body": "Fool yang tersingkir lewat voting mengamankan satu poin pribadi. Mr. White yang tersingkir lewat voting mendapat satu tebakan untuk kata warga. Tebakan diproses sebelum efek lain. Eliminasi karena pasangan atau balasan tidak memberi poin Fool maupun kesempatan menebak."
+      "body": "Fool yang tersingkir langsung lewat voting menang sendiri dan permainan berakhir. Mr. White yang tersingkir lewat voting mendapat satu tebakan untuk kata warga sebelum efek lain. Tebakan benar langsung mengakhiri permainan dengan kemenangan tunggal. Efek yang belum selesai dibatalkan saat kemenangan tunggal terjadi. Eliminasi karena pasangan atau balasan tidak memberi kemenangan Fool maupun kesempatan menebak."
     },
     {
       "title": "Pasangan dan Pembalas",
-      "body": "Saat seorang anggota Pasangan tersingkir, pasangannya ikut tersingkir. Saat Pembalas tersingkir, ia memilih satu pemain yang masih bertahan untuk ikut tersingkir jika ada. Jika sasarannya anggota Pasangan, pasangannya juga terkena efek. Selesaikan seluruh rangkaian sebelum memeriksa kemenangan. Pemain yang tersingkir berhenti memberi petunjuk dan memilih."
+      "body": "Saat seorang anggota Pasangan tersingkir, pasangannya ikut tersingkir. Saat Pembalas tersingkir, ia memilih satu pemain yang masih bertahan untuk ikut tersingkir jika ada. Jika sasarannya anggota Pasangan, pasangannya juga terkena efek. Selesaikan rangkaian sebelum memeriksa kemenangan tim. Kemenangan tunggal Fool atau Mr. White membatalkan sisa rangkaian. Pemain yang tersingkir berhenti memberi petunjuk dan voting."
     },
     {
       "title": "Tentukan pemenang",
-      "body": "Tebakan Mr. White yang benar memenangkan permainan untuknya sendiri setelah seluruh efek selesai. Jika tak ada yang tersisa, hasilnya seri. Jika hanya Pasangan yang bertahan, keduanya menang. Selama Pasangan masih utuh bersama pemain lain, permainan berlanjut. Setelah Pasangan terputus atau jika tidak ada Pasangan, warga menang jika masih ada warga dan semua penyusup tersingkir. Penyusup menang jika setidaknya satu bertahan dan jumlahnya menyamai atau melebihi warga. Fool tidak dihitung dalam kedua tim. Jika hanya Fool yang tersisa, hasilnya seri."
+      "body": "Fool yang langsung terpilih lewat voting atau tebakan Mr. White yang benar langsung memenangkan permainan untuk pemain itu sendiri. Selain itu, jika tak ada yang tersisa, hasilnya seri. Jika hanya Pasangan yang bertahan, keduanya menang. Selama Pasangan masih utuh bersama pemain lain, permainan berlanjut. Setelah Pasangan terputus atau jika tidak ada Pasangan, warga menang jika masih ada warga dan semua penyusup tersingkir. Penyusup menang jika setidaknya satu bertahan dan jumlahnya menyamai atau melebihi warga. Fool tidak dihitung dalam kedua tim. Jika hanya Fool yang tersisa, hasilnya seri."
     },
     {
       "title": "Hitung poin dan main lagi",
-      "body": "Setiap anggota tim pemenang mendapat satu poin meski sudah tersingkir, kecuali anggota Pasangan dan Fool. Kemenangan Pasangan memberi satu poin kepada masing-masing pasangan. Kemenangan tunggal memberi satu poin kepada Mr. White. Poin pribadi Fool tetap dihitung apa pun hasil akhirnya. Main lagi untuk mempertahankan pemain, pengaturan, dan skor sambil mengundi ulang peran dan kata."
+      "body": "Setiap anggota tim pemenang mendapat satu poin meski sudah tersingkir, kecuali anggota Pasangan dan Fool. Kemenangan Pasangan memberi satu poin kepada masing-masing pasangan. Kemenangan tunggal memberi satu poin hanya kepada Fool atau Mr. White yang menang. Lihat peran dan skor setelah layar kemenangan. Main lagi mempertahankan pemain, pengaturan, dan skor sambil mengundi ulang peran dan kata."
     }
   ]
 }

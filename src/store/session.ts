@@ -85,8 +85,8 @@ export function coherent(m: Match) {
     return false
   if (['intro', 'word'].includes(m.phase) && m.cursor >= m.players.length) return false
   if (['clue', 'action', 'target'].includes(m.phase) && m.cursor >= m.order.length) return false
-  if (['guess', 'revenge', 'justice'].includes(m.phase) && !known(m.actor)) return false
-  if ((m.phase === 'death' && !m.deaths.length) || (m.phase === 'result') !== Boolean(m.winner))
+  if (['guess', 'revenge', 'justice', 'revengeCall', 'justiceCall'].includes(m.phase) && !known(m.actor)) return false
+  if ((m.phase === 'death' && !m.deaths.length) || ['victory', 'result'].includes(m.phase) !== Boolean(m.winner))
     return false
   const valid = (s: string) =>
     m.ballot === 'action' ? ['extra', 'eliminate'].includes(s) : known(s)
@@ -98,7 +98,8 @@ export function coherent(m: Match) {
   if (m.phase === 'wheel' && (!m.candidates.includes(m.outcome) || m.candidates.length < 2))
     return false
   if (m.phase === 'actionResult' && !['eliminate', 'extra'].includes(m.outcome)) return false
-  if (m.phase === 'justice' && (m.candidates.length < 2 || m.candidates.includes(m.actor)))
+  if (m.phase === 'mimeReveal' && (!m.settings.mime || !m.mime || !m.players.some((p) => p.id === m.mime && p.alive && p.role !== 'white'))) return false
+  if (['justice', 'justiceCall'].includes(m.phase) && (m.candidates.length < 2 || m.candidates.includes(m.actor)))
     return false
   if (m.phase === 'target' || m.phase === 'action') {
     const eligible = m.order.slice(0, m.cursor)
@@ -110,7 +111,7 @@ export function coherent(m: Match) {
     )
       return false
   }
-  if (['ready', 'clue', 'discussion', 'action', 'target'].includes(m.phase)) {
+  if (['ready', 'mimeReveal', 'clue', 'discussion', 'action', 'target'].includes(m.phase)) {
     const alive = m.players.filter((p) => p.alive)
     if (m.order.length !== alive.length || !alive.every((p) => m.order.includes(p.id))) return false
   }

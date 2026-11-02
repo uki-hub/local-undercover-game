@@ -47,13 +47,16 @@
   - In-app rules, optional timers, reduced motion, local persistence, static fallbacks, and safe resume.
 
 - **Important implementation defaults**
-  - Hide Civilian/Undercover/Fool identity from the recipient; show their word only. Explicitly identify Mr. White and special abilities.
-  - Fool wins personally only when directly voted out; the match continues.
+  - Start directly with private word handoffs. Hide Warga/Undercover identity; show their word only plus any special ability/partner. Explicitly reveal Fool and Mr. White. No separate introduction round for new matches.
+  - After word dealing and each new Mime assignment, show a named Pantomim splash before clues. Elimination summaries state the player's name, revealed roles, cause and next effect.
+  - Fool wins solo when directly voted out; end play and cancel pending death effects.
+  - Fool options: `foolHasWord` gives the third word or no word; `foolCanStart` includes/excludes Fool in the first-round opener draw. Both default on, including older saves. Later rounds rotate normally; rematches retain both options.
   - An intact Couple postpones ordinary team victories; final-two Couple wins take priority over those victories.
-  - A correct directly eliminated Mr. White guess records a solo claim; finish pending death effects before the final result.
-  - Justice resolves elimination ties only; action-choice ties always use the wheel.
+  - A correct directly eliminated Mr. White guess wins solo; end play and cancel pending death effects.
+  - Use full-phone themed event scenes for decisions, eliminations, Justice/revenge summons and victories. See [change plan](./docs/event-scenes-plan.md).
+  - Justice resolves elimination ties only; other ties use a committed equal-chance draw, shown as a suspense reel. See [reel plan](./docs/tie-reel-plan.md).
   - One mandatory clue round before action voting; at most one extra clue round per elimination cycle.
-  - Commit random wheel results before animation; never reroll on replay, skip, or reload.
+  - Commit random tie results before animation; never reroll on replay, skip, resize or reload.
   - Animal geometry may be original procedural Three.js models; GLB packaging is optional. Recognizable, articulated, polished 3D and all required animations remain mandatory.
   - Use Indonesian UI copy throughout, including errors, rules, accessibility text, and animal/role labels; source every fixed display string from JSON language packs.
   - Keep UI translations separate from word triples. Future UI language changes must not translate, regenerate, or alter an active match's secret words.

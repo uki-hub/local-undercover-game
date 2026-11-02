@@ -166,7 +166,7 @@ describe('sealed voting', () => {
   })
   it('R05 live Justice outside a tie decides only among leaders', () => {
     for (const [idx, alive, phase] of [
-      [2, true, 'justice'],
+      [2, true, 'justiceCall'],
       [0, true, 'wheel'],
       [2, false, 'wheel'],
     ] as const) {
@@ -183,25 +183,36 @@ describe('sealed voting', () => {
       )
       expect(tied.phase).toBe(phase)
       expect(tied.candidates.sort()).toEqual(['p0', 'p1'])
-      if (phase === 'justice') {
-        expect(vote(tied, 'p3')).toBe(tied)
-        expect(vote(tied, 'p1').deaths[0].id).toBe('p1')
+      if (phase === 'justiceCall') {
+        expect(vote(tied, 'p1')).toBe(tied)
+        const decision = next(tied)
+        expect(vote(decision, 'p3')).toBe(decision)
+        expect(vote(decision, 'p1').deaths[0].id).toBe('p1')
       }
     }
   })
 })
 describe('death queue, victory and scoring', () => {
-  it('R07 only voting grants Fool a personal point; the game continues', () => {
+  it('R07 direct voting ends the game for Fool, cancels revenge and scores only Fool', () => {
     let m = stage(['fool', 'civilian', 'civilian', 'civilian', 'undercover'])
+    m.players[0].modifier = 'revenger'
     m = eliminate(m, 'p0')
     expect(m.foolWin).toBe('p0')
+    expect(m.queue).toEqual([])
     m = next(m)
-    expect(m.phase).toBe('ready')
-    expect(m.order).not.toContain('p0')
+    expect(m.phase).toBe('victory')
+    expect(m.winner).toBe('fool')
+    expect(awardIds(m)).toEqual(['p0'])
+    expect(vote(m, 'p1')).toBe(m)
+    const profile = useGame.getState().profile
+    const scored = score(profile, m)
+    expect(score(scored, next(m))).toBe(scored)
+    expect(next(m).phase).toBe('result')
     m = stage(['fool', 'civilian', 'civilian', 'civilian', 'undercover'])
     m.players[1].modifier = 'revenger'
-    m = vote(next(eliminate(m, 'p1')), 'p0')
+    m = vote(next(next(eliminate(m, 'p1'))), 'p0')
     expect(m.foolWin).toBeNull()
+    expect(next(m).winner).toBeNull()
   })
   it.each([true, false])('R08–09 White guess before revenge, correct=%s', (correct) => {
     let m = stage(['white', 'civilian', 'civilian', 'undercover', 'civilian', 'civilian'])
@@ -214,10 +225,19 @@ describe('death queue, victory and scoring', () => {
     expect(m.phase).toBe('guessResult')
     expect(vote(m, 'ulang')).toBe(m)
     m = next(m)
-    expect(m.phase).toBe('revenge')
-    expect(choices(m)).not.toContain('p0')
-    m = next(vote(m, 'p3'))
-    expect(m.winner).toBe(correct ? 'white' : 'civilian')
+    if (correct) {
+      expect(m.phase).toBe('victory')
+      expect(m.winner).toBe('white')
+      expect(m.queue).toEqual([])
+      expect(m.deaths).toHaveLength(1)
+      expect(awardIds(m)).toEqual(['p0'])
+    } else {
+      expect(m.phase).toBe('revengeCall')
+      m = next(m)
+      expect(choices(m)).not.toContain('p0')
+      m = next(vote(m, 'p3'))
+      expect(m.winner).toBe('civilian')
+    }
   })
   it('R10,11 Revenger kills Couple and drains once to a zero-survivor draw, linked White cannot guess', () => {
     let m = stage(['civilian', 'white', 'undercover'])
@@ -225,7 +245,8 @@ describe('death queue, victory and scoring', () => {
     m.players[1].modifier = m.players[2].modifier = 'couple'
     expect(victory(m)).toBeNull()
     m = next(eliminate(m, 'p0'))
-    expect(m.phase).toBe('revenge')
+    expect(m.phase).toBe('revengeCall')
+    m = next(m)
     m = vote(m, 'p2')
     m = next(m)
     expect(m.deaths.map((d) => d.cause)).toEqual(['vote', 'revengeKill', 'partner'])
@@ -244,7 +265,7 @@ describe('death queue, victory and scoring', () => {
     m.players[1].alive = false
     m.winner = 'civilian'
     m.foolWin = 'p3'
-    expect(awardIds(m)).toEqual(['p2', 'p3'])
+    expect(awardIds(m)).toEqual(['p2'])
   })
   it('R12 rotates Mime and starter once per cycle without repeating eligible survivors', () => {
     let m = stage([
@@ -262,9 +283,11 @@ describe('death queue, victory and scoring', () => {
     m.cursor = m.players.length - 1
     m = next(m)
     expect(m.mime).toBe('p1')
+    expect(m.phase).toBe('mimeReveal')
     const order = [...m.order]
     m = next(eliminate(m, 'p3'))
     expect(m.mime).toBe('p2')
+    expect(m.phase).toBe('mimeReveal')
     expect(m.order[0]).toBe(order[1])
     expect(m.round).toBe(2)
     m.mimeHistory = m.order.slice()
@@ -294,7 +317,67 @@ describe('death queue, victory and scoring', () => {
     expect(newMatch.id).not.toBe(m.id)
     expect(newMatch.players.map((p) => p.id)).toEqual(m.players.map((p) => p.id))
     expect(newMatch.deaths).toEqual([])
-    expect(newMatch.phase).toBe('intro')
+    expect(newMatch.phase).toBe('word')
     expect(newMatch.players.every((p) => p.alive)).toBe(true)
+  })
+})
+
+describe('persisted event presentation', () => {
+  it('announces the committed Mime after word dealing, resumes without reroll and begins clues once', () => {
+    let m = start(roster, { ...defaults, mime: true, white: true }, pack, [], [], first)
+    for (let i = 0; i < roster.length; i++) m = next(m)
+    expect(m.phase).toBe('mimeReveal')
+    expect(m.players.find(p => p.id === m.mime)!.role).not.toBe('white')
+    expect(coherent(m)).toBe(true)
+    const restored = matchSchema.parse(JSON.parse(JSON.stringify(m)))
+    const advanced = transition(restored, restored.revision, { type: 'next' }, () => { throw Error('must not reroll') })
+    expect(advanced.phase).toBe('clue')
+    expect(advanced.cursor).toBe(0)
+    expect(advanced.mime).toBe(m.mime)
+    expect(advanced.mimeHistory).toEqual(m.mimeHistory)
+    expect(transition(advanced, restored.revision, { type: 'next' })).toBe(advanced)
+    expect(coherent({ ...m, mime: null })).toBe(false)
+    expect(coherent({ ...m, mime: m.players.find(p => p.role === 'white')!.id })).toBe(false)
+  })
+  it('starts directly with word cards and resumes a combined Couple reveal without reassignment', () => {
+    const m = start(roster, { ...defaults, couple: true }, pack, [], [], first)
+    expect(m.phase).toBe('word')
+    const restored = matchSchema.parse(JSON.parse(JSON.stringify(m)))
+    expect(coherent(restored)).toBe(true)
+    expect(restored.players).toEqual(m.players)
+    let after = restored
+    for (let i = 0; i < roster.length; i++) after = next(after)
+    expect(after.phase).toBe('ready')
+  })
+  it('Justice and revenge announcements survive reload, reject early choices and advance once', () => {
+    let m = stage(['civilian', 'civilian', 'civilian', 'civilian', 'undercover', 'civilian'])
+    m.players[2].modifier = 'justice'
+    m = ballot(m, 'target', ['p1', 'p0', 'p1', 'p0', 'p1', 'p0'])
+    expect(m.phase).toBe('justiceCall')
+    const restored = matchSchema.parse(JSON.parse(JSON.stringify(m)))
+    expect(coherent(restored)).toBe(true)
+    expect(vote(restored, 'p0')).toBe(restored)
+    const decision = next(restored)
+    expect(decision.phase).toBe('justice')
+    expect(transition(decision, restored.revision, { type: 'next' })).toBe(decision)
+    m = stage(['civilian', 'civilian', 'civilian', 'civilian', 'undercover', 'civilian'])
+    m.players[0].modifier = 'revenger'
+    m = next(eliminate(m, 'p0'))
+    expect(m.phase).toBe('revengeCall')
+    expect(coherent(matchSchema.parse(JSON.parse(JSON.stringify(m))))).toBe(true)
+    expect(next(m).phase).toBe('revenge')
+  })
+  it('solo victory cancels queued partner deaths and wins before faction evaluation', () => {
+    let m = stage(['white', 'undercover', 'civilian', 'civilian', 'civilian', 'civilian'])
+    m.players[0].modifier = m.players[1].modifier = 'couple'
+    m = next(eliminate(m, 'p0'))
+    expect(m.queue).toEqual([{ kind: 'partner', id: 'p1' }])
+    m = vote(m, assigned(m, { role: 'civilian' })!)
+    expect(m.queue).toEqual([])
+    m = next(m)
+    expect(m.winner).toBe('white')
+    expect(m.players[1].alive).toBe(true)
+    expect(coherent(m)).toBe(true)
+    expect(coherent(next(m))).toBe(true)
   })
 })
