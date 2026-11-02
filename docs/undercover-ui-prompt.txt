@@ -1,0 +1,37 @@
+Tool: built-in imagegen
+Mode: new image; opaque background
+
+Use case: ui-mockup.
+Create one high-fidelity visual concept image for the Indonesian local pass-the-phone party web game Undercover, showing THREE complete portrait mobile game screens side by side in a single landscape presentation. This is a polished product UI concept, not code and not a technical diagram. Large, readable screens occupy almost the full image; small gaps, a pale cool-gray backdrop, soft shadows. Straight-on flat presentation of screen surfaces with smoothly rounded corners; no photographed devices, perspective tilt, hands, or decorative marketing headlines.
+
+Visual system shared across all three screens: premium playful mobile game, white and cool-gray surfaces, saturated cobalt-blue primary actions, charcoal typography, powder-blue accents. Sculpted layered cards, subtle bevels and inner shading, soft realistic ambient shadows, generous whitespace, refined rounded sans-serif typography, crisp legible Indonesian labels. Strong depth without visual clutter. Convey springy playful interaction with gently tilted decorative chips and poised 3D animal poses, while keeping text straight and readable.
+
+Critical avatar style: adorable 3D LOW-POLYGON animal busts, visible faceted geometry, polished matte materials, consistent orthographic camera and soft studio lighting. Restrained white, gray, and blue palette. Each animal sits on a circular blue or pale-gray disk: ears and head break OUT ABOVE the disk boundary, but the bottom of the bust is CLEANLY CROPPED at the circular lower edge. This cutout overlap creates an unmistakable pop-out 3D badge. Different animals: fox, rabbit, panda, cat, bear, raccoon. Never flat icons or emoji. Avatars are cosmetic; no secret role labels anywhere in setup.
+
+LEFT SCREEN — player setup.
+Small top brand "UNDERCOVER", small outlined settings icon.
+Big heading "Siap bermain?"
+Secondary text "Pilih avatar, ajak temanmu."
+A slightly raised white panel containing a clean two-column grid of six player tiles with animal circle avatars and names: "Adit", "Bima", "Citra", "Dina", "Eko", "Fani". Adit's fox has a clear cobalt selected ring. Under the grid a subtle outlined action "+ Tambah pemain". At the bottom a wide blue chunky premium button "Lanjut". Keep all content inside screen safe areas.
+
+MIDDLE SCREEN — private word reveal shown at the moment a player is holding reveal.
+Top small label "GILIRAN ADIT".
+Heading "Kata rahasiamu".
+A large pop-out blue-gray 3D fox avatar above a raised blue-edged reveal card.
+The card has a small eye icon, the word "PULPEN" in large crisp dark-blue letters, and small note "Jangan tunjukkan ke pemain lain."
+Below, a distinct blue press-and-hold control "Tahan untuk melihat" with a small fingerprint-style icon and a subtle pressed-state halo, visually conveying that the word is visible only during the hold.
+Bottom secondary action "Selesai, oper ponsel".
+No faction identity revealed; no other players' words.
+
+RIGHT SCREEN — action phase before an individual player's private action vote.
+Top small pill "RONDE 2".
+A row of small surviving animal avatar badges, no vote numbers.
+Heading "Apa selanjutnya?"
+Secondary text "Pilih secara rahasia."
+Two large tactile stacked selectable action cards:
+first card blue with a ballot icon and label "Voting", smaller text "Pilih pemain untuk dieliminasi";
+second card white with a blue outline, speech-bubble icon and label "Petunjuk lagi", smaller text "Satu petunjuk tambahan".
+Bottom small neutral text "Hasil muncul setelah semua memilih."
+Do not display vote counts, vote totals, role distributions, or another player's selection.
+
+Constraints: exact three distinct functional screen mockups, same UI system, typography and consistent avatar art across all screens. White / blue / gray dominant palette. Everything legible, no gibberish filler text. Premium finished game look, layered tactile UI, clear one-thumb controls. No watermarks, no code, no arrows or explanatory callouts outside the screens.

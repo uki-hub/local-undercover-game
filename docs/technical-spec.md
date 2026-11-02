@@ -1,0 +1,218 @@
+# Undercover — technical specification
+
+- **Status**
+  - Implemented at the repository root. [Setup and maintenance](../README.md) · [verification record](./evidence/verification.md).
+  - Development entry point: [handoff](../HANDOFF.md); detailed rules: [game rules](./game-rules.md).
+  - The handoff fixes implementation defaults for previously discussed mechanics.
+  - Approved visual target: [goal design](./goal-design.png); details: [design specification](./design-spec.md).
+  - Build sequence: [implementation plan](./implementation-plan.md); 3D deliverables: [asset plan](./asset-plan.md).
+  - Localization and editable content: [language and word pack specification](./language-and-word-packs.md).
+
+- **Product scope**
+  - Indonesian, portrait-first phone web game; 3–20 players sharing one device.
+  - Static GitHub Pages deployment; all gameplay runs locally.
+  - Offline play after required assets finish caching.
+  - Names, cosmetic animal avatars, configurable roles, word packs, session scores, rematches.
+
+- **Core stack**
+  - React 19 + matching React DOM 19: screen components and accessible controls.
+  - TypeScript with strict checking: game states, events, role rules, content models.
+  - Vite: development server, production bundling, static asset paths.
+  - Tailwind CSS 4 + its Vite plugin: colors, spacing, depth, responsive layout. [Official setup](https://tailwindcss.com/docs/installation/using-vite).
+  - Three.js + React Three Fiber 9: interactive low-poly avatars. Fiber 9 pairs with React 19. [Compatibility](https://r3f.docs.pmnd.rs/getting-started/installation).
+  - Motion for React: screen transitions, pressed states, springs, wheel animation; use the `motion` package and `motion/react` entry point. [Installation](https://motion.dev/docs/react-installation).
+  - Zustand: current match, preferences, roster, session scores; narrow selectors limit rerenders.
+  - Pin compatible dependency versions in one committed lockfile; use a supported Node LTS satisfying build-tool requirements.
+
+- **Additional libraries**
+  - i18next + react-i18next: JSON UI language packs, React translation hooks, interpolation, plurals, and future language switching. [Official React integration](https://react.i18next.com/latest/using-with-hooks).
+  - Zod: validate word packs, settings, saved data; infer matching TypeScript models. [Documentation](https://zod.dev/).
+  - vite-plugin-pwa: asset caching, offline readiness, optional home-screen installation.
+  - Vitest: game-engine and content-validation tests. [Documentation](https://vitest.dev/guide/).
+  - Playwright: complete match flows and touch-browser checks. [Documentation](https://playwright.dev/docs/intro).
+  - ESLint: React hooks and TypeScript checks.
+  - Optional React Three Drei: add only helpers needed for model loading or scene setup.
+
+- **Architecture**
+  - Game engine: pure TypeScript transitions, eligibility, assignment, tallying, death queue, victory evaluation.
+  - Content: JSON word-pack loading/validation and avatar manifests; no hardcoded dictionary in application code.
+  - Localization: stable translation keys and JSON resources; engine events/error codes remain independent of display language.
+  - Store: engine state, validated commands, persistence boundaries.
+  - Screens: render the permitted public/private view of current state.
+  - Presentation: Three.js scenes, Motion animations, shared controls, sound settings.
+  - Services: random selection, storage, visibility handling, asset loading, offline updates.
+  - Screen navigation follows engine state; internal match phases are not browser-history entries.
+  - Animation completion never decides votes, random outcomes, or deaths.
+
+- **State machine**
+  - Home → player setup → rules setup → couple introductions → private word handoffs.
+  - Once everyone finishes: public ready screen → clue turns → discussion → private action ballot.
+  - Another clue → one additional clue round → mandatory elimination ballot.
+  - Eliminate → private target ballots → tie resolution → elimination → role effects → victory check.
+  - Ongoing match → rotate Mime → public ready screen → next clue round.
+  - Finished match → reveal roles/words → scores → rematch/setup.
+  - Private interactions always begin with a named handoff screen.
+  - Clue/discussion timers pause when the page becomes hidden; private reveals close immediately.
+
+- **Main data models**
+  - Player: stable ID, name, avatar ID, base role, permanent modifier, partner ID, alive status, assigned word.
+  - Word pack: schema version, content version, locale, validated set collection.
+  - Word triple: ID, category ID, difficulty, word A, word B, Fool word, optional aliases for A/B.
+  - Match settings: role counts, enabled modifiers, category filters, timers, reduced motion, audio preference, UI language, word language.
+  - Match: ID, rules version, phase, round, players, word language/pack version, chosen triple snapshot, A/B mapping, speaker order, current actor.
+  - Ballot: kind, eligible voters, eligible targets/options, submitted votes, committed outcome.
+  - Resolution: pending deaths/choices, processed player IDs, personal winners, terminal victory claims.
+  - Session: roster, scores, preferences, recent triple IDs.
+
+- **Role composition and validation**
+  - Base roles: Civilian, Undercover, Mr. White, Fool; exactly one per player.
+  - Permanent modifiers: Couple, Revenger, Justice; at most one per player.
+  - Mime: temporary public modifier; may overlap an eligible permanent modifier.
+  - Initial Civilians must outnumber Undercover + Mr. White; require at least one Undercover.
+  - Initial limits: one Fool, one Mr. White, one Justice, one Revenger, one couple pair.
+  - Couple requires two distinct players; Fool cannot be coupled.
+  - Mime excludes Mr. White; skip assignment if no eligible survivor exists.
+  - Reject impossible configurations before role assignment.
+  - Base word identity stays hidden from its recipient; explicitly disclose Mr. White and assigned special abilities.
+
+- **Language packs**
+  - Ship Bahasa Indonesia with locale `id`; set initial and fallback UI language to `id` and enable only Indonesian initially.
+  - Use i18next + react-i18next with JSON namespaces under `src/locales/id/`; no fixed user-facing strings in components, engine logic, or avatar models.
+  - Localize headings, actions, errors, rules, accessibility labels, category/difficulty names, role names/descriptions, and animal labels.
+  - Store complete sentences with interpolation/plural handling; keep player names and secret words as literal data, never translation keys.
+  - Register languages in `src/locales/manifest.json`; future English resources live under `src/locales/en/` with matching namespaces/keys.
+  - Bundle the Indonesian resources for offline startup; no translation API or browser-language detector needed initially.
+  - Keep UI language and word language distinct; pin word language, content version, and exact words for an active match.
+  - Validate language resources and required keys in CI; unsupported saved locales fall back to Indonesian. [i18next configuration](https://www.i18next.com/overview/configuration-options).
+
+- **Indonesian word engine and JSON assets**
+  - Source all bundled playable triples from manually editable `public/words/id.json`; future English word content uses a separate `public/words/en.json`.
+  - Fetch the static JSON through a GitHub Pages base-aware URL, validate it, and cache it for offline play; no runtime word generation or inline fallback dictionary.
+  - Pack metadata: schemaVersion, contentVersion, locale, sets. Each set has id, categoryId, difficulty, wordA, wordB, foolWord, and optional aliasesA/aliasesB.
+  - JSON files are the content source of truth; TypeScript holds schemas/loaders/types, not duplicate word arrays.
+  - Manual edits need content validation and a new build/deployment; apply updated packs between matches, preserving active snapshots.
+  - A/B are close concepts; C is a distinct concept plausibly related to both.
+  - Randomly swap A/B between Civilian and Undercover; C remains Fool-only.
+  - Mr. White receives no word; Mime uses the existing assigned word.
+  - Filter by category/difficulty, exclude recent triples, then choose uniformly.
+  - If the filtered pool is exhausted, reuse the least recently played available triple.
+  - Validate unique IDs, nonempty/distinct words, allowed metadata, normalized spelling.
+  - Mr. White guesses use a typed entry: normalize case, Unicode, and extra spaces; accept curated aliases only.
+  - Target initial content: 100 manually reviewed triples; verify semantic fairness through playtesting.
+
+- **Voting and random selection**
+  - Only living players vote; exactly one confirmed submission per eligible voter per ballot.
+  - Elimination ballots exclude self-votes; submitted ballots cannot be reopened.
+  - Hide individual choices and totals; reveal the resulting action or eliminated player only.
+  - Action ballot: Eliminate versus Another clue; one extra clue round maximum per elimination cycle.
+  - Action tie: equal-probability wheel between those two choices; Justice does not intervene.
+  - Elimination tie: living Justice chooses among tied leaders unless Justice is one of them.
+  - Otherwise choose uniformly among tied leaders; animate a wheel with matching equal segments.
+  - Freeze candidates and commit the random result before animation; skipping/reloading cannot reroll it.
+  - Central random service uses browser cryptographic randomness with unbiased sampling and Fisher–Yates shuffling; tests inject fixed outcomes.
+
+- **Death resolution and victories**
+  - Record direct vote elimination first; Fool receives a personal win only for that cause.
+  - Directly voted Mr. White receives one Civilian-word guess; a correct guess records a solo victory claim.
+  - Resolve that guess before draining queued deaths/choices; a White who is also Revenger still resolves their revenge effect.
+  - Death queue processes each player once; enqueue linked partner death before their revenge choice.
+  - Revenger chooses another living player; skip if no valid target remains.
+  - Partner/revenge deaths trigger applicable death abilities, but never Fool victory or a Mr. White guess.
+  - Finish the queue before final victory evaluation, animation, and score updates.
+  - Priority: correct Mr. White claim → zero-survivor draw → final-two Couple → ordinary team victory.
+  - An intact Couple postpones ordinary team victories until the pair breaks or becomes the final two.
+  - Civilian victory: at least one Civilian survives and no impostor survives.
+  - Impostor victory: at least one Undercover/Mr. White survives and their count equals or exceeds living Civilians.
+  - Fool is neutral, excluded from team counts; a surviving Fool alone produces a draw.
+  - Fool personal victory does not end the match; show it alongside the eventual match result.
+  - Couple replaces its members’ ordinary team objectives; members score together only for Couple victory.
+  - Rotate Mime once per completed elimination cycle, without repeats among eligible survivors until necessary.
+
+- **Persistence and secrecy**
+  - localStorage: roster, preferences including UI language, scores, recent words, custom triples; namespace content history/custom triples by word language.
+  - sessionStorage: versioned active-match snapshot, pending resolution, committed random outcomes.
+  - Resume at a neutral handoff screen, including interrupted private ballots and role choices; never restore an exposed word.
+  - Reveal visibility stays in memory; clear on release, pointer cancellation, blur, hidden page, and screen changes.
+  - Unmount concealed secret content immediately; decorative exit animations must not retain it.
+  - Validate loaded storage and migrate supported versions; otherwise return safely to setup.
+  - Namespace storage to this game; unavailable storage falls back to in-memory play.
+  - A shared storage adapter reports access/quota failures to a localized notice while retaining in-memory state. Timer persistence uses the same adapter.
+  - Unsaved setup drafts live in a separate in-memory Zustand store (custom drafts keyed by word locale); panel unmounts do not discard them. They are never active-match secrets or persisted previews.
+  - Score reset clears points but retains the scored-match ledger and is guarded against unfinished games. Old settings gain `wordSource: all` when parsed.
+  - Optional card reminders read the explicitly selected living player's pinned card, without engine transitions or additional persistence. Reminders reuse named handoffs and release/blur/hide concealment; public timers pause until the reminder closes.
+  - Secrecy protects against accidental screen exposure; local state remains inspectable by the device owner.
+  - Zustand supports partial persistence and versioned migrations. [Persistence documentation](https://zustand.docs.pmnd.rs/reference/middlewares/persist).
+
+- **3D avatar system**
+  - Initial collection: 10 original articulated low-poly animals with idle animations and matching WebP preview portraits.
+  - Default asset path: procedural Three.js geometry with articulated transform groups; GLB models with equivalent rigs/clips are also supported. See the asset plan.
+  - Roster: cat, pig, monkey, chicken, bear, raccoon, dog, snake, owl, rat.
+  - Friendly, expressive styling across the roster; avatars never indicate secret roles.
+  - Repeated avatars are allowed when needed; player names always distinguish players.
+  - Shared lighting, camera framing, materials, scale, and idle pose conventions.
+  - Avatar manifest: ID, display-label translation key, source kind, procedural model key or GLB URL, preview URL, framing offsets, animation names.
+  - Use previews in lists/grids; load a live model for the selected/featured player.
+  - One active WebGL canvas; cache assets and reuse geometry/materials.
+  - Circular background is a separate layer; composite mask preserves the circular lower crop while allowing ears/head above it.
+  - Animate featured avatars on interaction and during short idle clips; render on demand between clips. [Performance guidance](https://r3f.docs.pmnd.rs/advanced/scaling-performance).
+  - Static preview fallback for failed loads, lost WebGL contexts, reduced effects, or unsupported rendering.
+
+- **Animal idle animations**
+  - Every animal: neutral idle pose, blinking, gentle movement, and a short yawn.
+  - Cat: ear twitch, sleepy yawn, paw stretch.
+  - Pig: nose wiggle, ear flick, head bob.
+  - Monkey: head scratch, curious glance, small shoulder stretch.
+  - Chicken: head bob, wing stretch, sleepy beak yawn.
+  - Bear: slow blink, sleepy head dip, shoulder stretch.
+  - Raccoon: paw rub, curious head tilt, nose twitch.
+  - Dog: head tilt, ear perk, gentle pant.
+  - Snake: tongue flick, subtle coil sway, head lift.
+  - Owl: blink, gentle head turn, feather ruffle.
+  - Rat: whisker twitch, nose sniff, paw grooming.
+  - Play short clips at varied intervals, initially 5–12 seconds; blend smoothly back to the neutral pose.
+  - Only the featured live avatar runs idle clips; grid portraits can use lightweight selection feedback.
+  - Clip selection and timing use cosmetic randomness independent of gameplay randomness.
+  - Pause clips and timers when hidden/offscreen; reduced motion uses a static pose.
+  - Clip movement respects the lower circular crop and keeps names, words, and controls unobstructed.
+  - Idle motion is cosmetic; it never signals a role, word, vote, or upcoming result.
+
+- **UI and motion**
+  - White/cool-gray surfaces, cobalt primary actions, dark-gray text; shared design tokens.
+  - Rounded raised cards, soft shadows, subtle gradients, clear selection rings.
+  - Portrait layout target: 360–480 CSS pixels; support 320-pixel widths and safe-area insets.
+  - Minimum 44-pixel touch targets; native semantic buttons and visible focus states.
+  - Press feedback: approximately 80–140 ms; normal transitions: 180–300 ms.
+  - Wheel: approximately 1.5–2.5 seconds; outcome already committed, skip preserves result.
+  - Reduced motion simplifies movement; state changes remain understandable without animation.
+  - Prevent duplicate commands through phase guards and stable command IDs.
+  - Public screen selectors expose only information permitted for that phase.
+
+- **Performance and offline delivery**
+  - Targets: core JS at or below 250 KB gzip, excluding lazy-loaded 3D; responsive transitions on midrange phones.
+  - Model target: at or below 300 KB each; use compressed previews and self-hosted fonts.
+  - Lazy-load Three.js/models; keep essential screens independent of WebGL success.
+  - Cap rendering resolution; pause animation loops while hidden; dispose unused GPU resources.
+  - Precache the shell, selected bundled content, previews, and required lazy chunks before declaring offline readiness.
+  - Explicitly cache the Indonesian UI resources and word JSON; word-pack load failure must show a localized retry state before starting a new match.
+  - Offline play uses preview avatars until any uncached model becomes available.
+  - Apply service-worker updates between matches; preserve active games. [Update behavior](https://vite-pwa-org.netlify.app/guide/auto-update).
+
+- **GitHub Pages deployment**
+  - Build static output with Vite; deploy its dist artifact through GitHub Actions.
+  - Configure the repository base path and apply it to model, font, content, and service-worker URLs.
+  - Keep gameplay at the application entry URL; no history-router rewrites required.
+  - Service-worker scope and manifest start URL must stay inside the repository path.
+  - Pipeline: locked dependency installation → type check → lint → locale/content validation → engine tests → production build → smoke tests → deploy.
+  - No secrets or server runtime required. [Vite GitHub Pages deployment](https://vite.dev/guide/static-deploy#github-pages).
+
+- **Acceptance checks**
+  - Complete a normal match, Fool personal win, Mr. White solo win, Couple win, and zero-survivor draw.
+  - Test impossible configurations, Justice ties, wheel outcomes, revenge/partner chains, Mime rotation, exhausted word pools.
+  - Check double taps, duplicate events, interrupted holds, app switching, reload during private phases and wheel animation.
+  - Verify saved games resume without exposed secrets or changed random outcomes.
+  - Check all 10 animals: idle/yawn clips, smooth blending, circular crop, static fallback, hidden-page pause, and reduced motion.
+  - Verify Indonesian copy coverage, translation interpolation/plurals, safe unsupported-locale fallback, and offline language resources.
+  - Verify word JSON manual edits, malformed/duplicate entries, localized load errors, subpath loading, and active-match content snapshots.
+  - Run mobile browser automation; additionally check real Android Chrome and iPhone Safari for touch, WebGL, layout, and offline behavior.
+  - Verify GitHub Pages repository-path assets, offline cold reopen after caching, and updates deferred until match end.
+  - Playtest role balance separately from technical correctness; tune presets after observed matches.

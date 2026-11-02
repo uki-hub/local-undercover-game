@@ -1,0 +1,394 @@
+{
+  "common": {
+    "brandFirst": [],
+    "brandLast": [],
+    "next": [],
+    "back": [],
+    "done": [],
+    "save": [],
+    "cancel": [],
+    "confirm": [],
+    "delete": [],
+    "edit": [],
+    "add": [],
+    "retry": [],
+    "settings": [],
+    "rules": [],
+    "home": [],
+    "players": [],
+    "options": [],
+    "audio": [],
+    "reduced": [],
+    "language": [],
+    "wordLanguage": [],
+    "custom": [],
+    "offline": [],
+    "caching": [],
+    "onlineOnly": [],
+    "update": [],
+    "landscape": [],
+    "all": [],
+    "category": [],
+    "difficulty": [],
+    "categories": {
+      "school": [],
+      "home": [],
+      "kitchen": [],
+      "food": [],
+      "clothing": [],
+      "animals": [],
+      "transport": []
+    },
+    "difficulties": {
+      "easy": [],
+      "medium": [],
+      "hard": []
+    },
+    "errors": {
+      "roster": [],
+      "settings": [],
+      "balance": [],
+      "modifiers": [],
+      "pool": [],
+      "pack": [],
+      "custom": [],
+      "name": [],
+      "root": []
+    },
+    "reload": [],
+    "timerOff": [],
+    "seconds": [
+      "count"
+    ],
+    "timeUp": [],
+    "selected": [],
+    "close": [],
+    "count": [
+      "count"
+    ],
+    "points": [
+      "count"
+    ],
+    "portrait": [
+      "name"
+    ],
+    "storageWarning": [],
+    "resetScores": [],
+    "resetScoresConfirm": []
+  },
+  "game": {
+    "homeTitle": [],
+    "homeSub": [],
+    "homeTag": [],
+    "start": [],
+    "resume": [],
+    "session": [],
+    "homeMeta": [],
+    "setupTitle": [],
+    "setupSub": [],
+    "addPlayer": [],
+    "editPlayer": [],
+    "newPlayer": [],
+    "name": [],
+    "avatar": [],
+    "editHint": [
+      "name"
+    ],
+    "config": [],
+    "configSub": [],
+    "preset": [],
+    "presetSize": [
+      "count"
+    ],
+    "presets": {
+      "classic": [],
+      "light": [],
+      "medium": [],
+      "full": []
+    },
+    "presetNotes": {
+      "classic": [],
+      "light": [],
+      "medium": [],
+      "full": []
+    },
+    "composition": [],
+    "abilities": [],
+    "civilians": [
+      "count"
+    ],
+    "content": [],
+    "timers": [],
+    "clueTimer": [],
+    "discussionTimer": [],
+    "launch": [],
+    "introTag": [],
+    "wordTag": [],
+    "handoff": [
+      "name"
+    ],
+    "handoffSub": [],
+    "readyAs": [
+      "name"
+    ],
+    "turn": [
+      "name"
+    ],
+    "intro": [],
+    "neutral": [],
+    "partner": [
+      "name"
+    ],
+    "word": [],
+    "hidden": [],
+    "hiddenSub": [],
+    "secretSub": [],
+    "hold": [],
+    "pass": [],
+    "round": [
+      "count"
+    ],
+    "ready": [],
+    "readySub": [],
+    "mime": [
+      "name"
+    ],
+    "beginClues": [],
+    "clue": [],
+    "clueSub": [],
+    "mimeClue": [],
+    "clueProgress": [
+      "current",
+      "total"
+    ],
+    "discussion": [],
+    "discussionSub": [],
+    "mandatory": [],
+    "toAction": [],
+    "toTarget": [],
+    "action": [],
+    "actionSub": [],
+    "eliminate": [],
+    "extra": [],
+    "eliminateSub": [],
+    "extraSub": [],
+    "ballotNote": [],
+    "confirmChoice": [],
+    "target": [],
+    "targetSub": [],
+    "justice": [],
+    "justiceSub": [],
+    "revenge": [],
+    "revengeSub": [],
+    "wheel": [],
+    "wheelSub": [],
+    "wheelSkip": [],
+    "wheelDone": [],
+    "actionResult": [],
+    "death": [],
+    "causes": {
+      "vote": [],
+      "partner": [],
+      "revengeKill": []
+    },
+    "deathLine": [
+      "cause",
+      "name"
+    ],
+    "foolClaim": [
+      "name"
+    ],
+    "guess": [],
+    "guessSub": [],
+    "guessLabel": [],
+    "guessConfirm": [],
+    "correct": [],
+    "incorrect": [],
+    "guessResultSub": [],
+    "results": [],
+    "wins": {
+      "civilian": [],
+      "impostor": [],
+      "couple": [],
+      "white": [],
+      "draw": []
+    },
+    "allWords": [],
+    "scoreboard": [],
+    "pointGain": [],
+    "firstClue": [
+      "name"
+    ],
+    "rematch": [],
+    "changeSetup": [],
+    "end": [],
+    "endConfirm": [],
+    "yesEnd": [],
+    "customSub": [],
+    "customAdd": [],
+    "customEmpty": [],
+    "wordA": [],
+    "wordB": [],
+    "foolWord": [],
+    "aliasesA": [],
+    "aliasesB": [],
+    "customRemove": [],
+    "available": [
+      "count"
+    ],
+    "revealAbility": [],
+    "privateRound": [],
+    "survivors": [],
+    "scoreTag": [],
+    "active": [],
+    "out": [],
+    "timerRule": [],
+    "help": [],
+    "local": [],
+    "introStep": [
+      "current",
+      "total"
+    ],
+    "wordStep": [
+      "current",
+      "total"
+    ],
+    "waiting": [],
+    "customPreset": [],
+    "wheelResult": [],
+    "secretInfo": [],
+    "wordSource": [],
+    "allSources": [],
+    "customOnly": [],
+    "customOnlyHint": [],
+    "reminder": [],
+    "reminderSub": [],
+    "backToGame": [],
+    "guide": [],
+    "guideProgress": [
+      "current",
+      "total"
+    ],
+    "guideSteps": {
+      "0": {
+        "title": [],
+        "body": []
+      },
+      "1": {
+        "title": [],
+        "body": []
+      },
+      "2": {
+        "title": [],
+        "body": []
+      },
+      "3": {
+        "title": [],
+        "body": []
+      }
+    }
+  },
+  "roles": {
+    "civilian": {
+      "name": [],
+      "description": []
+    },
+    "undercover": {
+      "name": [],
+      "description": []
+    },
+    "white": {
+      "name": [],
+      "hint": [],
+      "description": []
+    },
+    "fool": {
+      "name": [],
+      "description": []
+    },
+    "couple": {
+      "name": [],
+      "hint": [],
+      "description": []
+    },
+    "revenger": {
+      "name": [],
+      "hint": [],
+      "description": []
+    },
+    "justice": {
+      "name": [],
+      "hint": [],
+      "description": []
+    },
+    "mime": {
+      "name": [],
+      "description": []
+    }
+  },
+  "rules": {
+    "title": [],
+    "sections": {
+      "0": {
+        "title": [],
+        "body": []
+      },
+      "1": {
+        "title": [],
+        "body": []
+      },
+      "2": {
+        "title": [],
+        "body": []
+      },
+      "3": {
+        "title": [],
+        "body": []
+      },
+      "4": {
+        "title": [],
+        "body": []
+      },
+      "5": {
+        "title": [],
+        "body": []
+      },
+      "6": {
+        "title": [],
+        "body": []
+      },
+      "7": {
+        "title": [],
+        "body": []
+      },
+      "8": {
+        "title": [],
+        "body": []
+      },
+      "9": {
+        "title": [],
+        "body": []
+      },
+      "10": {
+        "title": [],
+        "body": []
+      },
+      "11": {
+        "title": [],
+        "body": []
+      }
+    }
+  },
+  "avatars": {
+    "cat": [],
+    "pig": [],
+    "monkey": [],
+    "chicken": [],
+    "bear": [],
+    "raccoon": [],
+    "dog": [],
+    "snake": [],
+    "owl": [],
+    "rat": []
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "default": "id",
+  "namespaces": [
+    "common",
+    "game",
+    "roles",
+    "rules",
+    "avatars"
+  ],
+  "locales": [
+    {
+      "code": "id",
+      "name": "Bahasa Indonesia",
+      "enabled": true
+    }
+  ],
+  "wordPacks": [
+    {
+      "locale": "id",
+      "path": "words/id.json"
+    }
+  ]
+}

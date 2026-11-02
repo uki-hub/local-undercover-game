@@ -1,0 +1,58 @@
+.animal-badge {
+  position: relative;
+  display: block;
+  width: 100%;
+  aspect-ratio: 1;
+  flex: none;
+  isolation: isolate;
+  user-select: none;
+  pointer-events: none;
+}
+.animal-disk {
+  position: absolute;
+  inset: 8% 4% 0;
+  border-radius: 50%;
+  border: 1px solid #e1eaf4;
+  background: radial-gradient(
+    circle at 30% 19%,
+    #d7e4ef 0%,
+    #bdcfe0 46%,
+    #9aadc4 83%,
+    #b3c6d9 100%
+  );
+  box-shadow:
+    inset 0 1px 2px #ffffffc9,
+    0 3px 5px #20355518;
+}
+.animal-selected .animal-disk {
+  border-color: #7ec5ff;
+  background: radial-gradient(circle at 35% 22%, #319bff, #0873ff 64%, #0452cf);
+  box-shadow:
+    0 0 0 2px #e5f4ff,
+    0 0 0 3px #b1d6ff,
+    0 4px 8px #1469c32b;
+}
+.animal-cutout {
+  position: absolute;
+  inset: 0;
+  /* Square's top is open. The lower semicircle follows the disk exactly. */
+  mask:
+    linear-gradient(#000 0 0) top / 100% 54% no-repeat,
+    radial-gradient(ellipse closest-side, #000 99.4%, transparent 100%) center bottom / 92% 92%
+      no-repeat;
+}
+.animal-cutout img,
+.animal-live {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+.animal-cutout img {
+  filter: drop-shadow(1px 3px 2px #22374d29);
+}
+.animal-live {
+  filter: drop-shadow(1px 3px 2px #22374d29);
+}

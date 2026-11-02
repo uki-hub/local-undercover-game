@@ -1,0 +1,1 @@
+Work in D:\repos\local-undercover-game. Read HANDOFF.md and relevant specifications in docs/. Inspect the current code before making changes. Implement [describe change or bug]. Run relevant checks and update documentation when behavior changes.

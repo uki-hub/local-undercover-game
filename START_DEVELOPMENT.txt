@@ -1,0 +1,18 @@
+Implement the complete Undercover game in D:\repos\local-undercover-game.
+
+Start by reading D:\repos\local-undercover-game\HANDOFF.md and every specification linked there, including the game rules, design, technical specification, asset plan, implementation plan, and language/word-pack specification. Inspect D:\repos\local-undercover-game\docs\goal-design.png before building the UI. Check the current workspace and applicable instructions before assuming its implementation status.
+
+Requirements:
+- React 19, TypeScript, Tailwind CSS, Three.js with compatible React Three Fiber, Motion, Zustand, and Vite; static GitHub Pages deployment.
+- Portrait-first phone UI; 3–20 local players sharing one device. Implement the entire game flow and all documented base roles/modifiers, including their exact tie, death-chain, victory, and scoring rules.
+- Match the approved image's white/blue/gray palette, raised cards, rounded controls, typography, depth, and circular animal badges. Display one functional game screen at a time.
+- Exactly 10 actual low-poly 3D avatars: cat, pig, monkey, chicken, bear, raccoon, dog, snake, owl, rat. Include blinking, yawning, species-specific idles, upper overflow/lower circular clipping, and static preview fallbacks. Original articulated procedural Three.js models are an approved asset path.
+- Bahasa Indonesia initially. Use i18next + react-i18next with JSON UI language packs and the documented structure for future English. All fixed user-facing and accessibility copy belongs in those resources.
+- Keep at least 100 reviewed Indonesian word triples in manually editable D:\repos\local-undercover-game\public\words\id.json. Implement schema validation, categories, difficulty, recent-set avoidance, and local custom triples. Keep the production dictionary out of TypeScript/components.
+- Preserve private handoffs and hold-to-reveal concealment, hidden vote totals, committed random outcomes, safe resume, offline play after caching, and reduced-motion behavior.
+
+Work through the documented milestones, updating progress and verification evidence. Begin implementation after reading the specifications and carry it through a complete playable build. Use documented defaults for routine decisions; record material decisions and resolve bugs found during verification.
+
+Run type checking, lint, locale/content validation, meaningful engine tests, a production build, and browser smoke flows. Inspect rendered phone-sized screens against the goal image. Verify interruption/privacy behavior, offline loading, all 10 avatars, and GitHub Pages repository-subpath assets. Keep physical-device checks separate from emulated browser checks and report any that could not be run.
+
+Update README with working setup commands, controls/rules, JSON maintenance, asset generation, tests, and deployment instructions. Prepare the GitHub Pages workflow; do not publish in this session. Finish by reporting implemented features, checks actually run, screenshot/evidence locations, and any remaining limitations.

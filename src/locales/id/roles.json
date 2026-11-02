@@ -1,0 +1,38 @@
+{
+  "civilian": {
+    "name": "Warga",
+    "description": "Kamu dan warga lain mendapat kata yang sama. Dengarkan petunjuk dan singkirkan semua penyusup."
+  },
+  "undercover": {
+    "name": "Undercover",
+    "description": "Katamu mirip dengan kata warga. Berbaurlah sampai jumlah penyusup yang tersisa menyamai atau melebihi jumlah warga."
+  },
+  "white": {
+    "name": "Mr. White",
+    "hint": "Tanpa kata. Berbaurlah. Jika tersingkir lewat voting, tebak kata warga sekali untuk menang sendiri.",
+    "description": "Kamu tidak mendapat kata. Dengarkan petunjuk dan berbaurlah dengan warga. Jika tersingkir lewat voting, kamu punya satu kesempatan menebak kata warga untuk menang sendiri."
+  },
+  "fool": {
+    "name": "Fool",
+    "description": "Katamu berbeda dari kata warga dan Undercover. Kamu mendapat satu poin pribadi jika tersingkir lewat voting. Pemain lain tetap bermain."
+  },
+  "couple": {
+    "name": "Pasangan",
+    "hint": "Menang hanya jika kalian berdua yang tersisa. Jika satu tersingkir, pasangannya ikut tersingkir.",
+    "description": "Kalian menang berdua jika hanya kalian yang tersisa. Jika salah satu tersingkir, pasangannya ikut tersingkir. Kalian tidak mendapat poin kemenangan tim."
+  },
+  "revenger": {
+    "name": "Pembalas",
+    "hint": "Saat tersingkir, pilih satu pemain yang masih hidup untuk ikut tersingkir.",
+    "description": "Jika tersingkir karena sebab apa pun, kamu harus memilih satu pemain yang masih bertahan untuk ikut tersingkir."
+  },
+  "justice": {
+    "name": "Hakim",
+    "hint": "Jika voting eliminasi seri dan kamu bukan calon, pilih siapa yang tersingkir dari calon yang seri.",
+    "description": "Jika voting eliminasi seri, kamu memilih siapa yang tersingkir dari para calon dengan suara terbanyak. Kamu hanya bisa memutuskan jika masih bermain dan namamu tidak termasuk calon."
+  },
+  "mime": {
+    "name": "Pantomim",
+    "description": "Berikan petunjuk hanya lewat gerakan, tanpa suara atau tulisan. Tugas ini berpindah setelah rangkaian eliminasi selesai."
+  }
+}
