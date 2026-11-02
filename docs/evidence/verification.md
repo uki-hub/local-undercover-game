@@ -1,6 +1,13 @@
-# Verification · 2 November 2026
+# Verification
 
-## Local checks
+## PWA and audio · 3 November 2026
+
+- Typecheck, ESLint, content validation (five namespaces and 400 word triples), 54 unit tests and the production build passed. All 39 Chromium cases passed across the full run and one retry. The reel test needed the retry because Windows rejected a screenshot write.
+- The production build precaches 29 entries (1,907 KiB) under `/local-undercover-game/`. Offline tests decode the launcher and Apple touch icons and play the 20-second soundtrack immediately after **Siap main offline**.
+- Chrome reported zero installability errors in a temporary regular profile. Browser checks exercise the install offer and fallback instructions, gesture-gated playback, music toggles, background/foreground transitions, quiet clue turns, timer chimes, silent private reveals and older profiles with unavailable audio.
+- Physical Android and iOS home-screen installation, phone-speaker volume and silent-switch behavior still need device checks.
+
+## Local checks · 2 November 2026
 
 Windows, Node 24.22, npm 11, installed Google Chrome 156. Tests used production assets under `/local-undercover-game/`.
 
@@ -103,7 +110,7 @@ The contact sheet includes seeded private-role states for inspection. Its captio
 
 Verified the manifest, font, dictionary, all ten portrait paths and the service-worker scope beneath the repository subpath. After caching, a fresh tab reopened offline and could start a match. A distinct second service worker installed during an active game, stayed waiting through another handoff and activated after the last old window closed.
 
-GitHub Pages configuration is present. No repository remote or Git metadata existed in the supplied workspace. No hosted workflow, publication or external deployment was run.
+The GitHub Pages release workflow publishes the tested production artifact after the manual publish job passes verification. [Hosted game](https://uki-hub.github.io/local-undercover-game/) · [Workflow runs](https://github.com/uki-hub/local-undercover-game/actions/workflows/pages.yml)
 
 ## Remaining verification
 

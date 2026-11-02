@@ -201,10 +201,16 @@
   - Model target: at or below 300 KB each; use compressed previews and self-hosted fonts.
   - Lazy-load Three.js/models; keep essential screens independent of WebGL success.
   - Cap rendering resolution; pause animation loops while hidden; dispose unused GPU resources.
-  - Precache the shell, selected bundled content, previews, and required lazy chunks before declaring offline readiness.
+  - Precache the shell, selected bundled content, previews, required lazy chunks, soundtrack and app icons. Declare offline readiness once the scoped worker controls the page. Claim clients at activation and defer updates until the last old client closes.
+  - The standalone manifest uses the configured Pages base for identity and launch scope. It includes 192px and 512px PNGs and a maskable icon. The HTML links a 180px Apple touch icon. Settings consumes a browser install offer on request or shows manual instructions. Standalone windows hide these controls.
   - Explicitly cache the Indonesian UI resources and word JSON; word-pack load failure must show a localized retry state before starting a new match.
   - Offline play uses preview avatars until any uncached model becomes available.
   - Apply service-worker updates between matches; preserve active games. [Update behavior](https://vite-pwa-org.netlify.app/guide/auto-update).
+
+- **Game audio**
+  - A user gesture unlocks a shared Web Audio context. The bundled 20-second instrumental loops outside clue and discussion phases. Visibility and page lifecycle events silence audio while away.
+  - Menu taps and committed public round, tie, elimination and victory events have short synthesized cues. Card reveals and private votes are silent. Timer expiry has its own chime preference.
+  - Music, effects and the timer chime persist independently in the local profile. New profiles enable music and effects. Older profiles start both off and retain the timer preference.
 
 - **GitHub Pages deployment**
   - Build static output with Vite; deploy its dist artifact through GitHub Actions.

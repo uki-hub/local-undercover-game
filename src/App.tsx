@@ -9,6 +9,8 @@ import { wordPool, loadPack, type Pack } from './content/words'
 import manifest from './locales/manifest.json'
 import { enabled, localeFor } from './i18n'
 import { useOffline } from './services/offline'
+import { useInstall } from './services/install'
+import { playCue, unlockAudio, useGameAudio } from './services/audio'
 import { useStorageStatus } from './services/storage'
 import { matchTheme } from './components/EventScene'
 import './components/events.css'
@@ -27,6 +29,8 @@ export function App() {
   const [pack, setPack] = useState<Pack | null>(null),
     [loading, setLoading] = useState(true)
   const { profile, match, update, launch, clear, resetScores } = useGame()
+  const install = useInstall()
+  useGameAudio(screen === 'match' ? match?.phase : undefined)
   const storageFailed = useStorageStatus((s) => s.failed)
   const [guideStep, guideTo] = useState(0)
   const guideSteps = t('game:guideSteps', { returnObjects: true }) as { title: string; body: string }[]
@@ -111,6 +115,9 @@ export function App() {
           if (e.detail > 1) {
             e.preventDefault()
             e.stopPropagation()
+          } else {
+            unlockAudio()
+            if (current !== 'match' && (e.target as Element).closest('button:enabled')) playCue('tap')
           }
         }}
       >
@@ -181,13 +188,19 @@ export function App() {
               <Title title={t('settings')} />
               <section>
                 <h2>{t('options')}</h2>
-                {(['reduced', 'audio'] as const).map((k) => (
+                {(['reduced', 'music', 'effects', 'audio'] as const).map((k) => (
                   <label key={k} className="toggle">
                     <b>{t(k)}</b>
                     <input
                       type="checkbox"
                       checked={profile[k]}
-                      onChange={(e) => update({ [k]: e.target.checked })}
+                      onChange={(e) => {
+                        update({ [k]: e.target.checked })
+                        if (e.target.checked && k !== 'reduced') {
+                          unlockAudio()
+                          if (k !== 'music') playCue(k === 'effects' ? 'tap' : 'timer')
+                        }
+                      }}
                     />
                   </label>
                 ))}
@@ -235,6 +248,12 @@ export function App() {
                 {t(offline.status)}
               </p>
               {offline.waiting && <p className="note">{t('update')}</p>}
+              {install.visible && (install.prompt
+                ? <Action secondary onClick={install.prompt}>{t('install')}</Action>
+                : <details className="install-help">
+                    <summary>{t('installHelp')}</summary>
+                    <p>{t('installHint')}</p>
+                  </details>)}
               <Footer>
                 {match && (
                   <button
@@ -279,6 +298,7 @@ export function App() {
                   {t('rules')}
                 </Action>
                 <Action secondary onClick={() => { guideTo(0); show('guide') }}>{t('game:guide')}</Action>
+                {install.visible && install.prompt && <Action secondary onClick={install.prompt}>{t('install')}</Action>}
                 <small className="status" role="status">
                   <i />
                   {t(offline.status)}

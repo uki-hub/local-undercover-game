@@ -2,9 +2,11 @@ import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import tailwind from '@tailwindcss/vite'
 import { VitePWA } from 'vite-plugin-pwa'
+import copy from './src/locales/id/common.json'
 
+const base = process.env.PAGES_BASE || '/local-undercover-game/'
 export default defineConfig({
-  base: process.env.PAGES_BASE || '/local-undercover-game/',
+  base,
   build: {
     rollupOptions: {
       output: {
@@ -24,19 +26,28 @@ export default defineConfig({
     VitePWA({
       registerType: 'prompt',
       injectRegister: false,
+      includeAssets: ['icons/apple-touch.png'],
       manifest: {
         name: 'Undercover',
         short_name: 'Undercover',
+        id: base,
+        description: copy.appDescription,
+        categories: ['games', 'entertainment'],
         lang: 'id',
         start_url: './',
         scope: './',
         display: 'standalone',
         theme_color: '#f4f8fc',
         background_color: '#f4f8fc',
-        icons: [{ src: 'icon.svg', sizes: 'any', type: 'image/svg+xml', purpose: 'any' }],
+        icons: [
+          { src: 'icons/game-192.png', sizes: '192x192', type: 'image/png' },
+          { src: 'icons/game-512.png', sizes: '512x512', type: 'image/png' },
+          { src: 'icons/maskable-512.png', sizes: '512x512', type: 'image/png', purpose: 'maskable' },
+        ],
       },
       workbox: {
-        globPatterns: ['**/*.{html,js,css,json,webmanifest,svg,webp,woff2}'],
+        clientsClaim: true,
+        globPatterns: ['**/*.{html,js,css,json,svg,webp,woff2,mp3}'],
         cleanupOutdatedCaches: true,
         navigateFallbackDenylist: [/\/words\//, /\/assets\//],
       },

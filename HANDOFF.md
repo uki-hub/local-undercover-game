@@ -4,6 +4,8 @@
 
 Latest setup: Pemain → Peran → Kata → Waktu, with clickable breadcrumb navigation and no “Pilihan mode” picker. UI explanations use shorter, casual Indonesian for teens. See the updated design specification and README for validation/navigation behavior.
 
+The production game now supports standalone installation, an offline soundtrack and public-event sounds. Install and audio controls live in **Pengaturan**. [Player instructions](./README.md#install-and-sound)
+
 - **Task for the next session**
   - Build the complete playable game described here. This session prepared documentation only.
   - Workspace: `D:\repos\local-undercover-game`.

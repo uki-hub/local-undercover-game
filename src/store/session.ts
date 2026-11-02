@@ -19,6 +19,8 @@ const profileSchema = z.object({
   settings: settingsSchema,
   reduced: z.boolean(),
   audio: z.boolean(),
+  effects: z.boolean().default(false),
+  music: z.boolean().default(false),
   uiLocale: z.string(),
   wordLocale: z.string(),
   scores: z.record(z.string(), z.number().int().nonnegative()),
@@ -50,6 +52,8 @@ const initial: Profile = {
   settings: defaults,
   reduced: false,
   audio: false,
+  effects: true,
+  music: true,
   uiLocale: 'id',
   wordLocale: 'id',
   scores: {},
@@ -134,7 +138,7 @@ type Store = {
     changes: Partial<
       Pick<
         Profile,
-        'roster' | 'settings' | 'reduced' | 'audio' | 'custom' | 'uiLocale' | 'wordLocale'
+        'roster' | 'settings' | 'reduced' | 'audio' | 'music' | 'effects' | 'custom' | 'uiLocale' | 'wordLocale'
       >
     >,
   ) => void

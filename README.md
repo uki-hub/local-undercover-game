@@ -2,6 +2,8 @@
 
 A Bahasa Indonesia pass-the-phone game for 3–20 players. One device handles private word cards and ballots while the group gives clues in person.
 
+[Play Undercover](https://uki-hub.github.io/local-undercover-game/) · [Install and sound settings](#install-and-sound)
+
 ## Run
 
 Use Node 24 LTS with npm. From this workspace:
@@ -56,11 +58,19 @@ Words mount only while held. Release, cancellation, blur, backgrounding and navi
 
 The versioned active match lives in `sessionStorage`. Reload the same tab and tap **Lanjutkan permainan**. Closing a tab can discard its active match. Local storage keeps the roster, settings, custom triples, word history and score ledger. Storage failures show a notice that recent progress/scores may be lost on reload or closing; in-memory play remains available. The notice stays out of held-card layouts. Device owners can inspect browser storage.
 
-Open the production build online over HTTPS or localhost. Wait for **Siap main offline** before disconnecting. The service worker precaches the shell, UI translations, dictionary, font, portraits and lazy 3D chunk. An updated worker waits until all windows using the previous version close. The active match pins its own words and aliases.
+Open the production build online over HTTPS or localhost. Wait for **Siap main offline** before disconnecting. The service worker then controls the page and has cached the game, dictionary, portraits, 3D models, music and launcher icons. An update waits until all windows using the previous version close. The active match pins its own words and aliases.
+
+## Install and sound
+
+Tap **Pasang game** on Home or in **Pengaturan** when the browser offers installation. Otherwise open **Pengaturan → Cara pasang game** for browser-menu instructions. In Safari, choose **Share → Add to Home Screen** and enable **Open as Web App** if offered. The icon opens the game in its own window. For local installation testing, use `npm run build` and `npm run preview`. [Browser installation behavior](https://web.dev/learn/pwa/installation-prompt/) · [Apple installation guide](https://support.apple.com/guide/iphone/iphea86e5236/ios)
+
+**Musik latar** controls the original eight-bar instrumental loop. **Efek suara** controls menu taps, round announcements, tie draws, eliminations and victories. **Bunyi pengingat waktu** controls the timer chime independently. Music and effects start enabled for new players and wait for the first tap or keyboard activation. On existing profiles they start off and the previous timer setting carries over.
+
+Music pauses during spoken clues and discussion. Switching away silences game audio. Private cards and ballot choices have no identifying sounds. All audio works offline. To edit and rebuild the soundtrack, run `python scripts/render-music.py` with FFmpeg installed.
 
 ## Editable content
 
-- Edit [public/words/id.json](public/words/id.json). It ships 112 curated triples, 16 in each category. Keep stable IDs when correcting entries. Increment `contentVersion`, run validation/tests, rebuild and redeploy.
+- Edit [public/words/id.json](public/words/id.json). Version 1.3.0 ships 400 Indonesian triples across 14 categories. Keep stable IDs when correcting entries. Increment `contentVersion`, run validation/tests, rebuild and redeploy.
 - A triple contains `id`, `categoryId`, `difficulty` (`easy`, `medium`, `hard`), `wordA`, `wordB`, `foolWord` and optional `aliasesA` / `aliasesB`. Words and aliases must be nonempty and distinct under Unicode, case and whitespace normalization.
 - **Sumber kata** chooses the combined bundled/local pool or **Kata pribadi saja**. Category/difficulty still apply; an empty custom pool blocks dealing without falling back to bundled words. Older saves default to the combined pool. Rematch preserves the selected source, avoids the last 20 IDs where possible and reuses the least recently played eligible set when exhausted. **Pengaturan → Paket kata pribadi** edits local triples between matches.
 - Interface copy lives in five [Indonesian JSON namespaces](src/locales/id). To add English, supply matching files under `src/locales/en/`, preserve interpolation names, then register and enable the locale in [the manifest](src/locales/manifest.json). The loader discovers the resources. The language selector appears with two enabled locales.
@@ -94,6 +104,6 @@ Playwright starts a local production preview on port 4174 unless a compatible pr
 
 The [workflow](.github/workflows/pages.yml) installs from the lockfile, checks types, lint, content and engine behavior, builds the site, runs Chromium smoke tests against the repository base path and packages `dist/`. Pushes to main and pull requests run verification.
 
-The Git remote is [uki-hub/local-undercover-game](https://github.com/uki-hub/local-undercover-game), with local `main` tracking `origin/main`. For later publication, select **Settings → Pages → Source → GitHub Actions**. From the default branch, run **Validate and prepare Pages** manually with **publish** enabled. Publication requires that explicit workflow input and a passing verification job. The action uses GitHub's Pages artifact and deployment flow. [GitHub Pages starter workflow](https://github.com/actions/starter-workflows/blob/main/pages/static.yml)
+To publish, push the release commit to `main`, then run **Validate and prepare Pages** on `main` with **publish** enabled. After the **deploy** job succeeds, open the game in a fresh browser window and check for **Siap main offline**. Installed players receive updates after closing all open game windows. [Release workflow and run history](https://github.com/uki-hub/local-undercover-game/actions/workflows/pages.yml)
 
-Local builds default to `/local-undercover-game/`. Set `PAGES_BASE` to another leading/trailing-slash project path for both build and browser tests. The workflow derives it from the repository name. No remote deployment was performed.
+Local builds default to `/local-undercover-game/`. Set `PAGES_BASE` to another leading/trailing-slash project path for both build and browser tests. The workflow derives it from the repository name.

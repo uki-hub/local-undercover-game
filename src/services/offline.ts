@@ -9,16 +9,23 @@ export function useOffline() {
       set('onlineOnly')
       return
     }
+    const worker = navigator.serviceWorker
+    const script = new URL(import.meta.env.BASE_URL + 'sw.js', location.href).href
+    const controlsGame = () => worker.controller?.scriptURL === script
+    const checkControl = () => {
+      if (controlsGame()) set('offline')
+    }
+    worker.addEventListener('controllerchange', checkControl)
+    checkControl()
     registerSW({
       immediate: true,
-      onOfflineReady: () => set('offline'),
+      onOfflineReady: checkControl,
       onNeedRefresh: () => wait(true),
-      onRegisterError: () => set('onlineOnly'),
-      onRegisteredSW: (_url, registration) => {
-        if (registration) void navigator.serviceWorker.ready.then(() => set('offline'))
-      },
+      onRegisterError: () => set(controlsGame() ? 'offline' : 'onlineOnly'),
+      onRegisteredSW: checkControl,
     })
     // Leave waiting workers untouched. Normal activation waits for every old client to close.
+    return () => worker.removeEventListener('controllerchange', checkControl)
   }, [])
   return { status, waiting }
 }

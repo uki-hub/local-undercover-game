@@ -1,11 +1,10 @@
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { useGame } from '../store/session'
+import { playCue } from '../services/audio'
 import { readStorage, writeStorage } from '../services/storage'
 const memory = new Map<string, number>()
 export function Timer({ seconds, token }: { seconds: number; token: string }) {
   const { t } = useTranslation()
-  const audio = useGame((s) => s.profile.audio)
   const [left, display] = useState(seconds)
   useEffect(() => {
     if (!seconds) return
@@ -26,23 +25,7 @@ export function Timer({ seconds, token }: { seconds: number; token: string }) {
       display(Math.ceil(remaining / 1000))
       if (!remaining && !notified) {
         notified = true
-        if (audio)
-          try {
-            const ctx = new AudioContext(),
-              tone = ctx.createOscillator(),
-              gain = ctx.createGain()
-            tone.connect(gain)
-            gain.connect(ctx.destination)
-            gain.gain.value = 0.065
-            tone.frequency.value = 660
-            tone.start()
-            tone.stop(ctx.currentTime + 0.16)
-            tone.onended = () => {
-              void ctx.close()
-            }
-          } catch {
-            /* Visual expiry is always available. */
-          }
+        playCue('timer')
       }
     }
     function save() {
@@ -61,7 +44,7 @@ export function Timer({ seconds, token }: { seconds: number; token: string }) {
       window.removeEventListener('pagehide', save)
       save()
     }
-  }, [seconds, token, audio])
+  }, [seconds, token])
   return seconds ? (
     <p className="timer" role="timer">
       {left ? t('seconds', { count: left }) : t('timeUp')}

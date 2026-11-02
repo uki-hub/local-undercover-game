@@ -226,6 +226,13 @@ header {
 .danger {
   color: #8f313b;
 }
+.install-help summary {
+  cursor: pointer;
+  padding: 12px 0;
+  min-height: 44px;
+  font-weight: 800;
+  color: #0955cb;
+}
 .twins {
   display: flex;
   gap: 8px;
