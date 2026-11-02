@@ -52,7 +52,10 @@ export function start(
   if (settings.justice) free.pop()!.modifier = 'justice'
   if (settings.revenger) free.pop()!.modifier = 'revenger'
   // Choose uniformly among eligible openers, preserving the circular roster order.
-  const starters = players.filter((p) => settings.foolCanStart || p.role !== 'fool')
+  const starters = players.filter((p) =>
+    (settings.foolCanStart || p.role !== 'fool') &&
+    (settings.whiteCanStart || p.role !== 'white'),
+  )
   const first = players.indexOf(starters[rng(starters.length)])
   return {
     version: 1,

@@ -89,7 +89,7 @@ Current role/event changes follow the [plan written before implementation](./eve
 
 - **Engine acceptance matrix**
   - R01: invalid role counts, duplicate/empty names, impossible modifier allocations, and empty content filters block start with a useful message.
-  - R02: all Civilians share one word, all Undercovers share the other, Fool receives C or no word according to `foolHasWord`, White receives none; A/B swapping preserves these mappings. Independently verify `foolCanStart` includes/excludes Fool from the first-round opener draw without removing clue turns or changing later-cycle rotation. Both options default on for older saves and persist through setup steps/reloads/rematches.
+  - R02: all Civilians share one word, all Undercovers share the other, Fool receives C or no word according to `foolHasWord`, White receives none; A/B swapping preserves these mappings. Independently verify `foolCanStart` and `whiteCanStart` include/exclude their respective roles from the first-round opener draw without removing clue turns or changing later-cycle rotation. All three options default on for older saves and persist through setup steps/reloads/rematches.
   - R03: an action tie draws between exactly two actions; an extra clue round always leads to elimination rather than another optional loop.
   - R04: target ballots reject self/dead/duplicate/out-of-turn votes; eliminated players never enter future voter lists.
   - R05: Justice outside a tied set chooses only among tied leaders; dead/absent/tied Justice invokes the suspense reel around a uniform draw.

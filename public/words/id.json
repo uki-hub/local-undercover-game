@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "contentVersion": "1.0.0",
+  "contentVersion": "1.2.0",
   "locale": "id",
   "sets": [
     {
@@ -54,8 +54,11 @@
       "categoryId": "school",
       "difficulty": "easy",
       "wordA": "gunting",
-      "wordB": "pisau kertas",
-      "foolWord": "karton"
+      "wordB": "cutter",
+      "foolWord": "karton",
+      "aliasesB": [
+        "pisau cutter"
+      ]
     },
     {
       "id": "school-007",
@@ -93,9 +96,12 @@
       "id": "school-011",
       "categoryId": "school",
       "difficulty": "hard",
-      "wordA": "peta dinding",
+      "wordA": "peta",
       "wordB": "globe",
-      "foolWord": "atlas"
+      "foolWord": "atlas",
+      "aliasesA": [
+        "peta dinding"
+      ]
     },
     {
       "id": "school-012",
@@ -130,10 +136,10 @@
     {
       "id": "school-015",
       "categoryId": "school",
-      "difficulty": "medium",
-      "wordA": "label nama",
-      "wordB": "nomor absen",
-      "foolWord": "daftar hadir"
+      "difficulty": "easy",
+      "wordA": "seragam sekolah",
+      "wordB": "baju olahraga",
+      "foolWord": "tas sekolah"
     },
     {
       "id": "school-016",
@@ -141,7 +147,7 @@
       "difficulty": "hard",
       "wordA": "lem stik",
       "wordB": "lem cair",
-      "foolWord": "kertas prakarya"
+      "foolWord": "kertas"
     },
     {
       "id": "home-001",
@@ -155,11 +161,11 @@
       "id": "home-002",
       "categoryId": "home",
       "difficulty": "hard",
-      "wordA": "seprai",
+      "wordA": "sprei",
       "wordB": "selimut",
       "foolWord": "sarung bantal",
       "aliasesA": [
-        "sprei"
+        "seprai"
       ]
     },
     {
@@ -167,10 +173,10 @@
       "categoryId": "home",
       "difficulty": "medium",
       "wordA": "sapu",
-      "wordB": "alat pel",
+      "wordB": "pel",
       "foolWord": "ember",
       "aliasesB": [
-        "pel"
+        "alat pel"
       ]
     },
     {
@@ -194,10 +200,10 @@
       "categoryId": "home",
       "difficulty": "easy",
       "wordA": "kipas angin",
-      "wordB": "penyejuk udara",
+      "wordB": "AC",
       "foolWord": "jendela",
       "aliasesB": [
-        "AC"
+        "penyejuk udara"
       ]
     },
     {
@@ -205,15 +211,15 @@
       "categoryId": "home",
       "difficulty": "hard",
       "wordA": "lampu meja",
-      "wordB": "lampu lantai",
-      "foolWord": "kap lampu"
+      "wordB": "lampu tidur",
+      "foolWord": "bohlam"
     },
     {
       "id": "home-008",
       "categoryId": "home",
       "difficulty": "medium",
       "wordA": "lemari pakaian",
-      "wordB": "laci pakaian",
+      "wordB": "rak baju",
       "foolWord": "gantungan baju"
     },
     {
@@ -228,9 +234,9 @@
       "id": "home-010",
       "categoryId": "home",
       "difficulty": "hard",
-      "wordA": "lap tangan",
+      "wordA": "lap dapur",
       "wordB": "handuk mandi",
-      "foolWord": "gantungan handuk"
+      "foolWord": "jemuran"
     },
     {
       "id": "home-011",
@@ -245,8 +251,8 @@
       "categoryId": "home",
       "difficulty": "medium",
       "wordA": "gorden",
-      "wordB": "kerai",
-      "foolWord": "kusen",
+      "wordB": "kelambu",
+      "foolWord": "jendela",
       "aliasesA": [
         "tirai"
       ]
@@ -262,9 +268,9 @@
     {
       "id": "home-014",
       "categoryId": "home",
-      "difficulty": "medium",
+      "difficulty": "easy",
       "wordA": "mesin cuci",
-      "wordB": "papan penggilas",
+      "wordB": "pengering baju",
       "foolWord": "keranjang cucian"
     },
     {
@@ -280,13 +286,13 @@
       "categoryId": "home",
       "difficulty": "hard",
       "wordA": "stopkontak",
-      "wordB": "sakelar",
+      "wordB": "saklar",
       "foolWord": "kabel",
       "aliasesA": [
         "stop kontak"
       ],
       "aliasesB": [
-        "saklar"
+        "sakelar"
       ]
     },
     {
@@ -308,10 +314,10 @@
     {
       "id": "kitchen-003",
       "categoryId": "kitchen",
-      "difficulty": "hard",
+      "difficulty": "easy",
       "wordA": "mangkuk",
-      "wordB": "piring cekung",
-      "foolWord": "sendok sup"
+      "wordB": "piring",
+      "foolWord": "sendok"
     },
     {
       "id": "kitchen-004",
@@ -334,7 +340,7 @@
       "categoryId": "kitchen",
       "difficulty": "medium",
       "wordA": "parutan",
-      "wordB": "pengupas",
+      "wordB": "pisau",
       "foolWord": "talenan"
     },
     {
@@ -343,31 +349,34 @@
       "difficulty": "easy",
       "wordA": "sumpit",
       "wordB": "garpu",
-      "foolWord": "mi"
+      "foolWord": "mie"
     },
     {
       "id": "kitchen-008",
       "categoryId": "kitchen",
-      "difficulty": "hard",
-      "wordA": "ulekan",
-      "wordB": "alu",
-      "foolWord": "lesung"
+      "difficulty": "medium",
+      "wordA": "cobek",
+      "wordB": "blender",
+      "foolWord": "cabai"
     },
     {
       "id": "kitchen-009",
       "categoryId": "kitchen",
       "difficulty": "medium",
-      "wordA": "penanak nasi",
+      "wordA": "rice cooker",
       "wordB": "kukusan",
-      "foolWord": "uap"
+      "foolWord": "nasi",
+      "aliasesA": [
+        "penanak nasi"
+      ]
     },
     {
       "id": "kitchen-010",
       "categoryId": "kitchen",
       "difficulty": "medium",
-      "wordA": "saringan teh",
-      "wordB": "saringan kopi",
-      "foolWord": "ampas"
+      "wordA": "saringan",
+      "wordB": "corong",
+      "foolWord": "botol"
     },
     {
       "id": "kitchen-011",
@@ -392,11 +401,14 @@
       "id": "kitchen-013",
       "categoryId": "kitchen",
       "difficulty": "hard",
-      "wordA": "stoples",
-      "wordB": "wadah bekal",
+      "wordA": "toples",
+      "wordB": "kotak makan",
       "foolWord": "tutup",
       "aliasesA": [
-        "toples"
+        "stoples"
+      ],
+      "aliasesB": [
+        "wadah bekal"
       ]
     },
     {
@@ -404,10 +416,13 @@
       "categoryId": "kitchen",
       "difficulty": "medium",
       "wordA": "kulkas",
-      "wordB": "kotak pendingin",
+      "wordB": "freezer",
       "foolWord": "es batu",
       "aliasesA": [
         "lemari es"
+      ],
+      "aliasesB": [
+        "lemari pembeku"
       ]
     },
     {
@@ -431,10 +446,10 @@
       "categoryId": "food",
       "difficulty": "hard",
       "wordA": "nasi goreng",
-      "wordB": "mi goreng",
+      "wordB": "mie goreng",
       "foolWord": "telur mata sapi",
       "aliasesB": [
-        "mie goreng"
+        "mi goreng"
       ]
     },
     {
@@ -565,10 +580,10 @@
       "categoryId": "clothing",
       "difficulty": "easy",
       "wordA": "kemeja",
-      "wordB": "kaus",
+      "wordB": "kaos",
       "foolWord": "celana",
       "aliasesB": [
-        "kaos"
+        "kaus"
       ]
     },
     {
@@ -576,10 +591,10 @@
       "categoryId": "clothing",
       "difficulty": "medium",
       "wordA": "jaket",
-      "wordB": "sweter",
+      "wordB": "sweater",
       "foolWord": "syal",
       "aliasesB": [
-        "sweater"
+        "sweter"
       ]
     },
     {
@@ -610,9 +625,15 @@
       "id": "clothing-006",
       "categoryId": "clothing",
       "difficulty": "hard",
-      "wordA": "sepatu bot",
-      "wordB": "sepatu kets",
-      "foolWord": "kaus kaki"
+      "wordA": "sepatu boots",
+      "wordB": "sneakers",
+      "foolWord": "kaos kaki",
+      "aliasesA": [
+        "sepatu bot"
+      ],
+      "aliasesB": [
+        "sepatu kets"
+      ]
     },
     {
       "id": "clothing-007",
@@ -635,10 +656,10 @@
       "categoryId": "clothing",
       "difficulty": "hard",
       "wordA": "kancing",
-      "wordB": "ritsleting",
+      "wordB": "resleting",
       "foolWord": "jaket",
       "aliasesB": [
-        "resleting"
+        "ritsleting"
       ]
     },
     {
@@ -669,11 +690,11 @@
       "id": "clothing-013",
       "categoryId": "clothing",
       "difficulty": "hard",
-      "wordA": "kaus kaki",
+      "wordA": "kaos kaki",
       "wordB": "stoking",
       "foolWord": "sepatu",
       "aliasesA": [
-        "kaos kaki"
+        "kaus kaki"
       ]
     },
     {
@@ -689,7 +710,7 @@
       "categoryId": "clothing",
       "difficulty": "hard",
       "wordA": "sarung",
-      "wordB": "kain panjang",
+      "wordB": "celana panjang",
       "foolWord": "lemari pakaian"
     },
     {
@@ -730,10 +751,13 @@
     {
       "id": "animals-004",
       "categoryId": "animals",
-      "difficulty": "hard",
+      "difficulty": "medium",
       "wordA": "katak",
-      "wordB": "kodok",
-      "foolWord": "berudu"
+      "wordB": "kura-kura",
+      "foolWord": "kolam",
+      "aliasesA": [
+        "kodok"
+      ]
     },
     {
       "id": "animals-005",
@@ -762,10 +786,10 @@
     {
       "id": "animals-008",
       "categoryId": "animals",
-      "difficulty": "hard",
+      "difficulty": "medium",
       "wordA": "kupu-kupu",
-      "wordB": "ngengat",
-      "foolWord": "kepompong"
+      "wordB": "capung",
+      "foolWord": "sayap"
     },
     {
       "id": "animals-009",
@@ -810,9 +834,9 @@
     {
       "id": "animals-014",
       "categoryId": "animals",
-      "difficulty": "hard",
+      "difficulty": "medium",
       "wordA": "cumi-cumi",
-      "wordB": "sotong",
+      "wordB": "gurita",
       "foolWord": "tinta"
     },
     {
@@ -836,10 +860,10 @@
       "categoryId": "transport",
       "difficulty": "easy",
       "wordA": "sepeda",
-      "wordB": "sepeda motor",
+      "wordB": "motor",
       "foolWord": "helm",
       "aliasesB": [
-        "motor"
+        "sepeda motor"
       ]
     },
     {
@@ -860,11 +884,14 @@
       "id": "transport-003",
       "categoryId": "transport",
       "difficulty": "medium",
-      "wordA": "kereta api",
-      "wordB": "kereta listrik",
+      "wordA": "KRL",
+      "wordB": "MRT",
       "foolWord": "stasiun",
       "aliasesB": [
-        "KRL"
+        "kereta MRT"
+      ],
+      "aliasesA": [
+        "kereta listrik"
       ]
     },
     {
@@ -879,11 +906,11 @@
       "id": "transport-005",
       "categoryId": "transport",
       "difficulty": "medium",
-      "wordA": "pesawat terbang",
+      "wordA": "pesawat",
       "wordB": "helikopter",
       "foolWord": "pilot",
       "aliasesA": [
-        "pesawat"
+        "pesawat terbang"
       ]
     },
     {
@@ -973,9 +1000,1244 @@
       "id": "transport-016",
       "categoryId": "transport",
       "difficulty": "medium",
-      "wordA": "pelampung",
-      "wordB": "sekoci",
-      "foolWord": "kapal"
+      "wordA": "kapal selam",
+      "wordB": "kapal perang",
+      "foolWord": "laut"
+    },
+    {
+      "id": "electronics-001",
+      "categoryId": "electronics",
+      "difficulty": "easy",
+      "wordA": "TV",
+      "wordB": "radio",
+      "foolWord": "antena",
+      "aliasesA": [
+        "televisi"
+      ]
+    },
+    {
+      "id": "electronics-002",
+      "categoryId": "electronics",
+      "difficulty": "medium",
+      "wordA": "HP",
+      "wordB": "telepon rumah",
+      "foolWord": "kartu SIM",
+      "aliasesA": [
+        "handphone",
+        "ponsel",
+        "telepon genggam"
+      ]
+    },
+    {
+      "id": "electronics-003",
+      "categoryId": "electronics",
+      "difficulty": "medium",
+      "wordA": "kamera",
+      "wordB": "CCTV",
+      "foolWord": "lensa",
+      "aliasesA": [
+        "kamera digital"
+      ],
+      "aliasesB": [
+        "kamera pengawas"
+      ]
+    },
+    {
+      "id": "electronics-004",
+      "categoryId": "electronics",
+      "difficulty": "medium",
+      "wordA": "speaker",
+      "wordB": "headset",
+      "foolWord": "volume",
+      "aliasesA": [
+        "pengeras suara"
+      ]
+    },
+    {
+      "id": "electronics-005",
+      "categoryId": "electronics",
+      "difficulty": "medium",
+      "wordA": "printer",
+      "wordB": "scanner",
+      "foolWord": "kertas",
+      "aliasesA": [
+        "pencetak"
+      ],
+      "aliasesB": [
+        "pemindai"
+      ]
+    },
+    {
+      "id": "electronics-006",
+      "categoryId": "electronics",
+      "difficulty": "medium",
+      "wordA": "proyektor",
+      "wordB": "TV",
+      "foolWord": "layar"
+    },
+    {
+      "id": "electronics-007",
+      "categoryId": "electronics",
+      "difficulty": "easy",
+      "wordA": "setrika",
+      "wordB": "hair dryer",
+      "foolWord": "kabel listrik",
+      "aliasesB": [
+        "pengering rambut",
+        "hairdryer"
+      ]
+    },
+    {
+      "id": "electronics-008",
+      "categoryId": "electronics",
+      "difficulty": "medium",
+      "wordA": "oven",
+      "wordB": "microwave",
+      "foolWord": "pizza"
+    },
+    {
+      "id": "electronics-009",
+      "categoryId": "electronics",
+      "difficulty": "medium",
+      "wordA": "blender",
+      "wordB": "mixer",
+      "foolWord": "adonan"
+    },
+    {
+      "id": "electronics-010",
+      "categoryId": "electronics",
+      "difficulty": "easy",
+      "wordA": "charger",
+      "wordB": "power bank",
+      "foolWord": "stopkontak",
+      "aliasesA": [
+        "pengisi daya"
+      ],
+      "aliasesB": [
+        "powerbank"
+      ]
+    },
+    {
+      "id": "electronics-011",
+      "categoryId": "electronics",
+      "difficulty": "medium",
+      "wordA": "jam digital",
+      "wordB": "smartwatch",
+      "foolWord": "alarm",
+      "aliasesB": [
+        "jam pintar"
+      ]
+    },
+    {
+      "id": "electronics-012",
+      "categoryId": "electronics",
+      "difficulty": "medium",
+      "wordA": "mikrofon",
+      "wordB": "speaker",
+      "foolWord": "karaoke",
+      "aliasesA": [
+        "mic",
+        "mik"
+      ]
+    },
+    {
+      "id": "electronics-013",
+      "categoryId": "electronics",
+      "difficulty": "medium",
+      "wordA": "kalkulator",
+      "wordB": "mesin kasir",
+      "foolWord": "struk"
+    },
+    {
+      "id": "electronics-014",
+      "categoryId": "electronics",
+      "difficulty": "medium",
+      "wordA": "bor listrik",
+      "wordB": "obeng listrik",
+      "foolWord": "baut"
+    },
+    {
+      "id": "electronics-015",
+      "categoryId": "electronics",
+      "difficulty": "medium",
+      "wordA": "rice cooker",
+      "wordB": "kompor listrik",
+      "foolWord": "panci",
+      "aliasesA": [
+        "penanak nasi"
+      ]
+    },
+    {
+      "id": "electronics-016",
+      "categoryId": "electronics",
+      "difficulty": "hard",
+      "wordA": "remote TV",
+      "wordB": "stik PS",
+      "foolWord": "tombol",
+      "aliasesA": [
+        "remote"
+      ],
+      "aliasesB": [
+        "stik PlayStation",
+        "controller PS"
+      ]
+    },
+    {
+      "id": "provinces-001",
+      "categoryId": "provinces",
+      "difficulty": "easy",
+      "wordA": "Jawa Barat",
+      "wordB": "Jawa Tengah",
+      "foolWord": "Jawa Timur"
+    },
+    {
+      "id": "provinces-002",
+      "categoryId": "provinces",
+      "difficulty": "medium",
+      "wordA": "Sumatera Utara",
+      "wordB": "Sumatera Barat",
+      "foolWord": "Sumatera Selatan"
+    },
+    {
+      "id": "provinces-003",
+      "categoryId": "provinces",
+      "difficulty": "easy",
+      "wordA": "Kalimantan Barat",
+      "wordB": "Kalimantan Timur",
+      "foolWord": "Kalimantan Tengah"
+    },
+    {
+      "id": "provinces-004",
+      "categoryId": "provinces",
+      "difficulty": "medium",
+      "wordA": "Sulawesi Utara",
+      "wordB": "Sulawesi Selatan",
+      "foolWord": "Sulawesi Tengah"
+    },
+    {
+      "id": "provinces-005",
+      "categoryId": "provinces",
+      "difficulty": "hard",
+      "wordA": "Bali",
+      "wordB": "Nusa Tenggara Barat",
+      "foolWord": "Nusa Tenggara Timur"
+    },
+    {
+      "id": "provinces-006",
+      "categoryId": "provinces",
+      "difficulty": "medium",
+      "wordA": "Aceh",
+      "wordB": "Sumatera Utara",
+      "foolWord": "Lampung"
+    },
+    {
+      "id": "provinces-007",
+      "categoryId": "provinces",
+      "difficulty": "easy",
+      "wordA": "Banten",
+      "wordB": "Jawa Barat",
+      "foolWord": "Jawa Tengah"
+    },
+    {
+      "id": "provinces-008",
+      "categoryId": "provinces",
+      "difficulty": "medium",
+      "wordA": "Riau",
+      "wordB": "Kepulauan Riau",
+      "foolWord": "Jambi"
+    },
+    {
+      "id": "provinces-009",
+      "categoryId": "provinces",
+      "difficulty": "hard",
+      "wordA": "Bengkulu",
+      "wordB": "Lampung",
+      "foolWord": "Sumatera Selatan"
+    },
+    {
+      "id": "provinces-010",
+      "categoryId": "provinces",
+      "difficulty": "easy",
+      "wordA": "Gorontalo",
+      "wordB": "Sulawesi Utara",
+      "foolWord": "Sulawesi Barat"
+    },
+    {
+      "id": "provinces-011",
+      "categoryId": "provinces",
+      "difficulty": "medium",
+      "wordA": "Maluku",
+      "wordB": "Maluku Utara",
+      "foolWord": "Sulawesi Tenggara"
+    },
+    {
+      "id": "provinces-012",
+      "categoryId": "provinces",
+      "difficulty": "hard",
+      "wordA": "Kalimantan Selatan",
+      "wordB": "Kalimantan Tengah",
+      "foolWord": "Kalimantan Utara"
+    },
+    {
+      "id": "provinces-013",
+      "categoryId": "provinces",
+      "difficulty": "medium",
+      "wordA": "Jambi",
+      "wordB": "Sumatera Selatan",
+      "foolWord": "Sumatera Barat"
+    },
+    {
+      "id": "provinces-014",
+      "categoryId": "provinces",
+      "difficulty": "easy",
+      "wordA": "Sulawesi Barat",
+      "wordB": "Sulawesi Tengah",
+      "foolWord": "Sulawesi Tenggara"
+    },
+    {
+      "id": "provinces-015",
+      "categoryId": "provinces",
+      "difficulty": "medium",
+      "wordA": "Nusa Tenggara Timur",
+      "wordB": "Maluku",
+      "foolWord": "Bali"
+    },
+    {
+      "id": "provinces-016",
+      "categoryId": "provinces",
+      "difficulty": "hard",
+      "wordA": "Bangka Belitung",
+      "wordB": "Kepulauan Riau",
+      "foolWord": "Bengkulu",
+      "aliasesA": [
+        "Kepulauan Bangka Belitung"
+      ]
+    },
+    {
+      "id": "islands-001",
+      "categoryId": "islands",
+      "difficulty": "easy",
+      "wordA": "Pulau Jawa",
+      "wordB": "Pulau Sumatra",
+      "foolWord": "Selat Sunda"
+    },
+    {
+      "id": "islands-002",
+      "categoryId": "islands",
+      "difficulty": "medium",
+      "wordA": "Pulau Kalimantan",
+      "wordB": "Pulau Sulawesi",
+      "foolWord": "Selat Makassar"
+    },
+    {
+      "id": "islands-003",
+      "categoryId": "islands",
+      "difficulty": "easy",
+      "wordA": "Pulau Bali",
+      "wordB": "Pulau Lombok",
+      "foolWord": "Selat Lombok"
+    },
+    {
+      "id": "islands-004",
+      "categoryId": "islands",
+      "difficulty": "medium",
+      "wordA": "Pulau Madura",
+      "wordB": "Pulau Bali",
+      "foolWord": "pantai"
+    },
+    {
+      "id": "islands-005",
+      "categoryId": "islands",
+      "difficulty": "hard",
+      "wordA": "Pulau Bangka",
+      "wordB": "Pulau Belitung",
+      "foolWord": "pantai"
+    },
+    {
+      "id": "islands-006",
+      "categoryId": "islands",
+      "difficulty": "medium",
+      "wordA": "Pulau Sumbawa",
+      "wordB": "Pulau Flores",
+      "foolWord": "Laut Flores"
+    },
+    {
+      "id": "islands-007",
+      "categoryId": "islands",
+      "difficulty": "easy",
+      "wordA": "Pulau Sumba",
+      "wordB": "Pulau Timor",
+      "foolWord": "pantai"
+    },
+    {
+      "id": "islands-008",
+      "categoryId": "islands",
+      "difficulty": "medium",
+      "wordA": "Pulau Ternate",
+      "wordB": "Pulau Tidore",
+      "foolWord": "Laut Maluku"
+    },
+    {
+      "id": "islands-009",
+      "categoryId": "islands",
+      "difficulty": "hard",
+      "wordA": "Pulau Ambon",
+      "wordB": "Pulau Flores",
+      "foolWord": "laut"
+    },
+    {
+      "id": "islands-010",
+      "categoryId": "islands",
+      "difficulty": "easy",
+      "wordA": "Pulau Bintan",
+      "wordB": "Pulau Batam",
+      "foolWord": "Selat Malaka"
+    },
+    {
+      "id": "islands-011",
+      "categoryId": "islands",
+      "difficulty": "medium",
+      "wordA": "Pulau Nias",
+      "wordB": "Pulau Lombok",
+      "foolWord": "ombak"
+    },
+    {
+      "id": "islands-012",
+      "categoryId": "islands",
+      "difficulty": "medium",
+      "wordA": "Pulau Papua",
+      "wordB": "Pulau Kalimantan",
+      "foolWord": "hutan"
+    },
+    {
+      "id": "islands-013",
+      "categoryId": "islands",
+      "difficulty": "medium",
+      "wordA": "Pulau Komodo",
+      "wordB": "Pulau Sumba",
+      "foolWord": "bukit"
+    },
+    {
+      "id": "islands-014",
+      "categoryId": "islands",
+      "difficulty": "medium",
+      "wordA": "Pulau Jawa",
+      "wordB": "Pulau Bali",
+      "foolWord": "wisata"
+    },
+    {
+      "id": "islands-015",
+      "categoryId": "islands",
+      "difficulty": "medium",
+      "wordA": "Pulau Lombok",
+      "wordB": "Pulau Sumbawa",
+      "foolWord": "pantai"
+    },
+    {
+      "id": "islands-016",
+      "categoryId": "islands",
+      "difficulty": "medium",
+      "wordA": "Pulau Belitung",
+      "wordB": "Pulau Karimunjawa",
+      "foolWord": "laut"
+    },
+    {
+      "id": "cities-001",
+      "categoryId": "cities",
+      "difficulty": "easy",
+      "wordA": "Bandung",
+      "wordB": "Bogor",
+      "foolWord": "Jawa Barat"
+    },
+    {
+      "id": "cities-002",
+      "categoryId": "cities",
+      "difficulty": "medium",
+      "wordA": "Surabaya",
+      "wordB": "Malang",
+      "foolWord": "Jawa Timur"
+    },
+    {
+      "id": "cities-003",
+      "categoryId": "cities",
+      "difficulty": "easy",
+      "wordA": "Semarang",
+      "wordB": "Solo",
+      "foolWord": "Jawa Tengah",
+      "aliasesB": [
+        "Surakarta"
+      ]
+    },
+    {
+      "id": "cities-004",
+      "categoryId": "cities",
+      "difficulty": "medium",
+      "wordA": "Jogja",
+      "wordB": "Solo",
+      "foolWord": "keraton",
+      "aliasesA": [
+        "Yogyakarta",
+        "Yogya"
+      ],
+      "aliasesB": [
+        "Surakarta"
+      ]
+    },
+    {
+      "id": "cities-005",
+      "categoryId": "cities",
+      "difficulty": "hard",
+      "wordA": "Medan",
+      "wordB": "Padang",
+      "foolWord": "Sumatra"
+    },
+    {
+      "id": "cities-006",
+      "categoryId": "cities",
+      "difficulty": "medium",
+      "wordA": "Palembang",
+      "wordB": "Pekanbaru",
+      "foolWord": "sungai"
+    },
+    {
+      "id": "cities-007",
+      "categoryId": "cities",
+      "difficulty": "easy",
+      "wordA": "Denpasar",
+      "wordB": "Mataram",
+      "foolWord": "pulau"
+    },
+    {
+      "id": "cities-008",
+      "categoryId": "cities",
+      "difficulty": "medium",
+      "wordA": "Makassar",
+      "wordB": "Manado",
+      "foolWord": "Sulawesi"
+    },
+    {
+      "id": "cities-009",
+      "categoryId": "cities",
+      "difficulty": "hard",
+      "wordA": "Pontianak",
+      "wordB": "Palangka Raya",
+      "foolWord": "Kalimantan"
+    },
+    {
+      "id": "cities-010",
+      "categoryId": "cities",
+      "difficulty": "easy",
+      "wordA": "Balikpapan",
+      "wordB": "Samarinda",
+      "foolWord": "Kalimantan Timur"
+    },
+    {
+      "id": "cities-011",
+      "categoryId": "cities",
+      "difficulty": "medium",
+      "wordA": "Banjarmasin",
+      "wordB": "Banjarbaru",
+      "foolWord": "Kalimantan Selatan"
+    },
+    {
+      "id": "cities-012",
+      "categoryId": "cities",
+      "difficulty": "hard",
+      "wordA": "Ambon",
+      "wordB": "Ternate",
+      "foolWord": "pelabuhan"
+    },
+    {
+      "id": "cities-013",
+      "categoryId": "cities",
+      "difficulty": "medium",
+      "wordA": "Jayapura",
+      "wordB": "Sorong",
+      "foolWord": "Papua"
+    },
+    {
+      "id": "cities-014",
+      "categoryId": "cities",
+      "difficulty": "easy",
+      "wordA": "Depok",
+      "wordB": "Bekasi",
+      "foolWord": "KRL"
+    },
+    {
+      "id": "cities-015",
+      "categoryId": "cities",
+      "difficulty": "medium",
+      "wordA": "Tangerang",
+      "wordB": "Tangerang Selatan",
+      "foolWord": "Banten"
+    },
+    {
+      "id": "cities-016",
+      "categoryId": "cities",
+      "difficulty": "hard",
+      "wordA": "Cirebon",
+      "wordB": "Pekalongan",
+      "foolWord": "batik"
+    },
+    {
+      "id": "food-017",
+      "categoryId": "food",
+      "difficulty": "easy",
+      "wordA": "rendang",
+      "wordB": "gulai",
+      "foolWord": "santan"
+    },
+    {
+      "id": "food-018",
+      "categoryId": "food",
+      "difficulty": "medium",
+      "wordA": "gado-gado",
+      "wordB": "pecel",
+      "foolWord": "bumbu kacang"
+    },
+    {
+      "id": "food-019",
+      "categoryId": "food",
+      "difficulty": "easy",
+      "wordA": "pempek",
+      "wordB": "siomai",
+      "foolWord": "ikan tenggiri"
+    },
+    {
+      "id": "food-020",
+      "categoryId": "food",
+      "difficulty": "medium",
+      "wordA": "rawon",
+      "wordB": "sop buntut",
+      "foolWord": "kuah"
+    },
+    {
+      "id": "food-021",
+      "categoryId": "food",
+      "difficulty": "hard",
+      "wordA": "gudeg",
+      "wordB": "opor",
+      "foolWord": "nangka muda"
+    },
+    {
+      "id": "food-022",
+      "categoryId": "food",
+      "difficulty": "medium",
+      "wordA": "nasi uduk",
+      "wordB": "nasi kuning",
+      "foolWord": "daun pandan"
+    },
+    {
+      "id": "food-023",
+      "categoryId": "food",
+      "difficulty": "easy",
+      "wordA": "nasi liwet",
+      "wordB": "nasi tim",
+      "foolWord": "kukusan"
+    },
+    {
+      "id": "food-024",
+      "categoryId": "food",
+      "difficulty": "medium",
+      "wordA": "bakso",
+      "wordB": "mie ayam",
+      "foolWord": "gerobak",
+      "aliasesB": [
+        "mi ayam"
+      ]
+    },
+    {
+      "id": "food-025",
+      "categoryId": "food",
+      "difficulty": "hard",
+      "wordA": "sate Padang",
+      "wordB": "sate Madura",
+      "foolWord": "tusuk sate"
+    },
+    {
+      "id": "food-026",
+      "categoryId": "food",
+      "difficulty": "easy",
+      "wordA": "ayam geprek",
+      "wordB": "ayam penyet",
+      "foolWord": "sambal"
+    },
+    {
+      "id": "food-027",
+      "categoryId": "food",
+      "difficulty": "medium",
+      "wordA": "ketoprak",
+      "wordB": "karedok",
+      "foolWord": "tauge"
+    },
+    {
+      "id": "food-028",
+      "categoryId": "food",
+      "difficulty": "hard",
+      "wordA": "klepon",
+      "wordB": "onde-onde",
+      "foolWord": "tepung ketan"
+    },
+    {
+      "id": "food-029",
+      "categoryId": "food",
+      "difficulty": "medium",
+      "wordA": "lemper",
+      "wordB": "arem-arem",
+      "foolWord": "daun pisang"
+    },
+    {
+      "id": "food-030",
+      "categoryId": "food",
+      "difficulty": "easy",
+      "wordA": "nagasari",
+      "wordB": "kue lapis",
+      "foolWord": "tepung beras"
+    },
+    {
+      "id": "food-031",
+      "categoryId": "food",
+      "difficulty": "medium",
+      "wordA": "soto ayam",
+      "wordB": "soto Betawi",
+      "foolWord": "kuah"
+    },
+    {
+      "id": "food-032",
+      "categoryId": "food",
+      "difficulty": "hard",
+      "wordA": "bubur sumsum",
+      "wordB": "bubur ketan hitam",
+      "foolWord": "santan"
+    },
+    {
+      "id": "football-teams-001",
+      "categoryId": "football-teams",
+      "difficulty": "easy",
+      "wordA": "Persib Bandung",
+      "wordB": "Persija Jakarta",
+      "foolWord": "stadion"
+    },
+    {
+      "id": "football-teams-002",
+      "categoryId": "football-teams",
+      "difficulty": "medium",
+      "wordA": "Arema",
+      "wordB": "Persebaya Surabaya",
+      "foolWord": "suporter"
+    },
+    {
+      "id": "football-teams-003",
+      "categoryId": "football-teams",
+      "difficulty": "easy",
+      "wordA": "PSM Makassar",
+      "wordB": "Persipura Jayapura",
+      "foolWord": "Indonesia Timur"
+    },
+    {
+      "id": "football-teams-004",
+      "categoryId": "football-teams",
+      "difficulty": "medium",
+      "wordA": "Bali United",
+      "wordB": "Madura United",
+      "foolWord": "pulau"
+    },
+    {
+      "id": "football-teams-005",
+      "categoryId": "football-teams",
+      "difficulty": "hard",
+      "wordA": "PSIS Semarang",
+      "wordB": "Persis Solo",
+      "foolWord": "Jawa Tengah"
+    },
+    {
+      "id": "football-teams-006",
+      "categoryId": "football-teams",
+      "difficulty": "medium",
+      "wordA": "PSS Sleman",
+      "wordB": "PSIM Yogyakarta",
+      "foolWord": "Jogja"
+    },
+    {
+      "id": "football-teams-007",
+      "categoryId": "football-teams",
+      "difficulty": "easy",
+      "wordA": "Real Madrid",
+      "wordB": "Barcelona",
+      "foolWord": "Liga Spanyol",
+      "aliasesB": [
+        "Barca"
+      ]
+    },
+    {
+      "id": "football-teams-008",
+      "categoryId": "football-teams",
+      "difficulty": "hard",
+      "wordA": "Manchester United",
+      "wordB": "Manchester City",
+      "foolWord": "Liga Inggris",
+      "aliasesA": [
+        "MU",
+        "Man United"
+      ],
+      "aliasesB": [
+        "Man City"
+      ]
+    },
+    {
+      "id": "football-teams-009",
+      "categoryId": "football-teams",
+      "difficulty": "medium",
+      "wordA": "Liverpool",
+      "wordB": "Chelsea",
+      "foolWord": "Liga Inggris"
+    },
+    {
+      "id": "football-teams-010",
+      "categoryId": "football-teams",
+      "difficulty": "hard",
+      "wordA": "AC Milan",
+      "wordB": "Inter Milan",
+      "foolWord": "Liga Italia",
+      "aliasesA": [
+        "Milan"
+      ],
+      "aliasesB": [
+        "Inter"
+      ]
+    },
+    {
+      "id": "football-teams-011",
+      "categoryId": "football-teams",
+      "difficulty": "medium",
+      "wordA": "Juventus",
+      "wordB": "Napoli",
+      "foolWord": "Liga Italia",
+      "aliasesA": [
+        "Juve"
+      ]
+    },
+    {
+      "id": "football-teams-012",
+      "categoryId": "football-teams",
+      "difficulty": "medium",
+      "wordA": "Arsenal",
+      "wordB": "Tottenham",
+      "foolWord": "Liga Inggris",
+      "aliasesB": [
+        "Spurs"
+      ]
+    },
+    {
+      "id": "football-teams-013",
+      "categoryId": "football-teams",
+      "difficulty": "medium",
+      "wordA": "timnas Indonesia",
+      "wordB": "timnas Malaysia",
+      "foolWord": "Piala Asia",
+      "aliasesA": [
+        "Indonesia",
+        "tim nasional Indonesia"
+      ],
+      "aliasesB": [
+        "Malaysia",
+        "tim nasional Malaysia"
+      ]
+    },
+    {
+      "id": "football-teams-014",
+      "categoryId": "football-teams",
+      "difficulty": "easy",
+      "wordA": "timnas Jepang",
+      "wordB": "timnas Korea Selatan",
+      "foolWord": "Piala Asia",
+      "aliasesA": [
+        "Jepang",
+        "tim nasional Jepang"
+      ],
+      "aliasesB": [
+        "Korea Selatan",
+        "tim nasional Korea Selatan"
+      ]
+    },
+    {
+      "id": "football-teams-015",
+      "categoryId": "football-teams",
+      "difficulty": "medium",
+      "wordA": "timnas Brasil",
+      "wordB": "timnas Argentina",
+      "foolWord": "Piala Dunia",
+      "aliasesA": [
+        "Brasil",
+        "Brazil",
+        "tim nasional Brasil"
+      ],
+      "aliasesB": [
+        "Argentina",
+        "tim nasional Argentina"
+      ]
+    },
+    {
+      "id": "football-teams-016",
+      "categoryId": "football-teams",
+      "difficulty": "medium",
+      "wordA": "timnas Spanyol",
+      "wordB": "timnas Portugal",
+      "foolWord": "Piala Dunia",
+      "aliasesA": [
+        "Spanyol",
+        "tim nasional Spanyol"
+      ],
+      "aliasesB": [
+        "Portugal",
+        "tim nasional Portugal"
+      ]
+    },
+    {
+      "id": "football-001",
+      "categoryId": "football",
+      "difficulty": "easy",
+      "wordA": "kiper",
+      "wordB": "striker",
+      "foolWord": "bola",
+      "aliasesA": [
+        "penjaga gawang"
+      ],
+      "aliasesB": [
+        "penyerang"
+      ]
+    },
+    {
+      "id": "football-002",
+      "categoryId": "football",
+      "difficulty": "medium",
+      "wordA": "bek tengah",
+      "wordB": "bek sayap",
+      "foolWord": "pertahanan"
+    },
+    {
+      "id": "football-003",
+      "categoryId": "football",
+      "difficulty": "easy",
+      "wordA": "gelandang bertahan",
+      "wordB": "gelandang serang",
+      "foolWord": "lini tengah"
+    },
+    {
+      "id": "football-004",
+      "categoryId": "football",
+      "difficulty": "medium",
+      "wordA": "tendangan sudut",
+      "wordB": "tendangan bebas",
+      "foolWord": "bola mati"
+    },
+    {
+      "id": "football-005",
+      "categoryId": "football",
+      "difficulty": "medium",
+      "wordA": "penalti",
+      "wordB": "tendangan bebas",
+      "foolWord": "gawang",
+      "aliasesA": [
+        "tendangan penalti",
+        "penalty"
+      ],
+      "aliasesB": [
+        "free kick"
+      ]
+    },
+    {
+      "id": "football-006",
+      "categoryId": "football",
+      "difficulty": "medium",
+      "wordA": "kartu kuning",
+      "wordB": "kartu merah",
+      "foolWord": "wasit"
+    },
+    {
+      "id": "football-007",
+      "categoryId": "football",
+      "difficulty": "easy",
+      "wordA": "lemparan ke dalam",
+      "wordB": "tendangan gawang",
+      "foolWord": "garis lapangan"
+    },
+    {
+      "id": "football-008",
+      "categoryId": "football",
+      "difficulty": "medium",
+      "wordA": "sundulan",
+      "wordB": "salto",
+      "foolWord": "umpan silang",
+      "aliasesB": [
+        "tendangan salto"
+      ]
+    },
+    {
+      "id": "football-009",
+      "categoryId": "football",
+      "difficulty": "hard",
+      "wordA": "umpan pendek",
+      "wordB": "umpan panjang",
+      "foolWord": "rekan setim"
+    },
+    {
+      "id": "football-010",
+      "categoryId": "football",
+      "difficulty": "easy",
+      "wordA": "dribbling",
+      "wordB": "passing",
+      "foolWord": "bola",
+      "aliasesA": [
+        "dribel",
+        "menggiring bola"
+      ],
+      "aliasesB": [
+        "mengoper bola"
+      ]
+    },
+    {
+      "id": "football-011",
+      "categoryId": "football",
+      "difficulty": "medium",
+      "wordA": "babak pertama",
+      "wordB": "babak kedua",
+      "foolWord": "turun minum"
+    },
+    {
+      "id": "football-012",
+      "categoryId": "football",
+      "difficulty": "medium",
+      "wordA": "offside",
+      "wordB": "handball",
+      "foolWord": "wasit",
+      "aliasesA": [
+        "ofsaid"
+      ],
+      "aliasesB": [
+        "hand ball"
+      ]
+    },
+    {
+      "id": "football-013",
+      "categoryId": "football",
+      "difficulty": "medium",
+      "wordA": "wasit",
+      "wordB": "hakim garis",
+      "foolWord": "peluit",
+      "aliasesA": [
+        "wasit utama"
+      ],
+      "aliasesB": [
+        "asisten wasit"
+      ]
+    },
+    {
+      "id": "football-014",
+      "categoryId": "football",
+      "difficulty": "easy",
+      "wordA": "pemain inti",
+      "wordB": "pemain cadangan",
+      "foolWord": "pelatih"
+    },
+    {
+      "id": "football-015",
+      "categoryId": "football",
+      "difficulty": "medium",
+      "wordA": "jersey kandang",
+      "wordB": "jersey tandang",
+      "foolWord": "ruang ganti",
+      "aliasesA": [
+        "seragam kandang"
+      ],
+      "aliasesB": [
+        "seragam tandang"
+      ]
+    },
+    {
+      "id": "football-016",
+      "categoryId": "football",
+      "difficulty": "hard",
+      "wordA": "promosi",
+      "wordB": "degradasi",
+      "foolWord": "klasemen"
+    },
+    {
+      "id": "it-001",
+      "categoryId": "it",
+      "difficulty": "medium",
+      "wordA": "laptop",
+      "wordB": "PC",
+      "foolWord": "monitor",
+      "aliasesB": [
+        "komputer desktop",
+        "komputer"
+      ]
+    },
+    {
+      "id": "it-002",
+      "categoryId": "it",
+      "difficulty": "easy",
+      "wordA": "keyboard",
+      "wordB": "mouse",
+      "foolWord": "kursor"
+    },
+    {
+      "id": "it-003",
+      "categoryId": "it",
+      "difficulty": "hard",
+      "wordA": "Chrome",
+      "wordB": "Firefox",
+      "foolWord": "tab"
+    },
+    {
+      "id": "it-004",
+      "categoryId": "it",
+      "difficulty": "easy",
+      "wordA": "email",
+      "wordB": "WhatsApp",
+      "foolWord": "notifikasi",
+      "aliasesA": [
+        "e-mail"
+      ],
+      "aliasesB": [
+        "WA"
+      ]
+    },
+    {
+      "id": "it-005",
+      "categoryId": "it",
+      "difficulty": "medium",
+      "wordA": "password",
+      "wordB": "PIN",
+      "foolWord": "login",
+      "aliasesA": [
+        "kata sandi"
+      ]
+    },
+    {
+      "id": "it-006",
+      "categoryId": "it",
+      "difficulty": "medium",
+      "wordA": "upload",
+      "wordB": "download",
+      "foolWord": "internet",
+      "aliasesA": [
+        "unggah"
+      ],
+      "aliasesB": [
+        "unduh"
+      ]
+    },
+    {
+      "id": "it-007",
+      "categoryId": "it",
+      "difficulty": "medium",
+      "wordA": "copy",
+      "wordB": "paste",
+      "foolWord": "file",
+      "aliasesA": [
+        "salin"
+      ],
+      "aliasesB": [
+        "tempel"
+      ]
+    },
+    {
+      "id": "it-008",
+      "categoryId": "it",
+      "difficulty": "easy",
+      "wordA": "Word",
+      "wordB": "Excel",
+      "foolWord": "dokumen",
+      "aliasesA": [
+        "Microsoft Word"
+      ],
+      "aliasesB": [
+        "Microsoft Excel"
+      ]
+    },
+    {
+      "id": "it-009",
+      "categoryId": "it",
+      "difficulty": "medium",
+      "wordA": "RAM",
+      "wordB": "SSD",
+      "foolWord": "komputer"
+    },
+    {
+      "id": "it-010",
+      "categoryId": "it",
+      "difficulty": "medium",
+      "wordA": "hard disk",
+      "wordB": "flashdisk",
+      "foolWord": "file",
+      "aliasesA": [
+        "harddisk",
+        "HDD"
+      ],
+      "aliasesB": [
+        "flash disk",
+        "flash drive"
+      ]
+    },
+    {
+      "id": "it-011",
+      "categoryId": "it",
+      "difficulty": "easy",
+      "wordA": "Wi-Fi",
+      "wordB": "hotspot",
+      "foolWord": "internet",
+      "aliasesA": [
+        "wifi",
+        "wi fi"
+      ]
+    },
+    {
+      "id": "it-012",
+      "categoryId": "it",
+      "difficulty": "hard",
+      "wordA": "Android",
+      "wordB": "iOS",
+      "foolWord": "HP"
+    },
+    {
+      "id": "it-013",
+      "categoryId": "it",
+      "difficulty": "medium",
+      "wordA": "Windows",
+      "wordB": "Linux",
+      "foolWord": "laptop"
+    },
+    {
+      "id": "it-014",
+      "categoryId": "it",
+      "difficulty": "easy",
+      "wordA": "foto",
+      "wordB": "video",
+      "foolWord": "kamera"
+    },
+    {
+      "id": "it-015",
+      "categoryId": "it",
+      "difficulty": "medium",
+      "wordA": "screenshot",
+      "wordB": "rekam layar",
+      "foolWord": "HP",
+      "aliasesA": [
+        "tangkapan layar"
+      ],
+      "aliasesB": [
+        "screen recording"
+      ]
+    },
+    {
+      "id": "it-016",
+      "categoryId": "it",
+      "difficulty": "medium",
+      "wordA": "YouTube",
+      "wordB": "TikTok",
+      "foolWord": "video"
     }
   ]
 }

@@ -61,7 +61,7 @@
   - Player: stable ID, name, avatar ID, base role, permanent modifier, partner ID, alive status, assigned word.
   - Word pack: schema version, content version, locale, validated set collection.
   - Word triple: ID, category ID, difficulty, word A, word B, Fool word, optional aliases for A/B.
-  - Match settings: role counts, enabled modifiers, independent `foolHasWord`/`foolCanStart` booleans, category filters, timers, reduced motion, audio preference, UI language, word language.
+  - Match settings: role counts, enabled modifiers, independent `foolHasWord`/`foolCanStart`/`whiteCanStart` booleans, category filters, timers, reduced motion, audio preference, UI language, word language.
   - Match: ID, rules version, phase, round, players, word language/pack version, chosen triple snapshot, A/B mapping, speaker order, current actor.
   - Ballot: kind, eligible voters, eligible targets/options, submitted votes, committed outcome.
   - Resolution: pending deaths/choices, processed player IDs, personal winners, terminal victory claims.
@@ -113,7 +113,7 @@
   - Otherwise choose uniformly among tied leaders; animate repeated public cards into the committed outcome, without changing the draw or showing secret roles.
   - Freeze candidates and commit the random result before animation; skipping/reloading cannot reroll it.
   - Central random service uses browser cryptographic randomness with unbiased sampling and Fisher–Yates shuffling; tests inject fixed outcomes.
-  - The initial speaker draw samples uniformly from eligible players: all players when `foolCanStart` is on, everyone except Fool when off. Rotate the complete circular roster from that index; do not remove Fool from clues or ballots. Later-cycle rotation and extra clues retain their existing rules.
+  - The initial speaker draw samples uniformly from eligible players, independently excluding Fool when `foolCanStart` is off and Mr. White when `whiteCanStart` is off. Valid role balance guarantees eligible openers even when both options are off. Rotate the complete circular roster from that index; neither role loses clue turns or ballots. Later-cycle rotation and extra clues retain their existing rules.
 
 - **Death resolution and victories**
   - Record direct vote elimination first; Fool receives the terminal solo win only for that cause.
@@ -144,7 +144,7 @@
   - A shared storage adapter reports access/quota failures to a localized notice while retaining in-memory state. Timer persistence uses the same adapter.
   - Unsaved setup drafts live in a separate in-memory Zustand store (custom drafts keyed by word locale); panel unmounts do not discard them. They are never active-match secrets or persisted previews.
   - Score reset clears points but retains the scored-match ledger and is guarded against unfinished games. Old settings gain `wordSource: all` when parsed.
-  - Old profile/match settings gain `foolHasWord: true` and `foolCanStart: true` through schema defaults without reassigning roles, words or order. Both options are pinned in the match settings and reused for rematches; step navigation leaves them unchanged.
+  - Old profile/match settings gain `foolHasWord: true`, `foolCanStart: true` and `whiteCanStart: true` through schema defaults without reassigning roles, words or order. These options are pinned in the match settings and reused for rematches; step navigation leaves them unchanged.
   - Optional card reminders read the explicitly selected living player's pinned card, without engine transitions or additional persistence. Reminders reuse named handoffs and release/blur/hide concealment; public timers pause until the reminder closes.
   - Secrecy protects against accidental screen exposure; local state remains inspectable by the device owner.
   - Zustand supports partial persistence and versioned migrations. [Persistence documentation](https://zustand.docs.pmnd.rs/reference/middlewares/persist).

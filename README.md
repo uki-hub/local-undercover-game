@@ -33,6 +33,8 @@ Survivor strips show names even when avatars repeat. During ready, clues or disc
 
 **Pengaturan → Nolkan skor sesi** confirms before clearing points, and is available before a match or after results. Players, settings, word history and the scored-match ledger remain; reloading an old result cannot restore cleared points. Reset is unavailable during unfinished games.
 
+With Mr. White enabled on **Peran**, **Mr. White boleh mulai dulu** includes/excludes him from the first-round opener draw independently of Fool. It defaults on, including older saves, and survives navigation, reloads and rematches. When off, Mr. White still gives a clue after the opener; later rounds rotate normally. Mr. White always receives no word.
+
 | Role | Rule |
 | --- | --- |
 | Warga | Share one word. Win with a living civilian and no living impostors. |

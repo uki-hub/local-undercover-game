@@ -14,7 +14,7 @@ it.each(Array.from({length:18},(_,i)=>i+3))('roster size %i finishes legally acr
   for(let seed=1;seed<=4;seed++){
     const rng=seeded(37*n+seed)
     let m=start(people.slice(0,n),{...defaults,white:n>=7,fool:n>=6,
-      foolHasWord:seed%2===0,foolCanStart:seed<=2,couple:n>=5,
+      foolHasWord:seed%2===0,foolCanStart:seed<=2,whiteCanStart:seed%2===0,couple:n>=5,
       revenger:true,justice:n>=4,mime:true,undercover:Math.max(1,Math.floor(n/5))},pack,[],[],rng)
     let steps=0
     while(!m.winner){

@@ -20,6 +20,7 @@ export const rosterSchema = z
 export const settingsSchema = z.object({
   undercover: z.number().int().min(1).max(9),
   white: z.boolean(),
+  whiteCanStart: z.boolean().default(true),
   fool: z.boolean(),
   foolHasWord: z.boolean().default(true),
   foolCanStart: z.boolean().default(true),
@@ -37,6 +38,7 @@ export type Settings = z.infer<typeof settingsSchema>
 export const defaults: Settings = {
   undercover: 1,
   white: false,
+  whiteCanStart: true,
   fool: false,
   foolHasWord: true,
   foolCanStart: true,

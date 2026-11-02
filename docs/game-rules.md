@@ -13,6 +13,7 @@
   - Require at least one Undercover and more Civilians than Undercover + Mr. White initially.
   - At most one Mr. White and one Fool; their counts are configurable between zero and one.
   - When Fool is enabled, independently configure whether it receives a word and whether it may open the first clue round. Both options default on and survive step navigation, reloads and rematches; they have no effect without Fool.
+  - When Mr. White is enabled, `whiteCanStart` independently controls whether it may open the first clue round. It defaults on, including older saves, and survives step navigation, reloads and rematches. Without Mr. White it has no effect; Mr. White always receives no word.
   - At most one Justice, one Revenger, one Couple pair; each player gets at most one permanent modifier.
   - Couple members must be distinct and cannot be Fool. Justice and Revenger may overlay any base role.
   - Mime is temporary, can overlap a permanent modifier, and excludes Mr. White.
@@ -54,9 +55,9 @@
 
 - **Clue and discussion phase**
   - After all reveals, assign the first Mime if enabled and enter the dedicated `mimeReveal` splash. Name the player prominently, state the gesture-only rule and identify the first speaker. Acknowledging begins clues directly. Without Mime, show the ordinary round-ready screen.
-  - First-round speaker is uniformly random among all players, including Mr. White, except Fool is excluded when `foolCanStart` is off. This option allows Fool into the draw; it does not force Fool to start. Fool remains in the circular order and gives a clue either way.
+  - First-round speaker is uniformly random among eligible players. Exclude Fool when `foolCanStart` is off and Mr. White when `whiteCanStart` is off; apply both independently. These options allow a role into the draw without forcing it to start. Both players remain in the circular order and give a clue either way.
   - Keep a stable circular order. At each new elimination cycle, rotate the starter to the next living player.
-  - The Fool opener restriction applies only to the first round of each match/rematch; later-cycle rotation may put Fool first. Extra clue rounds keep their current order.
+  - Fool/Mr. White opener restrictions apply only to the first round of each match/rematch; later-cycle rotation may put either first. Extra clue rounds keep their current order.
   - During an extra clue round, keep the current cycle's order.
   - Each living player gives one spoken clue; Mime gestures instead. The app shows whose turn it is.
   - No secret-word repetition, spelling, translation, or writing; Mime additionally cannot speak.

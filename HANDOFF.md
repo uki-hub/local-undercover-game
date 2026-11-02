@@ -53,6 +53,7 @@ Latest setup: Pemain → Peran → Kata → Waktu, with clickable breadcrumb nav
   - After word dealing and each new Mime assignment, show a named Pantomim splash before clues. Elimination summaries state the player's name, revealed roles, cause and next effect.
   - Fool wins solo when directly voted out; end play and cancel pending death effects.
   - Fool options: `foolHasWord` gives the third word or no word; `foolCanStart` includes/excludes Fool in the first-round opener draw. Both default on, including older saves. Later rounds rotate normally; rematches retain both options.
+  - Mr. White has an independent `whiteCanStart` option for the same first-round opener draw, defaulting on for older saves. Disabling it keeps Mr. White in the full clue order after another player opens; Mr. White still receives no word.
   - An intact Couple postpones ordinary team victories; final-two Couple wins take priority over those victories.
   - A correct directly eliminated Mr. White guess wins solo; end play and cancel pending death effects.
   - Use full-phone themed event scenes for decisions, eliminations, Justice/revenge summons and victories. See [change plan](./docs/event-scenes-plan.md).

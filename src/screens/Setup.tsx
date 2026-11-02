@@ -218,6 +218,22 @@ export function Config({
               </label>
             ))}
           </section>
+          {s.white && (
+            <section>
+              <h2>{t('game:whiteOptions')}</h2>
+              <label className="toggle">
+                <span>
+                  <b>{t('game:whiteCanStart')}</b>
+                  <small>{t('game:whiteCanStartHint')}</small>
+                </span>
+                <input
+                  type="checkbox"
+                  checked={s.whiteCanStart}
+                  onChange={(e) => set({ whiteCanStart: e.target.checked })}
+                />
+              </label>
+            </section>
+          )}
           {s.fool && (
             <section>
               <h2>{t('game:foolOptions')}</h2>

@@ -8,12 +8,19 @@ Windows, Node 24.22, npm 11, installed Google Chrome 156. Tests used production 
 | --- | --- |
 | `npm run typecheck` and `npm run lint` | Passed strict TypeScript, ESLint and React Hooks checks. |
 | `npm run validate:content` | Five Indonesian namespaces, required placeholders and 112 triples passed validation. Separate damaged fixture copies produced field-specific failures for a missing placeholder, missing key and duplicate triple ID. |
-| `npm test` | 47 tests passed, including 72 seeded complete games covering every size from 3 to 20 and all four Fool-option combinations. Covers terminal Fool/White victories, queue cancellation, persisted Mime/Justice/revenge announcements, combined opening, legacy-setting migration and custom-only content. |
+| `npm test` | 54 tests passed, including 72 seeded complete games covering every size from 3 to 20, Fool-option combinations and independent White opener settings. Covers terminal Fool/White victories, queue cancellation, persisted Mime/Justice/revenge announcements, combined opening, legacy-setting migration and custom-only content. |
 | `npm run build` | Vite production build and service worker generated. Core JS chunks total approximately 181.57 kB gzip; lazy Three/Fiber/rig chunks total 252.78 kB gzip. Largest minified chunk 375.76 kB. Workbox precached 26 entries, approximately 1.69 MiB. Two upstream Zod documentation-comment annotation notices remain; Rollup removes those comments. |
 | Development startup | Chrome reached the six-player setup screen through the normal Vite development entry point. The lockfile also passed an offline `npm ci --dry-run`. |
 | Browser checks | All 35 Chromium cases passed, including the three new setup cases, Fool options, privacy, events, suspense reel, offline/rematch/update and live/fallback 3D. Final full run passed 34 cases and hit one screenshot-file write error; that case passed unchanged with `npx playwright test --last-failed`. An earlier full run passed all 35 together. |
 | `npm run avatars` | Ten live rigs and 66 clips passed capture and neutral restoration checks. [Asset QA](avatar-verification.md) |
 | Dependency audit | Production dependency audit returned zero advisories. The development toolchain audit reported 17 moderate and 2 low findings after compatible fixes. |
+
+## Mr. White opener follow-up
+
+- Added `whiteCanStart`, defaulting true for profiles and matches missing the setting. “Mr. White boleh mulai dulu” appears only when White is enabled on Peran; disabling/re-enabling White retains the choice. The setting independently includes/excludes White from the uniform first-round opener draw. White still receives no word and keeps its clue turn; later rounds rotate normally.
+- Seven new unit cases cover both settings, independent White/Fool opener combinations across 400 seeded starts, full circular clue order, pinned settings, reload/rematch retention and legacy migration. The existing 72 complete-game simulations now vary White eligibility as well. All 54 unit cases passed.
+- `npx playwright test tests/browser/white-options.spec.ts tests/browser/fool-options.spec.ts tests/browser/setup.spec.ts`: 7 passed against the production subpath build in installed Chrome. Covers defaults, independent options, off/on retention, step navigation, setup reload, actual launch/rematch snapshots, existing Fool cards/privacy and small-phone navigation. Used localhost access outside the restricted network sandbox.
+- Typecheck, lint, content validation (five Indonesian namespaces and the current 240 triples), production build and `git diff --check` passed. Existing upstream Zod annotation notices remain. Inspected `test-results/white-options-320.png`: both roles/options fit and remain readable at 320px without horizontal overflow. Other browser suites and historical captures were not regenerated; unrelated word-pack/category edits were preserved.
 
 ## Setup and wording follow-up
 

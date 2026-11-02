@@ -37,7 +37,14 @@
       "food": [],
       "clothing": [],
       "animals": [],
-      "transport": []
+      "transport": [],
+      "electronics": [],
+      "provinces": [],
+      "islands": [],
+      "cities": [],
+      "football-teams": [],
+      "football": [],
+      "it": []
     },
     "difficulties": {
       "easy": [],
@@ -98,6 +105,9 @@
     "configSub": [],
     "composition": [],
     "foolOptions": [],
+    "whiteOptions": [],
+    "whiteCanStart": [],
+    "whiteCanStartHint": [],
     "foolHasWord": [],
     "foolHasWordHint": [],
     "foolCanStart": [],

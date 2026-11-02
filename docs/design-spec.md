@@ -77,6 +77,7 @@
   - Home also offers an optional four-step guide. Settings offers confirmed score reset outside unfinished games. Failed storage reads/writes show a localized in-memory-play notice outside held-card layouts.
   - Role settings: counts/toggles and invalid-combination explanations, followed by separate word and timer steps.
   - Enabling Fool reveals two independent toggles: “Fool mendapat kata” and “Fool boleh mulai dulu”. Both start on. Helper copy explains the third-word/no-word choice and first-round opener eligibility. Hiding Fool or changing setup steps preserves these preferences.
+  - Enabling Mr. White reveals “Mr. White boleh mulai dulu”, initially on. Helper copy explains that disabling it only excludes Mr. White from the first-round opener draw, with a clue turn after the opener. Hiding the role or changing steps preserves the choice independently of Fool's options.
   - New matches skip the introduction round; private word handoffs contain all personal information together. Legacy introduction saves remain supported.
   - Public ready/clue/discussion: current speaker, Mime gesture cue, survivors, optional timer, advance controls.
   - Dedicated Mime splash: prominent player name/portrait, Mime emblem, current round, gesture-only instructions and first speaker. Show after dealing and after each reassignment; its primary action starts clues directly.

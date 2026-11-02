@@ -36,7 +36,14 @@
     "food": "Makanan & minuman",
     "clothing": "Pakaian",
     "animals": "Hewan",
-    "transport": "Transportasi"
+    "transport": "Transportasi",
+    "electronics": "Elektronik",
+    "provinces": "Provinsi",
+    "islands": "Pulau",
+    "cities": "Kota",
+    "football-teams": "Tim sepak bola",
+    "football": "Sepak bola",
+    "it": "Teknologi informasi"
   },
   "difficulties": {
     "easy": "Mudah",
