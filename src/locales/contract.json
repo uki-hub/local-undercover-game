@@ -96,22 +96,6 @@
     ],
     "config": [],
     "configSub": [],
-    "preset": [],
-    "presetSize": [
-      "count"
-    ],
-    "presets": {
-      "classic": [],
-      "light": [],
-      "medium": [],
-      "full": []
-    },
-    "presetNotes": {
-      "classic": [],
-      "light": [],
-      "medium": [],
-      "full": []
-    },
     "composition": [],
     "foolOptions": [],
     "foolHasWord": [],
@@ -396,7 +380,29 @@
         "critical": [],
         "revealed": []
       }
-    }
+    },
+    "setupNav": [],
+    "setupSteps": {
+      "roster": [],
+      "roles": [],
+      "words": [],
+      "timers": []
+    },
+    "setupTitles": {
+      "roles": [],
+      "words": [],
+      "timers": []
+    },
+    "setupHints": {
+      "roles": [],
+      "words": [],
+      "timers": []
+    },
+    "setupReady": [
+      "count"
+    ],
+    "fixRoles": [],
+    "fixWords": []
   },
   "roles": {
     "civilian": {

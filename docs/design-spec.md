@@ -15,6 +15,7 @@
 
 - **Language and copy**
   - All interface text is Bahasa Indonesia for the initial release, including errors, role instructions, rule explanations, placeholders, and accessibility labels.
+  - Use short, casual sentences that teens can scan. Prefer familiar wording such as “pura-pura tahu”, “keluar”, and “offline” over formal terms. Keep role names, win conditions, limits and privacy instructions clear.
   - The Indonesian copy quoted below is a design target; store it in JSON translation resources and render through i18next/react-i18next.
   - Use stable keys and complete translated sentences with placeholders for player names/counts; avoid concatenated sentence fragments.
   - Animal/role/category labels come from their language-pack keys, not model code or enum names.
@@ -48,6 +49,13 @@
   - Longer rosters scroll; names and actions remain distinguishable when avatars repeat.
   - Provide a Beranda action from the roster. Preserve unsaved player/custom-word drafts across panel navigation until explicit save/cancel; reload is outside draft persistence.
 
+- **Step-by-step setup**
+  - Show one step at a time: Pemain → Peran → Kata → Waktu. Remove the “Pilihan mode” preset cards.
+  - A compact numbered breadcrumb bar sits above the heading on every setup step, including player editing. Use an ordered navigation list, chevrons, a blue current-step marker and `aria-current="step"`; each step is a clickable button with at least a 44×44 touch target.
+  - Lanjut/Kembali move sequentially. The bar can jump to any step without losing saved choices or unsaved player drafts. Settings/rules return to the same step. Step changes scroll to the top and focus the main content.
+  - Peran contains role counts/toggles and conditional Fool options. Kata contains word source/category/difficulty and pool feedback. Waktu contains optional clue/discussion timers and the only Bagikan peran action.
+  - Invalid role combinations block Peran's Lanjut; missing/empty word pools block Kata's Lanjut. Validate all settings again on Waktu; jumping ahead cannot enable an invalid start. Provide a direct correction action to the relevant step.
+
 - **Reference screen 2 — private reveal**
   - Entry state: named handoff only; explicit readiness action before exposing a personal card.
   - Personal screen: Giliran [name], prominent animal badge, secret card, hold-to-reveal control, Selesai, oper ponsel action.
@@ -67,8 +75,8 @@
 - **Other required screens**
   - Home: resume available match, start setup, rules, offline-ready status, settings access.
   - Home also offers an optional four-step guide. Settings offers confirmed score reset outside unfinished games. Failed storage reads/writes show a localized in-memory-play notice outside held-card layouts.
-  - Role settings: counts/toggles, preset descriptions, invalid-combination explanations, categories/difficulty, optional timers.
-  - Enabling Fool reveals two independent toggles: “Fool mendapat kata” and “Fool boleh mulai dulu”. Both start on. Helper copy explains the third-word/no-word choice and first-round opener eligibility. Hiding Fool or applying a preset preserves these preferences.
+  - Role settings: counts/toggles and invalid-combination explanations, followed by separate word and timer steps.
+  - Enabling Fool reveals two independent toggles: “Fool mendapat kata” and “Fool boleh mulai dulu”. Both start on. Helper copy explains the third-word/no-word choice and first-round opener eligibility. Hiding Fool or changing setup steps preserves these preferences.
   - New matches skip the introduction round; private word handoffs contain all personal information together. Legacy introduction saves remain supported.
   - Public ready/clue/discussion: current speaker, Mime gesture cue, survivors, optional timer, advance controls.
   - Dedicated Mime splash: prominent player name/portrait, Mime emblem, current round, gesture-only instructions and first speaker. Show after dealing and after each reassignment; its primary action starts clues directly.

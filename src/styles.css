@@ -262,6 +262,9 @@ small {
 .roster-panel .grid-players {
   flex: 1;
 }
+.roster-panel .portrait {
+  width: clamp(64px, 8.5dvh, 84px);
+}
 .player-card {
   position: relative;
   min-width: 0;
@@ -279,8 +282,7 @@ small {
     0 4px 10px #587b9917;
 }
 .player-card.chosen,
-.animal-picker button[aria-pressed='true'],
-.preset-grid [aria-pressed='true'] {
+.animal-picker button[aria-pressed='true'] {
   border-color: #1986ff;
   box-shadow:
     inset 0 0 0 1.5px #2c91ff,
@@ -403,26 +405,63 @@ section small,
   border-radius: 14px;
   font-weight: 650;
 }
-.preset-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 7px;
-}
-.preset-grid button {
+.setup-nav {
   border: 1px solid var(--line);
-  background: #f6faff;
-  padding: 10px;
-  text-align: left;
+  border-radius: 16px;
+  background: #edf4fc;
+  box-shadow: inset 0 1px white;
+  padding: 4px;
 }
-.preset-grid small,
-.preset-grid span {
-  display: block;
+.setup-nav ol {
+  display: flex;
+  list-style: none;
+  padding: 0;
+  margin: 0;
 }
-.preset-grid span {
-  font-size: 12px;
-  line-height: 1.35;
-  margin-top: 4px;
-  font-weight: 600;
+.setup-nav li {
+  display: flex;
+  align-items: center;
+  flex: 1;
+  min-width: 0;
+}
+.setup-nav button {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+  gap: 3px;
+  min-width: 0;
+  min-height: 57px;
+  padding: 5px 2px;
+  border: 1px solid transparent;
+  border-radius: 12px;
+  background: transparent;
+  color: var(--muted);
+  font-size: 13px;
+}
+.setup-nav button span {
+  display: grid;
+  place-items: center;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #dce7f5;
+  font-size: 11px;
+}
+.setup-nav button[aria-current='step'] {
+  background: white;
+  border-color: #b8d8ff;
+  color: #0751c9;
+  box-shadow: 0 2px 5px #3565a222;
+}
+.setup-nav button[aria-current='step'] span {
+  background: #0875ff;
+  color: white;
+}
+.setup-nav li > svg {
+  flex-shrink: 0;
+  color: #70849e;
 }
 .note,
 .statement {

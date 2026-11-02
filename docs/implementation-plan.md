@@ -53,7 +53,7 @@ Current role/event changes follow the [plan written before implementation](./eve
 - [x] **Milestone 3 — chaos rules and content**
   - Add Fool solo wins, Mr. White one-shot guesses, combined Couple/word reveals, Couple deaths/objective, Revenger choices, Justice ties, and rotating Mime.
   - Implement FIFO death effects, pending interaction states, exact terminal priority, and idempotent match scoring.
-  - Complete the rules/preset/custom-role UI and in-app explanations of the custom victory rules.
+  - Complete step-by-step setup (Pemain → Peran → Kata → Waktu), individual role controls and in-app explanations of the custom victory rules. No mode/preset picker.
   - Expand the editable JSON pack to 100+ curated triples, with categories, difficulty, aliases, recent-set avoidance, and custom triple CRUD.
   - Complete all Indonesian translation namespaces; document JSON-only addition of future English resources and separate English word content.
   - Add all public/private role screens and complete result disclosure.
@@ -89,7 +89,7 @@ Current role/event changes follow the [plan written before implementation](./eve
 
 - **Engine acceptance matrix**
   - R01: invalid role counts, duplicate/empty names, impossible modifier allocations, and empty content filters block start with a useful message.
-  - R02: all Civilians share one word, all Undercovers share the other, Fool receives C or no word according to `foolHasWord`, White receives none; A/B swapping preserves these mappings. Independently verify `foolCanStart` includes/excludes Fool from the first-round opener draw without removing clue turns or changing later-cycle rotation. Both options default on for older saves and persist through presets/reloads/rematches.
+  - R02: all Civilians share one word, all Undercovers share the other, Fool receives C or no word according to `foolHasWord`, White receives none; A/B swapping preserves these mappings. Independently verify `foolCanStart` includes/excludes Fool from the first-round opener draw without removing clue turns or changing later-cycle rotation. Both options default on for older saves and persist through setup steps/reloads/rematches.
   - R03: an action tie draws between exactly two actions; an extra clue round always leads to elimination rather than another optional loop.
   - R04: target ballots reject self/dead/duplicate/out-of-turn votes; eliminated players never enter future voter lists.
   - R05: Justice outside a tied set chooses only among tied leaders; dead/absent/tied Justice invokes the suspense reel around a uniform draw.

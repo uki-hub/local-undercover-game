@@ -19,12 +19,12 @@ async function seed(p: Page, m: Match) {
 }
 const handoff = (p: Page) => button(p, /^Saya .+, siap$/).click()
 
-test('Fool options persist through setup, presets, reload and rematch', async ({ page }) => {
+test('Fool options persist through setup steps, reload and rematch', async ({ page }) => {
   await page.goto('./')
   await button(page, 'Mulai bermain').click()
   await button(page, 'Lanjut').click()
   await expect(page.getByRole('checkbox', { name: /^Fool mendapat kata/ })).toHaveCount(0)
-  await page.getByRole('checkbox', { name: /^Fool Bisa/ }).check()
+  await page.getByRole('checkbox', { name: /^Fool Dapat/ }).check()
   const word = page.getByRole('checkbox', { name: /^Fool mendapat kata/ })
   const opener = page.getByRole('checkbox', { name: /^Fool boleh mulai dulu/ })
   await expect(word).toBeChecked()
@@ -32,11 +32,12 @@ test('Fool options persist through setup, presets, reload and rematch', async ({
   await word.uncheck()
   await expect(opener).toBeChecked()
   await opener.uncheck()
-  await page.getByRole('checkbox', { name: /^Fool Bisa/ }).uncheck()
-  await page.getByRole('checkbox', { name: /^Fool Bisa/ }).check()
+  await page.getByRole('checkbox', { name: /^Fool Dapat/ }).uncheck()
+  await page.getByRole('checkbox', { name: /^Fool Dapat/ }).check()
   await expect(word).not.toBeChecked()
   await expect(opener).not.toBeChecked()
-  await button(page, /Kacau ringan/).click()
+  await button(page, 'Kata').click()
+  await button(page, 'Peran').click()
   await expect(word).not.toBeChecked()
   await expect(opener).not.toBeChecked()
   await page.setViewportSize({ width: 320, height: 568 })
@@ -47,6 +48,7 @@ test('Fool options persist through setup, presets, reload and rematch', async ({
   await button(page, 'Lanjut').click()
   await expect(word).not.toBeChecked()
   await expect(opener).not.toBeChecked()
+  await page.getByRole('button', { name: 'Waktu', exact: true }).click()
   await button(page, 'Bagikan peran').click()
   let m = await snapshot(page)
   expect(m.settings).toMatchObject({ fool: true, foolHasWord: false, foolCanStart: false })

@@ -6,12 +6,13 @@
   - Initial game language is Bahasa Indonesia. All fixed display copy uses the JSON language packs defined in the [content/localization specification](./language-and-word-packs.md).
 
 - **Roster and configuration**
+  - Setup shows Pemain → Peran → Kata → Waktu separately, with sequential actions and direct breadcrumb navigation. There is no “Pilihan mode” picker. Retain selected settings between steps; revalidate the complete setup before dealing on the final step.
   - 3–20 players; names required, trimmed, case-insensitively unique, 1–20 characters.
   - Each player selects one of the 10 cosmetic avatars; repeated avatars allowed.
   - Each player receives one base role: Civilian, Undercover, Mr. White, or Fool.
   - Require at least one Undercover and more Civilians than Undercover + Mr. White initially.
   - At most one Mr. White and one Fool; their counts are configurable between zero and one.
-  - When Fool is enabled, independently configure whether it receives a word and whether it may open the first clue round. Both options default on and survive preset changes, reloads and rematches; they have no effect without Fool.
+  - When Fool is enabled, independently configure whether it receives a word and whether it may open the first clue round. Both options default on and survive step navigation, reloads and rematches; they have no effect without Fool.
   - At most one Justice, one Revenger, one Couple pair; each player gets at most one permanent modifier.
   - Couple members must be distinct and cannot be Fool. Justice and Revenger may overlay any base role.
   - Mime is temporary, can overlap a permanent modifier, and excludes Mr. White.
@@ -19,12 +20,12 @@
   - Select the Couple from eligible players, then Justice/Revenger from players without a permanent modifier.
   - Treat assignments as immutable for the match; only Mime ownership rotates.
 
-- **Starting presets — playtest defaults**
+- **Reference compositions — playtest defaults, not selectable UI modes**
   - Classic, 6 players: 5 Civilians, 1 Undercover; other roles/modifiers off.
   - Light chaos, 6 players: 4 Civilians, 1 Undercover, 1 Fool; Mime on.
   - Medium chaos, 8 players: 5 Civilians, 2 Undercover, 1 Fool; Mime, Justice, Revenger on.
   - Full chaos, 10 players: 6 Civilians, 2 Undercover, 1 Mr. White, 1 Fool; every modifier on.
-  - Presets require their listed roster size. For other sizes, validate custom counts before starting; never silently alter selected counts.
+  - These compositions remain engine/playtest references. Setup starts from the saved settings (initially one Undercover, other roles off) and exposes individual controls. Validate custom counts before starting; never silently alter selected counts for a roster size.
 
 - **Words and disclosure**
   - Select one Indonesian triple: A/B are similar; C is different but shares plausible context with both.

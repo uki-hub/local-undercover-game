@@ -55,7 +55,7 @@ test('classic match, sealed interruptions, cold offline reopen, rematch and Page
   const errors: string[] = []
   page.on('pageerror', (e) => errors.push(e.message))
   await page.goto('./')
-  await expect(page.getByRole('status')).toHaveText('Siap dimainkan luring')
+  await expect(page.getByRole('status')).toHaveText('Siap main offline')
   await page.reload()
   const base = new URL('./', page.url()).href
   expect(await page.evaluate(async () => (await navigator.serviceWorker.ready).scope)).toBe(base)
@@ -74,6 +74,7 @@ test('classic match, sealed interruptions, cold offline reopen, rematch and Page
   await expect(page.getByRole('heading', { name: 'Siap bermain?' })).toBeVisible()
   await shot(page, 'setup-390')
   await button(page, 'Lanjut').click()
+  await page.getByRole('button', { name: 'Waktu', exact: true }).click()
   await button(page, 'Bagikan peran').click()
   await context.setOffline(true)
   await resume(page)
@@ -117,19 +118,19 @@ test('classic match, sealed interruptions, cold offline reopen, rematch and Page
   }
   await button(page, 'Mulai petunjuk').click()
   for (let i = 0; i < 6; i++) await button(page, 'Lanjut').click()
-  await button(page, 'Mulai pilihan aksi').click()
+  await button(page, 'Pilih langkah berikutnya').click()
   for (let i = 0; i < 6; i++) {
     await handoff(page)
-    await expect(button(page, 'Konfirmasi pilihan')).toHaveCount(0)
+    await expect(button(page, 'Pilih ini')).toHaveCount(0)
     if (i === 0) {
       await shot(page, 'action-390')
       await button(page, /^Petunjuk lagi/).click()
       await resume(page)
       await handoff(page)
-      await expect(button(page, 'Konfirmasi pilihan')).toHaveCount(0)
+      await expect(button(page, 'Pilih ini')).toHaveCount(0)
     }
     await button(page, /^Voting Pilih/).click()
-    await button(page, 'Konfirmasi pilihan').click()
+    await button(page, 'Pilih ini').click()
   }
   await button(page, 'Lanjut').click()
   m = await snapshot(page)
@@ -139,7 +140,7 @@ test('classic match, sealed interruptions, cold offline reopen, rematch and Page
     const voter = m.players.find((p) => p.id === id)!
     await expect(button(page, voter.name)).toHaveCount(0)
     await button(page, spy.id === id ? m.players.find((p) => p.id !== id)!.name : spy.name).click()
-    await button(page, 'Konfirmasi pilihan').click()
+    await button(page, 'Pilih ini').click()
   }
   await expect(page.getByRole('heading', { name: spy.name + ' tersingkir!' })).toBeVisible()
   await shot(page, 'elimination-390')
@@ -164,6 +165,7 @@ test('classic match, sealed interruptions, cold offline reopen, rematch and Page
   await cold.goto(base)
   await button(cold, 'Mulai bermain').click()
   await button(cold, 'Lanjut').click()
+  await cold.getByRole('button', { name: 'Waktu', exact: true }).click()
   await expect(button(cold, 'Bagikan peran')).toBeEnabled()
   await cold.close()
 })
@@ -193,7 +195,7 @@ test('refresh private choices and wheel preserves sealed outcomes', async ({ pag
     expect((await snapshot(page)).revision).toBe(m.revision)
     await handoff(page)
     if (phase === 'guess') await expect(page.getByRole('textbox')).toHaveValue('')
-    else await expect(button(page, 'Konfirmasi pilihan')).toHaveCount(0)
+    else await expect(button(page, 'Pilih ini')).toHaveCount(0)
   }
   const m = fresh()
   m.phase = 'wheel'
@@ -269,10 +271,12 @@ test('word load error, retry, corrupt save and denied storage', async ({ browser
   await p.reload()
   await button(p, 'Mulai bermain').click()
   await button(p, 'Lanjut').click()
+  await p.getByRole('button', { name: 'Waktu', exact: true }).click()
   await expect(button(p, 'Bagikan peran')).toBeDisabled()
-  await expect(p.getByRole('status')).toContainText('Paket kata gagal dimuat')
+  await expect(p.getByRole('status')).toContainText('Kata gagal dimuat')
   await p.unroute('**/words/id.json')
   await button(p, 'Coba lagi').click()
+  await p.getByRole('button', { name: 'Waktu', exact: true }).click()
   await expect(button(p, 'Bagikan peran')).toBeEnabled()
   const previous = fresh()
   previous.phase = 'result'
@@ -280,7 +284,7 @@ test('word load error, retry, corrupt save and denied storage', async ({ browser
   previous.settings.category = previous.triple.categoryId = 'retired'
   await p.evaluate(([k,data]) => sessionStorage.setItem(k,data), [key,JSON.stringify(previous)])
   await resume(p)
-  await expect(p.getByRole('status')).toContainText('Tidak ada set kata untuk filter ini.')
+  await expect(p.getByRole('status')).toContainText('Tidak ada set kata yang cocok. Coba ubah pilihan kata.')
   await expect(button(p, 'Main lagi')).toBeDisabled()
   await expect(p.getByText(previous.triple.wordA, {exact:true})).toBeVisible()
   await ctx.addInitScript(() => {
@@ -298,6 +302,7 @@ test('word load error, retry, corrupt save and denied storage', async ({ browser
   await p.reload()
   await button(p, 'Mulai bermain').click()
   await button(p, 'Lanjut').click()
+  await p.getByRole('button', { name: 'Waktu', exact: true }).click()
   await button(p, 'Bagikan peran').click()
   await handoff(p)
   await hold(p)
@@ -339,7 +344,7 @@ test('classic impostor victory through repeated cycles and the one extra clue ro
   page,
 }) => {
   await page.goto('./')
-  for (const name of ['Mulai bermain', 'Lanjut', 'Bagikan peran']) await button(page, name).click()
+  for (const name of ['Mulai bermain', 'Lanjut', 'Lanjut', 'Lanjut', 'Bagikan peran']) await button(page, name).click()
   for (let i = 0; i < 6; i++) {
     await handoff(page)
     await hold(page)
@@ -352,23 +357,23 @@ test('classic impostor victory through repeated cycles and the one extra clue ro
     const target = m.players.find((p) => p.alive && p.role === 'civilian')!
     await button(page, 'Mulai petunjuk').click()
     for (let i = 0; i < m.order.length; i++) await button(page, 'Lanjut').click()
-    await button(page, 'Mulai pilihan aksi').click()
+    await button(page, 'Pilih langkah berikutnya').click()
     for (let i = 0; i < m.order.length; i++) {
       await handoff(page)
       await button(page, round === 1 ? /^Petunjuk lagi/ : /^Voting Pilih/).click()
-      await button(page, 'Konfirmasi pilihan').click()
+      await button(page, 'Pilih ini').click()
     }
     await button(page, 'Lanjut').click()
     if (round === 1) {
       for (let i = 0; i < m.order.length; i++) await button(page, 'Lanjut').click()
-      await button(page, 'Mulai voting eliminasi').click()
+      await button(page, 'Mulai voting pemain').click()
     }
     m = await snapshot(page)
     for (const id of m.order) {
       await handoff(page)
       const other = m.players.find((p) => p.id !== id && p.alive)!
       await button(page, id === target.id ? other.name : target.name).click()
-      await button(page, 'Konfirmasi pilihan').click()
+      await button(page, 'Pilih ini').click()
     }
     await button(page, 'Lanjut').click()
   }

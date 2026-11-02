@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState } from 'react'
 import { MotionConfig, motion, useReducedMotion } from 'motion/react'
 import { useTranslation } from 'react-i18next'
 import { Action, Footer, Icon, Portrait, Title } from './components/ui'
-import { Config, Customs, Roster } from './screens/Setup'
+import { Config, Customs, Roster, SetupNav, type SetupStep } from './screens/Setup'
 import { MatchScreen } from './screens/Match'
 import { useGame } from './store/session'
 import { wordPool, loadPack, type Pack } from './content/words'
@@ -13,7 +13,7 @@ import { useStorageStatus } from './services/storage'
 import { matchTheme } from './components/EventScene'
 import './components/events.css'
 
-type Screen = 'home' | 'roster' | 'config' | 'match'
+type Screen = 'home' | SetupStep | 'match'
 type Panel = 'settings' | 'rules' | 'custom' | 'guide' | null
 export function App() {
   const { t, i18n } = useTranslation()
@@ -82,7 +82,9 @@ export function App() {
     if (panel === 'rules') show(rulesFrom)
     else if (panel === 'custom') show('settings')
     else if (panel) show(null)
-    else if (screen === 'config') go('roster')
+    else if (screen === 'timers') go('words')
+    else if (screen === 'words') go('roles')
+    else if (screen === 'roles') go('roster')
     else if (screen === 'roster') go('home')
   }, [panel, screen, rulesFrom])
   useEffect(() => {
@@ -142,6 +144,9 @@ export function App() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: reduced ? 0 : 0.18 }}
         >
+          {!panel && (screen === 'roster' || screen === 'roles' || screen === 'words' || screen === 'timers') && (
+            <SetupNav step={screen} go={go} />
+          )}
           {panel === 'guide' ? (
             <>
               <Title title={t('game:guide')} tag={t('game:guideProgress', { current: guideStep + 1, total: guideSteps.length })} />
@@ -281,14 +286,15 @@ export function App() {
               </Footer>
             </>
           ) : screen === 'roster' ? (
-            <Roster next={() => go('config')} home={() => go('home')} />
-          ) : screen === 'config' ? (
+            <Roster next={() => go('roles')} home={() => go('home')} />
+          ) : screen === 'roles' || screen === 'words' || screen === 'timers' ? (
             <Config
+              step={screen}
+              go={go}
               pack={pack}
               loading={loading}
               retry={loadAgain}
               launch={start}
-              back={() => go('roster')}
             />
           ) : (
             match && (

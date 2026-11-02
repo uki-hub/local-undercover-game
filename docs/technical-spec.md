@@ -45,7 +45,9 @@
   - Animation completion never decides votes, random outcomes, or deaths.
 
 - **State machine**
-  - Home → player setup → rules setup → private word handoffs (word/special ability/partner combined; Warga/Undercover identities hidden).
+  - Home → `roster` (Pemain) → `roles` (Peran) → `words` (Kata) → `timers` (Waktu) → private word handoffs (word/special ability/partner combined; Warga/Undercover identities hidden).
+  - Setup navigation is an ordered breadcrumb bar with current-step semantics and direct buttons. Each configuration step renders only its own controls. The selected step stays in App state while Settings/rules panels are open; settings remain in the persisted profile. Reload returns to Home. No mode/preset picker is rendered.
+  - Role and word steps gate sequential advancement on their own validation. The final timer step rechecks the entire configuration and word pack before enabling launch, including after direct navigation. Errors link back to role or word controls. Step navigation never starts a match.
   - Once everyone finishes: named `mimeReveal` splash when Mime is assigned, otherwise public ready screen → clue turns → discussion → private action ballot.
   - Another clue → one additional clue round → mandatory elimination ballot.
   - Eliminate → private target ballots → tie resolution → elimination → role effects → victory check.
@@ -142,7 +144,7 @@
   - A shared storage adapter reports access/quota failures to a localized notice while retaining in-memory state. Timer persistence uses the same adapter.
   - Unsaved setup drafts live in a separate in-memory Zustand store (custom drafts keyed by word locale); panel unmounts do not discard them. They are never active-match secrets or persisted previews.
   - Score reset clears points but retains the scored-match ledger and is guarded against unfinished games. Old settings gain `wordSource: all` when parsed.
-  - Old profile/match settings gain `foolHasWord: true` and `foolCanStart: true` through schema defaults without reassigning roles, words or order. Both options are pinned in the match settings and reused for rematches; setup presets leave them unchanged.
+  - Old profile/match settings gain `foolHasWord: true` and `foolCanStart: true` through schema defaults without reassigning roles, words or order. Both options are pinned in the match settings and reused for rematches; step navigation leaves them unchanged.
   - Optional card reminders read the explicitly selected living player's pinned card, without engine transitions or additional persistence. Reminders reuse named handoffs and release/blur/hide concealment; public timers pause until the reminder closes.
   - Secrecy protects against accidental screen exposure; local state remains inspectable by the device owner.
   - Zustand supports partial persistence and versioned migrations. [Persistence documentation](https://zustand.docs.pmnd.rs/reference/middlewares/persist).

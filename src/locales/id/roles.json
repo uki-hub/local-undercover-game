@@ -1,40 +1,40 @@
 {
   "civilian": {
     "name": "Warga",
-    "description": "Kamu dan warga lain mendapat kata yang sama. Dengarkan petunjuk dan singkirkan semua penyusup."
+    "description": "Kata kalian sama. Cari Undercover dan Mr. White lewat petunjuk mereka."
   },
   "undercover": {
     "name": "Undercover",
-    "description": "Katamu mirip dengan kata warga. Berbaurlah sampai jumlah penyusup yang tersisa menyamai atau melebihi jumlah warga."
+    "description": "Katamu mirip kata Warga. Jangan ketahuan! Tim penyusup menang saat jumlahnya sama atau lebih banyak dari Warga."
   },
   "white": {
     "name": "Mr. White",
-    "hint": "Tanpa kata. Berbaurlah. Jika divoting, tebak kata warga sekali untuk menang sendiri.",
-    "description": "Kamu tidak mendapat kata. Dengarkan petunjuk dan berbaurlah dengan warga. Jika tersingkir lewat voting, kamu punya satu kesempatan menebak kata warga untuk menang sendiri."
+    "hint": "Tanpa kata. Pura-pura tahu! Jika keluar lewat voting, tebak kata Warga sekali untuk menang sendiri.",
+    "description": "Tanpa kata, jadi pura-pura tahu! Jika keluar lewat voting, tebak kata Warga sekali. Kalau benar, kamu menang sendiri."
   },
   "fool": {
     "name": "Fool",
-    "hint": "Buat pemain lain memilihmu. Jika tersingkir lewat voting, kamu menang sendiri!",
-    "noWordHint": "Tanpa kata. Gertaklah agar pemain lain memilihmu. Jika tersingkir lewat voting, kamu menang sendiri!",
-    "description": "Bisa mendapat kata ketiga atau tanpa kata, sesuai pengaturan. Jika tersingkir langsung lewat voting, kamu menang sendiri dan permainan berakhir."
+    "hint": "Bikin teman memilihmu saat voting. Kalau kamu terpilih, kamu menang sendiri!",
+    "noWordHint": "Tanpa kata. Pura-pura tahu, lalu bikin teman memilihmu saat voting untuk menang sendiri!",
+    "description": "Dapat kata ketiga atau tanpa kata. Bikin teman memilihmu saat voting. Kalau terpilih, kamu menang sendiri dan game selesai!"
   },
   "couple": {
     "name": "Pasangan",
-    "hint": "Menang jika hanya kalian berdua tersisa. Jika satu gugur, keduanya gugur.",
-    "description": "Kalian menang berdua jika hanya kalian yang tersisa. Jika salah satu tersingkir, pasangannya ikut tersingkir. Kalian tidak mendapat poin kemenangan tim."
+    "hint": "Menang kalau tinggal kalian berdua. Satu keluar, pasangannya ikut keluar.",
+    "description": "Menang kalau tinggal kalian berdua. Satu keluar, pasangannya ikut keluar. Poin hanya dari menang berdua."
   },
   "revenger": {
     "name": "Pembalas",
-    "hint": "Saat tersingkir, pilih satu pemain yang masih hidup untuk ikut tersingkir.",
-    "description": "Jika tersingkir karena sebab apa pun, kamu harus memilih satu pemain yang masih bertahan untuk ikut tersingkir."
+    "hint": "Saat keluar, pilih satu pemain yang masih main untuk ikut keluar.",
+    "description": "Kalau kamu keluar, pilih satu pemain yang masih main untuk ikut keluar. Berlaku apa pun penyebabnya."
   },
   "justice": {
     "name": "Hakim",
-    "hint": "Saat voting eliminasi seri, pilih satu calon jika kamu masih hidup dan bukan calon.",
-    "description": "Jika voting eliminasi seri, kamu memilih siapa yang tersingkir dari para calon dengan suara terbanyak. Kamu hanya bisa memutuskan jika masih bermain dan namamu tidak termasuk calon."
+    "hint": "Saat voting pemain seri, kamu pilih siapa yang keluar. Harus masih main dan tidak ikut seri.",
+    "description": "Kalau suara terbanyak seri, kamu pilih siapa yang keluar. Kamu harus masih main dan tidak ikut seri."
   },
   "mime": {
     "name": "Pantomim",
-    "description": "Berikan petunjuk hanya lewat gerakan, tanpa suara atau tulisan. Tugas ini berpindah setelah rangkaian eliminasi selesai."
+    "description": "Beri petunjuk pakai gerakan saja. Tanpa suara atau tulisan! Ganti pemain tiap ronde setelah semua efek selesai."
   }
 }

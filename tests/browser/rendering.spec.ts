@@ -20,6 +20,7 @@ test('featured chicken renders in the game and a failed 3D chunk still permits p
     await expect(page.locator('canvas')).toHaveCount(failChunk ? 0 : 1)
     await page.getByRole('button', { name: 'Simpan' }).click()
     await page.getByRole('button', { name: 'Lanjut', exact: true }).click()
+    await page.getByRole('button', { name: 'Waktu', exact: true }).click()
     await page.getByRole('button', { name: 'Bagikan peran' }).click()
     await expect(page.getByRole('heading', { name: 'Oper ke Adit' })).toBeVisible()
     await context.close()

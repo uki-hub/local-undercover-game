@@ -47,9 +47,9 @@ test('installed update waits through active play and activates after the last cl
   try {
     const page = await context.newPage()
     await page.goto(url)
-    await expect(page.getByRole('status')).toContainText('Siap dimainkan luring')
+    await expect(page.getByRole('status')).toContainText('Siap main offline')
     await page.reload()
-    for (const name of ['Mulai bermain', 'Lanjut', 'Bagikan peran'])
+    for (const name of ['Mulai bermain', 'Lanjut', 'Lanjut', 'Lanjut', 'Bagikan peran'])
       await page.getByRole('button', { name, exact: true }).click()
     generation++
     await page.evaluate(async () => {

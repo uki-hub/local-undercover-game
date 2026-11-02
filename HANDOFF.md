@@ -2,6 +2,8 @@
 
 **Implementation delivered.** Use [README](./README.md) for setup and [verification](./docs/evidence/verification.md) for test results, screenshots and remaining device checks. The following handoff preserves the original brief and pre-development inventory.
 
+Latest setup: Pemain → Peran → Kata → Waktu, with clickable breadcrumb navigation and no “Pilihan mode” picker. UI explanations use shorter, casual Indonesian for teens. See the updated design specification and README for validation/navigation behavior.
+
 - **Task for the next session**
   - Build the complete playable game described here. This session prepared documentation only.
   - Workspace: `D:\repos\local-undercover-game`.

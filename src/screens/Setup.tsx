@@ -11,11 +11,33 @@ import {
   type Pack,
   type Triple,
 } from '../content/words'
-import { defaults, presets, setupIssue, type Settings } from '../engine/model'
+import { setupIssue, type Settings } from '../engine/model'
 import { saveCustom, useGame } from '../store/session'
 import { newId } from '../engine/random'
 import { useSetupDrafts } from '../store/setup'
 import { RoleEmblem } from '../components/RoleEmblem'
+
+const setupSteps = ['roster', 'roles', 'words', 'timers'] as const
+export type SetupStep = (typeof setupSteps)[number]
+
+export function SetupNav({ step, go }: { step: SetupStep; go: (step: SetupStep) => void }) {
+  const { t } = useTranslation()
+  return (
+    <nav className="setup-nav" aria-label={t('game:setupNav')}>
+      <ol>
+        {setupSteps.map((item, i) => (
+          <li key={item}>
+            <button aria-current={step === item ? 'step' : undefined} onClick={() => go(item)}>
+              <span aria-hidden="true">{i + 1}</span>
+              {t('game:setupSteps.' + item)}
+            </button>
+            {i < setupSteps.length - 1 && <Icon name="next" size={12} />}
+          </li>
+        ))}
+      </ol>
+    </nav>
+  )
+}
 
 export function Roster({ next, home }: { next: () => void; home: () => void }) {
   const { t } = useTranslation()
@@ -131,161 +153,148 @@ export function Roster({ next, home }: { next: () => void; home: () => void }) {
   )
 }
 export function Config({
+  step,
+  go,
   pack,
   loading,
   retry,
   launch,
-  back,
 }: {
+  step: Exclude<SetupStep, 'roster'>
+  go: (step: SetupStep) => void
   pack: Pack | null
   loading: boolean
   retry: () => void
   launch: () => void
-  back: () => void
 }) {
   const { t } = useTranslation()
   const p = useGame((s) => s.profile),
     update = useGame((s) => s.update)
   const s = p.settings
   const set = (changes: Partial<Settings>) => update({ settings: { ...s, ...changes } })
-  const pool = pack
-    ? wordPool(pack, p.custom[pack.locale] || [], s)
-    : []
+  const pool = pack ? wordPool(pack, p.custom[pack.locale] || [], s) : []
   const issue = setupIssue(p.roster, s, pool.length)
+  const roleIssue = setupIssue(p.roster, s, 1)
+  const wordIssue = pack && !pool.length ? 'pool' : null
+  const visibleIssue = step === 'roles' ? roleIssue : step === 'words' ? wordIssue : issue
+  const blocked = step === 'roles' ? !!roleIssue : step === 'words' ? !pack || !!wordIssue : !pack || !!issue
+  const next = () => go(step === 'roles' ? 'words' : 'timers')
+  const back = () => go(step === 'roles' ? 'roster' : step === 'words' ? 'roles' : 'words')
   return (
     <>
-      <Title title={t('game:config')} sub={t('game:configSub')} />
-      <section>
-        <h2>{t('game:preset')}</h2>
-        <div className="preset-grid">
-          {presets.map((pr) => {
-            const values = { ...defaults, ...pr.roles }
-            const active =
-              pr.size === p.roster.length &&
-              (
-                ['undercover', 'fool', 'white', 'mime', 'couple', 'justice', 'revenger'] as const
-              ).every((k) => s[k] === values[k])
-            return (
-              <button
-                key={pr.id}
-                disabled={p.roster.length !== pr.size}
-                aria-pressed={active}
-                onClick={() =>
-                  set({
-                    undercover: values.undercover,
-                    white: values.white,
-                    fool: values.fool,
-                    couple: values.couple,
-                    justice: values.justice,
-                    revenger: values.revenger,
-                    mime: values.mime,
-                  })
-                }
-              >
-                <strong>{t('game:presets.' + pr.id)}</strong>
-                <small>{t('count', { count: pr.size })}</small>
-                <span>{t('game:presetNotes.' + pr.id)}</span>
-              </button>
-            )
-          })}
-        </div>
-      </section>
-      <section>
-        <h2>{t('game:composition')}</h2>
-        <label className="row">
-          <span className="role-config"><RoleEmblem role="undercover" />{t('roles:undercover.name')}</span>
-          <select value={s.undercover} onChange={(e) => set({ undercover: +e.target.value })}>
-            {Array.from({ length: 9 }, (_, i) => (
-              <option key={i}>{i + 1}</option>
-            ))}
-          </select>
-        </label>
-        <p className="muted role-config civilian-count">
-          <RoleEmblem role="civilian" />
-          {t('game:civilians', {
-            count: p.roster.length - s.undercover - Number(s.white) - Number(s.fool),
-          })}
-        </p>
-        {(['white', 'fool', 'couple', 'revenger', 'justice', 'mime'] as const).map((k) => (
-          <label key={k} className="toggle">
-            <span className="role-config">
-              <RoleEmblem role={k} />
-              <span>
-              <b>{t('roles:' + k + '.name')}</b>
-              <small>{t('roles:' + k + '.description')}</small>
-              </span>
-            </span>
-            <input
-              type="checkbox"
-              checked={s[k]}
-              onChange={(e) => set({ [k]: e.target.checked })}
-            />
-          </label>
-        ))}
-      </section>
-      {s.fool && (
-        <section>
-          <h2>{t('game:foolOptions')}</h2>
-          {(['foolHasWord', 'foolCanStart'] as const).map((k) => (
-            <label key={k} className="toggle">
-              <span>
-                <b>{t('game:' + k)}</b>
-                <small>{t('game:' + k + 'Hint')}</small>
-              </span>
-              <input
-                type="checkbox"
-                checked={s[k]}
-                onChange={(e) => set({ [k]: e.target.checked })}
-              />
+      <Title title={t('game:setupTitles.' + step)} sub={t('game:setupHints.' + step)} />
+      {step === 'roles' && (
+        <>
+          <section>
+            <h2>{t('game:composition')}</h2>
+            <label className="row">
+              <span className="role-config"><RoleEmblem role="undercover" />{t('roles:undercover.name')}</span>
+              <select value={s.undercover} onChange={(e) => set({ undercover: +e.target.value })}>
+                {Array.from({ length: 9 }, (_, i) => (
+                  <option key={i}>{i + 1}</option>
+                ))}
+              </select>
             </label>
-          ))}
-        </section>
-      )}
-      <section>
-        <h2>{t('game:content')}</h2>
-        <label className="row">
-          {t('game:wordSource')}
-          <select value={s.wordSource} onChange={(e) => set({ wordSource: e.target.value as Settings['wordSource'] })}>
-            <option value="all">{t('game:allSources')}</option>
-            <option value="custom">{t('game:customOnly')}</option>
-          </select>
-        </label>
-        {s.wordSource === 'custom' && <p className="muted">{t('game:customOnlyHint')}</p>}
-        <Filters
-          category={s.category}
-          difficulty={s.difficulty}
-          changeCategory={(category) => set({ category })}
-          changeDifficulty={(difficulty) => set({ difficulty })}
-          all
-        />
-        {pack && <small>{t('game:available', { count: pool.length })}</small>}
-      </section>
-      <section>
-        <h2>{t('game:timers')}</h2>
-        {(['clueSeconds', 'discussionSeconds'] as const).map((key, i) => (
-          <label key={key} className="row">
-            {t(i ? 'game:discussionTimer' : 'game:clueTimer')}
-            <select value={s[key]} onChange={(e) => set({ [key]: +e.target.value })}>
-              {[0, 15, 30, 45, 60, 90, 120, 180].map((n) => (
-                <option key={n} value={n}>
-                  {n ? t('seconds', { count: n }) : t('timerOff')}
-                </option>
+            <p className="muted role-config civilian-count">
+              <RoleEmblem role="civilian" />
+              {t('game:civilians', {
+                count: p.roster.length - s.undercover - Number(s.white) - Number(s.fool),
+              })}
+            </p>
+            {(['white', 'fool', 'couple', 'revenger', 'justice', 'mime'] as const).map((k) => (
+              <label key={k} className="toggle">
+                <span className="role-config">
+                  <RoleEmblem role={k} />
+                  <span>
+                    <b>{t('roles:' + k + '.name')}</b>
+                    <small>{t('roles:' + k + '.description')}</small>
+                  </span>
+                </span>
+                <input
+                  type="checkbox"
+                  checked={s[k]}
+                  onChange={(e) => set({ [k]: e.target.checked })}
+                />
+              </label>
+            ))}
+          </section>
+          {s.fool && (
+            <section>
+              <h2>{t('game:foolOptions')}</h2>
+              {(['foolHasWord', 'foolCanStart'] as const).map((k) => (
+                <label key={k} className="toggle">
+                  <span>
+                    <b>{t('game:' + k)}</b>
+                    <small>{t('game:' + k + 'Hint')}</small>
+                  </span>
+                  <input
+                    type="checkbox"
+                    checked={s[k]}
+                    onChange={(e) => set({ [k]: e.target.checked })}
+                  />
+                </label>
               ))}
+            </section>
+          )}
+        </>
+      )}
+      {step === 'words' && (
+        <section>
+          <h2>{t('game:content')}</h2>
+          <label className="row">
+            {t('game:wordSource')}
+            <select value={s.wordSource} onChange={(e) => set({ wordSource: e.target.value as Settings['wordSource'] })}>
+              <option value="all">{t('game:allSources')}</option>
+              <option value="custom">{t('game:customOnly')}</option>
             </select>
           </label>
-        ))}
-      </section>
-      {!pack ? (
+          {s.wordSource === 'custom' && <p className="muted">{t('game:customOnlyHint')}</p>}
+          <Filters
+            category={s.category}
+            difficulty={s.difficulty}
+            changeCategory={(category) => set({ category })}
+            changeDifficulty={(difficulty) => set({ difficulty })}
+            all
+          />
+          {pack && <small>{t('game:available', { count: pool.length })}</small>}
+        </section>
+      )}
+      {step === 'timers' && (
+        <>
+          <section>
+            <h2>{t('game:timers')}</h2>
+            {(['clueSeconds', 'discussionSeconds'] as const).map((key, i) => (
+              <label key={key} className="row">
+                {t(i ? 'game:discussionTimer' : 'game:clueTimer')}
+                <select value={s[key]} onChange={(e) => set({ [key]: +e.target.value })}>
+                  {[0, 15, 30, 45, 60, 90, 120, 180].map((n) => (
+                    <option key={n} value={n}>
+                      {n ? t('seconds', { count: n }) : t('timerOff')}
+                    </option>
+                  ))}
+                </select>
+              </label>
+            ))}
+          </section>
+          {pack && !issue && <p className="center muted">{t('game:setupReady', { count: p.roster.length })}</p>}
+        </>
+      )}
+      {step !== 'roles' && !pack ? (
         <p role="status">
           {t(loading ? 'game:waiting' : 'errors.pack')}{' '}
           {!loading && <button onClick={retry}>{t('retry')}</button>}
         </p>
       ) : (
-        issue && <p role="alert">{t('errors.' + issue)}</p>
+        visibleIssue && <p role="alert">{t('errors.' + visibleIssue)}</p>
+      )}
+      {step === 'timers' && pack && issue && (
+        <Action secondary onClick={() => go(roleIssue ? 'roles' : 'words')}>
+          {t(roleIssue ? 'game:fixRoles' : 'game:fixWords')}
+        </Action>
       )}
       <Footer>
-        <Action disabled={!pack || !!issue} onClick={launch}>
-          {t('game:launch')}
+        <Action disabled={blocked} onClick={step === 'timers' ? launch : next}>
+          {t(step === 'timers' ? 'game:launch' : 'next')}
         </Action>
         <Action secondary onClick={back}>
           {t('back')}

@@ -22,6 +22,7 @@
   - Future resources use matching files under src/locales/en/. Do not add empty or incomplete English packs to the selectable language list.
 
 - **Display-text rules**
+  - Write short, casual Indonesian for teens. Use familiar words and direct instructions; keep all game conditions, limits, role names and privacy steps accurate. Role descriptions, private hints, guide steps, errors and event summaries follow the same tone.
   - Fixed user-facing text, including button labels, placeholders, toast/error copy, dialogs, alt text, and ARIA labels, comes from JSON language resources.
   - Components reference stable translation keys. Engine events and validation errors expose stable codes plus parameters, translated at the presentation boundary.
   - Internal enums, IDs, asset paths, and role logic stay language-independent.
