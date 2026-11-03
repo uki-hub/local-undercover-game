@@ -1,4 +1,5 @@
-import type { ReactNode } from 'react'
+import { useLayoutEffect, useRef, type ReactNode } from 'react'
+import { motion } from 'motion/react'
 import { useTranslation } from 'react-i18next'
 import { AvatarBadge } from '../avatars/AvatarBadge'
 import type { Person } from '../engine/model'
@@ -46,7 +47,16 @@ export function Title({ title, sub, tag }: { title: string; sub?: string; tag?: 
   )
 }
 export function Footer({ children }: { children: ReactNode }) {
-  return <div className="footer">{children}</div>
+  const ref = useRef<HTMLDivElement>(null)
+  useLayoutEffect(() => {
+    const footer = ref.current!, phone = footer.closest<HTMLElement>('.phone')!
+    const measure = () => phone.style.setProperty('--dock-height', `${footer.offsetHeight}px`)
+    measure()
+    const observer = new ResizeObserver(measure)
+    observer.observe(footer)
+    return () => observer.disconnect()
+  }, [])
+  return <div ref={ref} className="footer">{children}</div>
 }
 export function Action({
   children,
@@ -60,9 +70,10 @@ export function Action({
   disabled?: boolean
 }) {
   return (
-    <button className={secondary ? 'secondary' : 'primary'} onClick={onClick} disabled={disabled}>
+    <motion.button className={secondary ? 'secondary' : 'primary'} onClick={onClick} disabled={disabled}
+      whileTap={disabled ? undefined : { scale: 0.975 }} transition={{ duration: 0.1 }}>
       {children}
-    </button>
+    </motion.button>
   )
 }
 export function Portrait({
@@ -76,6 +87,31 @@ export function Portrait({
 }) {
   const reduced = useGame((s) => s.profile.reduced)
   return <AvatarBadge id={person.avatar} live={live} selected={selected} reduced={reduced} />
+}
+export function CharacterStage({ person, group = false, compact = false }: {
+  person: Pick<Person, 'avatar'>; group?: boolean; compact?: boolean
+}) {
+  return <div className={'character-stage' + (compact ? ' stage-compact' : '')} aria-hidden="true">
+    <span className="stage-glow" /><span className="stage-orbit" /><span className="stage-spark" />
+    <div className="stage-lead"><Portrait person={person} live /></div>
+    {group && <>
+      <span className="stage-friend friend-left"><Portrait person={{ avatar: 'pig' }} /></span>
+      <span className="stage-friend friend-right"><Portrait person={{ avatar: 'raccoon' }} /></span>
+    </>}
+  </div>
+}
+
+export function Stepper({ value, min, max, onChange, label }: {
+  value: number; min: number; max: number; onChange: (value: number) => void; label: string
+}) {
+  const { t } = useTranslation()
+  return <span className="stepper">
+    <button type="button" aria-label={t('decrease', { name: label })} disabled={value <= min} onClick={() => onChange(value - 1)}>−</button>
+    <select aria-label={label} value={value} onChange={e => onChange(+e.target.value)}>
+      {Array.from({ length: max - min + 1 }, (_, i) => <option key={i} value={i + min}>{i + min}</option>)}
+    </select>
+    <button type="button" aria-label={t('increase', { name: label })} disabled={value >= max} onClick={() => onChange(value + 1)}>+</button>
+  </span>
 }
 export function Strip({ people, selected }: { people: Person[]; selected?: string }) {
   const { t } = useTranslation()
@@ -102,10 +138,12 @@ export function PlayerCard({
   mark?: boolean
 }) {
   return (
-    <button
+    <motion.button
       className={'player-card ' + (selected ? 'chosen' : '')}
       aria-pressed={selected}
       onClick={onClick}
+      layout="position"
+      transition={{ layout: { type: 'spring', stiffness: 420, damping: 34 } }}
     >
       {selected && mark && (
         <i className="tick">
@@ -116,7 +154,7 @@ export function PlayerCard({
         <Portrait person={p} selected={selected} />
       </span>
       <strong>{p.name}</strong>
-    </button>
+    </motion.button>
   )
 }
 export function ChoiceArt({ chat }: { chat: boolean }) {

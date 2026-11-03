@@ -16,7 +16,7 @@
   "editHint": "Ubah {{name}}",
   "config": "Atur permainan",
   "configSub": "Pilih peran buat teman-temanmu.",
-  "composition": "Siapa saja perannya?",
+  "composition": "Susunan peran",
   "foolOptions": "Atur Fool",
   "whiteOptions": "Atur Mr. White",
   "whiteCanStart": "Mr. White boleh mulai dulu",
@@ -251,5 +251,10 @@
   },
   "setupReady": "{{count}} pemain siap. Baca kartu bergiliran.",
   "fixRoles": "Ubah peran",
-  "fixWords": "Ubah pilihan kata"
+  "fixWords": "Ubah pilihan kata",
+  "studio": {
+    "rosterTitle": "Siapa yang ikut?",
+    "roleOptions": "Peran tambahan",
+    "roleDetails": "Kenali tiap peran"
+  }
 }

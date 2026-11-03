@@ -32,7 +32,7 @@ type Effect = 'confetti' | 'blood' | 'wings' | 'hearts' | 'sparks'
 export function SceneEffects({ effect }: { effect: Effect }) {
   return <div className={'scene-effects effect-' + effect} aria-hidden="true">
     {Array.from({ length: effect === 'confetti' ? 32 : 14 }, (_, i) => <i key={i} style={{
-      '--i': i, '--x': `${(i * 37 + 7) % 100}%`, '--delay': `${-(i % 9) * .43}s`,
+      '--i': i, '--x': `${(i * 37 + 7) % 100}%`, '--delay': `${(i % 6) * .04}s`,
       '--drift': `${((i * 19) % 90) - 45}px`, '--spin': `${i * 47}deg`,
     } as CSSProperties} />)}
   </div>

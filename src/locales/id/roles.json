@@ -10,31 +10,37 @@
   "white": {
     "name": "Mr. White",
     "hint": "Tanpa kata. Pura-pura tahu! Jika keluar lewat voting, tebak kata Warga sekali untuk menang sendiri.",
-    "description": "Tanpa kata, jadi pura-pura tahu! Jika keluar lewat voting, tebak kata Warga sekali. Kalau benar, kamu menang sendiri."
+    "description": "Tanpa kata, jadi pura-pura tahu! Jika keluar lewat voting, tebak kata Warga sekali. Kalau benar, kamu menang sendiri.",
+    "short": "Tanpa kata. Tebak saat keluar."
   },
   "fool": {
     "name": "Fool",
     "hint": "Bikin teman memilihmu saat voting. Kalau kamu terpilih, kamu menang sendiri!",
     "noWordHint": "Tanpa kata. Pura-pura tahu, lalu bikin teman memilihmu saat voting untuk menang sendiri!",
-    "description": "Dapat kata ketiga atau tanpa kata. Bikin teman memilihmu saat voting. Kalau terpilih, kamu menang sendiri dan game selesai!"
+    "description": "Dapat kata ketiga atau tanpa kata. Bikin teman memilihmu saat voting. Kalau terpilih, kamu menang sendiri dan game selesai!",
+    "short": "Dapat kata atau tanpa kata. Menang saat dipilih."
   },
   "couple": {
     "name": "Pasangan",
     "hint": "Menang kalau tinggal kalian berdua. Satu keluar, pasangannya ikut keluar.",
-    "description": "Menang kalau tinggal kalian berdua. Satu keluar, pasangannya ikut keluar. Poin hanya dari menang berdua."
+    "description": "Menang kalau tinggal kalian berdua. Satu keluar, pasangannya ikut keluar. Poin hanya dari menang berdua.",
+    "short": "Satu keluar, pasangannya ikut keluar."
   },
   "revenger": {
     "name": "Pembalas",
     "hint": "Saat keluar, pilih satu pemain yang masih main untuk ikut keluar.",
-    "description": "Kalau kamu keluar, pilih satu pemain yang masih main untuk ikut keluar. Berlaku apa pun penyebabnya."
+    "description": "Kalau kamu keluar, pilih satu pemain yang masih main untuk ikut keluar. Berlaku apa pun penyebabnya.",
+    "short": "Saat keluar, ajak satu pemain ikut keluar."
   },
   "justice": {
     "name": "Hakim",
     "hint": "Saat voting pemain seri, kamu pilih siapa yang keluar. Harus masih main dan tidak ikut seri.",
-    "description": "Kalau suara terbanyak seri, kamu pilih siapa yang keluar. Kamu harus masih main dan tidak ikut seri."
+    "description": "Kalau suara terbanyak seri, kamu pilih siapa yang keluar. Kamu harus masih main dan tidak ikut seri.",
+    "short": "Pilih siapa yang keluar saat voting seri."
   },
   "mime": {
     "name": "Pantomim",
-    "description": "Beri petunjuk pakai gerakan saja. Tanpa suara atau tulisan! Ganti pemain tiap ronde setelah semua efek selesai."
+    "description": "Beri petunjuk pakai gerakan saja. Tanpa suara atau tulisan! Ganti pemain tiap ronde setelah semua efek selesai.",
+    "short": "Petunjuk pakai gerakan saja."
   }
 }

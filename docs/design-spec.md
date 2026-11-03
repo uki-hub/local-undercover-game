@@ -1,6 +1,7 @@
 # Undercover — visual and interaction specification
 
 - **Approved target**
+  - Party Studio was approved on 4 November 2026 and supersedes the older board's screen composition and full-phone role colors. [Original audit and proposal](./visual-upgrade-proposal.md).
   - [goal-design.png](./goal-design.png) is the user-supplied visual goal, copied unchanged from the attachment.
   - Reference dimensions: 1536 × 1024; it is a design board showing three separate mobile screens.
   - Recreate its visual language through functional components; each phone displays one current game screen.
@@ -10,7 +11,7 @@
   - Premium, playful, friendly; tactile depth from layered surfaces, rounded corners, lighting, and restrained shadows.
   - White and cool gray form the surfaces; saturated blue marks primary actions and selection.
   - Very dark navy/gray text, readable contrast, clear large headings, generous spacing.
-  - Animals use natural warm colors. Setup and ordinary input screens retain white/blue/gray; public event scenes use the role palettes described below.
+  - Animals use natural warm colors. White/blue/gray remains dominant on every screen, including events and results. Small role emblems retain their identifying colors.
   - Preserve the goal's raised blue buttons, thin luminous blue outlines, soft ambient shadows, and circular animal badges.
 
 - **Language and copy**
@@ -23,8 +24,8 @@
   - Expose no English language option until its resources are supplied and enabled; see the [language-pack plan](./language-and-word-packs.md).
 
 - **Starting tokens — tune by comparison**
-  - Primary blue approximately #0875FF; deep accent #0754DC; ink #10162E.
-  - Page #F4F8FC; surface #FFFFFF; muted surface #EAF1F8; secondary text #67758E; pale blue #CFE3FF.
+  - Primary blue #0875FF; deep accent #0754DC; ink #17233C.
+  - Page #F4F7FB; surface #FFFFFF; muted surface #EAF2FF; secondary text #60718A; divider #DFE7F0.
   - Spacing rhythm: 4/8/12/16/24/32 pixels. Small screen horizontal padding around 20 pixels.
   - Cards approximately 20–28 pixel radii; major controls approximately 18–24 pixels; badges circular.
   - Body text 16–18 pixels; major headings approximately 28–36 pixels; word reveal approximately 36–48 pixels, shrinking safely for phrases.
@@ -35,15 +36,15 @@
   - Target portrait 360–480 CSS pixels wide; validate 320-pixel width and 360×640/390×844/430×932 viewports.
   - Constrain the game column on wider screens; one screen remains centered.
   - Use safe-area padding and a viewport strategy that tolerates mobile browser chrome and keyboard changes.
-  - Keep primary actions near the bottom when space permits; allow content to scroll on smaller screens without overlap.
+  - Primary actions use a persistent bottom dock with safe-area and visual-viewport keyboard offsets. Its measured height reserves content space; long lists and the last item scroll above it. Landscape on short displays returns actions to document flow.
   - Landscape gets a gentle portrait suggestion with reachable controls, rather than an assumed browser orientation lock.
   - Touch targets at least 44×44 pixels; no essential hover gestures.
   - Reserve reveal-card space in both concealed/held states so the hold control does not jump. At short phone heights (690 CSS pixels or less), omit the decorative reveal portrait/icon and use compact copy. Long custom words shrink while remaining readable. Test the held content itself, not only controls after release.
 
 - **Reference screen 1 — player setup**
   - Brand at top, settings access, large Siap bermain? heading.
-  - Two-column player card grid: circular animal badge, visible name, selected outline.
-  - Tap a player to edit name/avatar; changing the avatar updates their card.
+  - Small character stage above a compact two-column name/avatar grid; at nine or more players, omit the stage and use compact single-column rows. Keep names visible and primary actions reachable for all 20 players.
+  - Tap a player to open a nonmodal name/avatar edit sheet. Focus starts in the name field; save/cancel/Escape returns focus to the selected roster card. Header/settings and setup navigation remain available. Escape explicitly cancels the player draft.
   - Add-player action, player-count validation, bottom Lanjut control leading to role settings.
   - Avatar picker shows all 10 choices, selected state, name, and live selected preview.
   - Longer rosters scroll; names and actions remain distinguishable when avatars repeat.
@@ -51,7 +52,7 @@
 
 - **Step-by-step setup**
   - Show one step at a time: Pemain → Peran → Kata → Waktu. Remove the “Pilihan mode” preset cards.
-  - A compact numbered breadcrumb bar sits above the heading on every setup step, including player editing. Use an ordered navigation list, chevrons, a blue current-step marker and `aria-current="step"`; each step is a clickable button with at least a 44×44 touch target.
+  - A compact numbered breadcrumb bar sits above the heading on every setup step, including player editing. Use an ordered navigation list, a blue current-step underline and `aria-current="step"`; each step is a clickable button with at least a 44×44 touch target.
   - Lanjut/Kembali move sequentially. The bar can jump to any step without losing saved choices or unsaved player drafts. Settings/rules return to the same step. Step changes scroll to the top and focus the main content.
   - Peran contains role counts/toggles and conditional Fool options. Kata contains word source/category/difficulty and pool feedback. Waktu contains optional clue/discussion timers and the only Bagikan peran action.
   - Invalid role combinations block Peran's Lanjut; missing/empty word pools block Kata's Lanjut. Validate all settings again on Waktu; jumping ahead cannot enable an invalid start. Provide a direct correction action to the relevant step.
@@ -75,14 +76,14 @@
 - **Other required screens**
   - Home: resume available match, start setup, rules, offline-ready status, settings access.
   - Home also offers an optional four-step guide. Settings offers confirmed score reset outside unfinished games. Failed storage reads/writes show a localized in-memory-play notice outside held-card layouts.
-  - Role settings: counts/toggles and invalid-combination explanations, followed by separate word and timer steps.
+  - Role settings: a civilian-count summary, Undercover decrement/native-select/increment control, compact switch rows and invalid-combination explanations. Full role explanations remain in optional “Kenali tiap peran” details. Separate word/timer steps and every independent role option remain available.
   - Enabling Fool reveals two independent toggles: “Fool mendapat kata” and “Fool boleh mulai dulu”. Both start on. Helper copy explains the third-word/no-word choice and first-round opener eligibility. Hiding Fool or changing setup steps preserves these preferences.
   - Enabling Mr. White reveals “Mr. White boleh mulai dulu”, initially on. Helper copy explains that disabling it only excludes Mr. White from the first-round opener draw, with a clue turn after the opener. Hiding the role or changing steps preserves the choice independently of Fool's options.
   - New matches skip the introduction round; private word handoffs contain all personal information together. Legacy introduction saves remain supported.
   - Public ready/clue/discussion: current speaker, Mime gesture cue, survivors, optional timer, advance controls.
   - Dedicated Mime splash: prominent player name/portrait, Mime emblem, current round, gesture-only instructions and first speaker. Show after dealing and after each reassignment; its primary action starts clues directly.
   - Elimination ballot: living target cards, selection, confirm; exclude current voter.
-  - Tie reel: public portraits/names or action art scroll past a fixed gold pointer. A fast start becomes a long deceleration. Dark burgundy turns red with double-beat pulses, subtle zoom/bounce, an ECG trace and an impact burst. The centered card and explicit named result agree.
+  - Tie reel: public portraits/names or action art scroll past a fixed blue pointer inside a slate-blue stage. Keep the surrounding shell light. Fast start, long deceleration, blue heartbeat pulses, subtle zoom/bounce, ECG and impact burst preserve the existing timing and committed result.
   - Justice decision: tied candidates only and an explicit confirmation.
   - Elimination/effects: affected player, role reveal, understandable ordered death chain.
   - Revenge choice: valid living targets only. Mr. White guess: one text entry, clear confirmation and outcome.
@@ -97,8 +98,11 @@
   - Featured animals blink/yawn/perform species idles; previews in lists stay inexpensive.
   - Reduced motion removes large movements and idle clips while keeping clear state changes.
   - Cosmetic animal motion remains independent of role, word, vote, and game outcome. Role/event animations illustrate already committed public events.
-  - Full-phone event palettes: green Warga victory, violet Undercover, ice-blue White, gold/orange Fool, rose Couple, purple Justice, red revenge/death, blue clues and slate draw/failed guess. Header and safe areas inherit the scene palette.
-  - Justice uses animated ivory wings behind floating scales; Fool and faction wins use confetti; deaths use stylized falling red droplets; Couple uses floating hearts. Emblems enter with a brief scale/tilt spring and gently hover. No flashing effects.
+  - Event shells remain white/cool gray with stable blue primary actions. Themed role emblems, named players and clear summaries distinguish outcomes without replacing the app palette.
+  - Justice uses pale blue wings, wins use blue/gray confetti, eliminations use restrained blue/gray shards, and Couple uses pale hearts. Particles finish within 1.8 seconds; emblems settle within 2.65 seconds. Essential controls are usable immediately. No flashing or indefinite celebration loops.
+  - Shared character stages use brief entrances, orbital framing and the existing featured live avatar. Player cards use position springs and selected-portrait feedback. Clues show public turn progress; optional timer rings retain the existing pause/chime/manual-advance behavior.
+  - Action ballots start with equal neutral choices. Selecting adds blue emphasis and a check. The confirmation button remains present but disabled until a choice is made; each new actor gets a fresh unselected ballot.
+  - The app shell stays mounted during match revisions; only the match view remounts to clear actor-local state. There are no outgoing private-view or secret-text animations. Scores are committed by the existing engine; the +1 animation is decorative.
   - Elimination scenes put the affected player's name in the heading and spell out role(s), cause and next effect in sentences; chain entries include each player's role. Justice/revenge/guess summaries name the actor. Continue actions are immediate. Never auto-dismiss. Motion preferences preserve static art, text and color.
 
 - **Visual acceptance**

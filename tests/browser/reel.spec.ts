@@ -67,7 +67,7 @@ test('static reel centers every small tie outcome and both ends of a 20-player t
   }
 })
 
-test('reel decelerates, red heartbeat and zoom intensify, then committed card lands with an impact', async ({ browser }) => {
+test('reel decelerates, blue heartbeat and zoom intensify, then committed card lands with an impact', async ({ browser }) => {
   const context = await browser.newContext({ baseURL: test.info().project.use.baseURL!, viewport: { width: 390, height: 844 }, reducedMotion: 'no-preference', serviceWorkers: 'block' })
   const p = await context.newPage(), m = tied('target', 3, 1)
   const errors: string[] = []

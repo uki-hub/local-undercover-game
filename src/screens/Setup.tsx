@@ -1,7 +1,8 @@
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { ANIMALS, type AnimalId } from '../avatars/manifest'
-import { Action, Footer, Icon, PlayerCard, Portrait, Title } from '../components/ui'
+import { Action, CharacterStage, Footer, Icon, PlayerCard, Portrait, Stepper, Title } from '../components/ui'
+import { EditSheet } from '../components/EditSheet'
 import {
   categories,
   difficulties,
@@ -46,6 +47,14 @@ export function Roster({ next, home }: { next: () => void; home: () => void }) {
   const [selected, select] = useState(roster[0].id)
   const editing = useSetupDrafts((s) => s.player), edit = useSetupDrafts((s) => s.editPlayer)
   const [error, invalid] = useState(false)
+  const wasEditing = useRef(false)
+  useEffect(() => {
+    if (editing) wasEditing.current = true
+    else if (wasEditing.current) {
+      wasEditing.current = false
+      document.querySelector<HTMLButtonElement>('.roster-panel .player-card.chosen')?.focus({ preventScroll: true })
+    }
+  }, [editing])
   if (editing) {
     const exists = roster.some((p) => p.id === editing.id)
     function save() {
@@ -63,8 +72,7 @@ export function Roster({ next, home }: { next: () => void; home: () => void }) {
       edit(null)
     }
     return (
-      <>
-        <Title title={t(exists ? 'game:editPlayer' : 'game:newPlayer')} />
+      <EditSheet title={t(exists ? 'game:editPlayer' : 'game:newPlayer')} cancel={() => edit(null)}>
         <div className="hero-avatar compact">
           <Portrait person={editing} live selected />
         </div>
@@ -112,13 +120,15 @@ export function Roster({ next, home }: { next: () => void; home: () => void }) {
             )}
           </div>
         </Footer>
-      </>
+      </EditSheet>
     )
   }
   return (
     <>
       <Title title={t('game:setupTitle')} sub={t('game:setupSub')} />
-      <div className="roster-panel">
+      {roster.length <= 8 && <CharacterStage person={roster.find(p => p.id === selected) ?? roster[0]} group compact />}
+      <div className={'roster-panel' + (roster.length > 8 ? ' roster-large' : '')}>
+        <div className="roster-caption"><h2>{t('game:studio.rosterTitle')}</h2><span>{t('count', { count: roster.length })}</span></div>
         <div className="grid-players">
           {roster.map((p) => (
             <PlayerCard
@@ -185,29 +195,28 @@ export function Config({
       <Title title={t('game:setupTitles.' + step)} sub={t('game:setupHints.' + step)} />
       {step === 'roles' && (
         <>
-          <section>
+          <section className="role-composition">
             <h2>{t('game:composition')}</h2>
-            <label className="row">
+            <div className="row">
               <span className="role-config"><RoleEmblem role="undercover" />{t('roles:undercover.name')}</span>
-              <select value={s.undercover} onChange={(e) => set({ undercover: +e.target.value })}>
-                {Array.from({ length: 9 }, (_, i) => (
-                  <option key={i}>{i + 1}</option>
-                ))}
-              </select>
-            </label>
+              <Stepper label={t('roles:undercover.name')} value={s.undercover} min={1} max={9} onChange={undercover => set({ undercover })} />
+            </div>
             <p className="muted role-config civilian-count">
               <RoleEmblem role="civilian" />
               {t('game:civilians', {
                 count: p.roster.length - s.undercover - Number(s.white) - Number(s.fool),
               })}
             </p>
+          </section>
+          <section className="role-options">
+            <h2>{t('game:studio.roleOptions')}</h2>
             {(['white', 'fool', 'couple', 'revenger', 'justice', 'mime'] as const).map((k) => (
               <label key={k} className="toggle">
                 <span className="role-config">
                   <RoleEmblem role={k} />
                   <span>
                     <b>{t('roles:' + k + '.name')}</b>
-                    <small>{t('roles:' + k + '.description')}</small>
+                    <small>{t('roles:' + k + '.short')}</small>
                   </span>
                 </span>
                 <input
@@ -254,6 +263,11 @@ export function Config({
           )}
         </>
       )}
+      {step === 'roles' && <details className="role-guide">
+        <summary>{t('game:studio.roleDetails')}<Icon name="book" size={17} /></summary>
+        <div>{(['civilian', 'undercover', 'white', 'fool', 'couple', 'revenger', 'justice', 'mime'] as const).map(role =>
+          <p key={role}><b>{t('roles:' + role + '.name')}</b> {t('roles:' + role + '.description')}</p>)}</div>
+      </details>}
       {step === 'words' && (
         <section>
           <h2>{t('game:content')}</h2>

@@ -78,5 +78,7 @@
   "portrait": "Potret {{name}}",
   "storageWarning": "Perubahan belum tersimpan. Masih bisa main, tapi progres dan skor baru bisa hilang saat halaman ditutup atau dimuat ulang.",
   "resetScores": "Nolkan skor sesi",
-  "resetScoresConfirm": "Nolkan semua skor? Pemain, pengaturan, dan kata tetap disimpan."
+  "resetScoresConfirm": "Nolkan semua skor? Pemain, pengaturan, dan kata tetap disimpan.",
+  "increase": "Tambah {{name}}",
+  "decrease": "Kurangi {{name}}"
 }

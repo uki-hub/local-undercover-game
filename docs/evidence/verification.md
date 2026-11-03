@@ -115,3 +115,33 @@ The GitHub Pages release workflow publishes the tested production artifact after
 ## Remaining verification
 
 Phone dimensions and touch events were emulated on desktop Chromium. Physical Android Chrome, iPhone Safari, mobile keyboards, screen readers, mobile GPU/battery behavior and in-person word fairness/role balance still need hands-on checks.
+
+## Party Studio — 4 November 2026
+
+Implemented the approved [Party Studio proposal](../visual-upgrade-proposal.md). The engine, match/session schema, role rules, dictionary and dependency lockfile are unchanged.
+
+- Shared white/blue/gray presentation now covers setup, handoffs, clues, ballots, events, reel and results. Character stages retain the single demand-rendered live canvas and static list/failure previews.
+- The measured bottom dock stays reachable with 20 players and fully enabled roles at 320×568, 390×844 and 430×932. Last roster items scroll above it. All three count-stepper targets are at least 44×44px. Header and setup navigation remain accessible; count selection works through native select and increment/decrement buttons.
+- Player sheets focus the name field, preserve drafts through settings/step navigation, and return focus on save/cancel. Escape inside the sheet explicitly cancels; Escape in settings/rules preserves the draft. No extra mandatory setup or confirmation step was added.
+- Ballots start neutral with a disabled, reserved confirmation control. Normal-motion checks confirm its position stays stable, the next actor sees no previous selection, and the app header stays mounted. Existing handoff/reload/secret-release/blur/cancel tests pass.
+- Held White+Justice, White+Couple, long-word and legacy introduction cards fit all four existing phone sizes without moving the hold control or overflowing the card. Secret content still unmounts immediately; no outgoing private-content animation was introduced.
+- Countdown rings retain timer pause, reminder, chime and manual advance. Event particles finish within 1.8 seconds; emblem motion finishes within 2.65 seconds. The finite-celebration test confirms controls are immediately usable and all event animations settle. OS/app reduced motion and failed-3D fallback pass.
+- The blue/gray reel retains its 6.6-second sequence, committed outcomes, exact landing, skip/reload/resize behavior and public secrecy. Offline reopen/completion, install/audio, updates, solo wins, score idempotency and rematches remain covered.
+
+Checks run:
+
+| Command | Result |
+| --- | --- |
+| `npm run typecheck` | Passed |
+| `npm run lint` | Passed without warnings |
+| `npm run validate:content` | Passed: five namespaces, 400 Indonesian triples |
+| `npm test` | 54 tests passed |
+| `npm run build` | Passed; 29 precache entries, 1,914.47 KiB; no added dependencies |
+| `npm run test:browser` | 42 cases passed on the complete run; the remaining reel case passed on an unchanged targeted retry after a Windows screenshot-file open error. All 43 cases passed across these runs. |
+| `npm run test:browser -- tests/browser/setup.spec.ts tests/browser/studio.spec.ts tests/browser/fool-options.spec.ts tests/browser/white-options.spec.ts` | 11 passed after the final 44px stepper-target adjustment |
+
+The production build retains two nonblocking Zod comment-annotation warnings; the browser runner retains its `NO_COLOR`/`FORCE_COLOR` notices. Earlier development runs exposed and fixed native count-control labeling and long private-card sizing; old absent-confirmation assertions were updated to require disabled, unselected ballots instead. Browser tests use the production repository subpath. No publication was performed.
+
+Visually reviewed refreshed [lobby](setup-390.png), [held card](reveal-390.png), [neutral ballot](action-390.png), [results](results-390.png), [event gallery](events-gallery.webp), [Justice](justice-motion.png), [reel result](tie-reel-result-390.png) and screen contact sheet. Full-page result captures include the viewport-fixed dock; the score list scrolls behind it with space reserved below the last row.
+
+Physical Android/iPhone, real keyboard/safe-area behavior, screen readers and mobile frame/battery measurements remain unverified. Desktop emulation is not a phone-performance measurement.

@@ -43,6 +43,9 @@
   - Services: random selection, storage, visibility handling, asset loading, offline updates.
   - Screen navigation follows engine state; internal match phases are not browser-history entries.
   - Animation completion never decides votes, random outcomes, or deaths.
+  - Party Studio presentation: `CharacterStage`, shared action controls, measured `Footer` dock and nonmodal `EditSheet`. A `ResizeObserver` publishes dock height; visual-viewport events update keyboard offsets and available height. CSS reserves space so content remains scrollable above the dock.
+  - App shell keys follow the active setup/panel screen. `MatchScreen` keys include match ID and revision, preserving actor-state resets without remounting the header. Private content unmounts immediately; no `AnimatePresence` or browser view-transition capture retains it.
+  - Count steppers retain a labeled native select and independent increment/decrement buttons, outside a wrapping label. Compact role text is localized separately from the full optional explanations. Countdown rings wrap the existing timer state and never auto-advance.
 
 - **State machine**
   - Home → `roster` (Pemain) → `roles` (Peran) → `words` (Kata) → `timers` (Waktu) → private word handoffs (word/special ability/partner combined; Warga/Undercover identities hidden).

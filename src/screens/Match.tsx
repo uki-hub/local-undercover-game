@@ -3,6 +3,7 @@ import { flushSync } from 'react-dom'
 import { useTranslation } from 'react-i18next'
 import {
   Action,
+  CharacterStage,
   ChoiceArt,
   Footer,
   Icon,
@@ -107,7 +108,7 @@ function Reveal({ p, intro, next, reminder = false }: { p: Person; intro: boolea
       <Title title={t(intro ? 'game:intro' : 'game:word')} tag={t('game:turn', { name: p.name })} />
       <div className="reveal-body">
       <div className="hero-avatar reveal-avatar">
-        <Portrait person={p} live selected />
+        <CharacterStage person={p} />
       </div>
       <div className={'secret-card ' + (held ? 'exposed' : '')}>
         <span className="eye">
@@ -193,7 +194,7 @@ function Ballot({
           tag={t('game:turn', { name: p.name })}
         />
         <div className="hero-avatar">
-          <Portrait person={p} live selected />
+          <CharacterStage person={p} />
         </div>
         <label className="field">
           {t('game:guessLabel')}
@@ -217,13 +218,13 @@ function Ballot({
     <div className={'ballot-layout ' + (action ? 'action-ballot' : '')}>
       <Strip people={people} selected={p.id} />
       {(phase === 'justice' || phase === 'revenge') && <div className="center"><RoleBadge role={phase === 'justice' ? 'justice' : 'revenger'} /></div>}
-      <Title title={t('game:' + phase)} sub={t('game:' + phase + 'Sub')} />
+      <Title title={t('game:' + phase)} sub={t('game:' + phase + 'Sub')} tag={t('game:turn', { name: p.name })} />
       {action ? (
         <div className="action-options">
           {options.map((id, i) => (
             <button
               key={id}
-              className={'action-choice ' + (!i ? 'blue' : '') + (choice === id ? ' picked' : '')}
+              className={'action-choice' + (choice === id ? ' picked' : '')}
               aria-pressed={choice === id}
               onClick={() => select(id)}
             >
@@ -232,7 +233,7 @@ function Ballot({
                 <strong>{t('game:' + id)}</strong>
                 <small>{t('game:' + id + 'Sub')}</small>
               </span>
-              <Icon name={choice === id ? 'check' : 'next'} />
+              <span className="choice-check">{choice === id && <Icon name="check" size={16} />}</span>
             </button>
           ))}
         </div>
@@ -250,7 +251,7 @@ function Ballot({
         </div>
       )}
       <Footer>
-        {choice && <Action onClick={() => submit(choice)}>{t('game:confirmChoice')}</Action>}
+        <Action disabled={!choice} onClick={() => submit(choice)}>{t('game:confirmChoice')}</Action>
         <p className="muted center">{t('game:ballotNote')}</p>
       </Footer>
     </div>
@@ -334,7 +335,7 @@ export function MatchScreen({
     const owner = people.find((o) => o.id === reminder)!
     if (!reminderOpen) return <div className="handoff">
       <Title title={t('game:handoff', { name: owner.name })} sub={t('game:handoffSub')} />
-      <div className="hero-avatar"><Portrait person={owner} live selected /></div>
+      <div className="hero-avatar"><CharacterStage person={owner} /></div>
       <Footer>
         <Action onClick={() => openReminder(true)}>{t('game:readyAs', { name: owner.name })}</Action>
         <Action secondary onClick={finish}>{t('game:backToGame')}</Action>
@@ -364,7 +365,7 @@ export function MatchScreen({
             }
           />
           {['justice', 'revenge', 'guess'].includes(m.phase) ? <EventArt role={m.phase === 'justice' ? 'justice' : m.phase === 'revenge' ? 'revenger' : 'white'} effect={m.phase === 'justice' ? 'wings' : 'sparks'} /> : <div className="hero-avatar">
-            <Portrait person={p} live selected />
+            <CharacterStage person={p} />
           </div>}
           <div className="note">
             <Icon name="phone" />
@@ -405,8 +406,11 @@ export function MatchScreen({
     return (
       <>
         <Title title={t('game:wins.' + m.winner)} tag={t('game:results')} />
+        <div className="result-stage">
+        <CharacterStage person={person(m.players.find(o => awards.has(o.id)) ?? m.players[0])} group compact />
         <div className="victory-medallion">
           {winnerRole(m.winner) ? <RoleEmblem role={winnerRole(m.winner)!} /> : <Icon name="trophy" size={50} />}
+        </div>
         </div>
         <section>
           <h2>{t('game:allWords')}</h2>
@@ -420,7 +424,7 @@ export function MatchScreen({
         <section>
           <h2>{t('game:scoreboard')}</h2>
           {m.players.map((o) => (
-            <div className="result-player" key={o.id}>
+            <div className={'result-player' + (awards.has(o.id) ? ' score-winner' : '')} key={o.id}>
               <span className="tiny-avatar">
                 <Portrait person={person(o)} />
               </span>
@@ -515,8 +519,9 @@ export function MatchScreen({
           sub={t('game:clue')}
         />
         <div className="hero-avatar">
-          <Portrait person={p} live selected />
+          <CharacterStage person={p} />
         </div>
+        <div className="turn-progress" aria-hidden="true">{people.map((o, i) => <span key={o.id} className={i <= m.cursor ? 'turn-done' : ''} />)}</div>
         {m.mime === p.id && <div className="center"><RoleBadge role="mime" /></div>}
         <p className="note">{t(m.mime === p.id ? 'game:mimeClue' : 'game:clueSub')}</p>
         <Timer seconds={m.settings.clueSeconds} token={m.id + '-' + m.revision} />

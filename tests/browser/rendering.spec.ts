@@ -10,7 +10,7 @@ test('featured chicken renders in the game and a failed 3D chunk still permits p
     const page = await context.newPage()
     if (failChunk) await page.route('**/assets/LiveAnimal-*.js', route => route.abort())
     await page.goto('./')
-    if (!failChunk) await expect(page.locator('.home-badge img')).toHaveCSS('visibility', 'hidden')
+    if (!failChunk) await expect(page.locator('.home-stage .stage-lead img')).toHaveCSS('visibility', 'hidden')
     await page.getByRole('button', { name: 'Mulai bermain' }).click()
     await page.getByRole('button', { name: 'Adit', exact: true }).click()
     await page.getByRole('button', { name: 'Ayam', exact: true }).click()

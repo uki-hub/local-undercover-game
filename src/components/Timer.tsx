@@ -46,8 +46,12 @@ export function Timer({ seconds, token }: { seconds: number; token: string }) {
     }
   }, [seconds, token])
   return seconds ? (
-    <p className="timer" role="timer">
-      {left ? t('seconds', { count: left }) : t('timeUp')}
+    <p className={'timer' + (!left ? ' timer-expired' : '')} role="timer" data-urgent={left > 0 && left <= 5}>
+      <svg className="timer-ring" viewBox="0 0 100 100" aria-hidden="true">
+        <circle className="timer-track" cx="50" cy="50" r="45" />
+        <circle className="timer-remaining" cx="50" cy="50" r="45" pathLength="1" strokeDasharray="1" strokeDashoffset={1 - left / seconds} />
+      </svg>
+      <span>{left ? t('seconds', { count: left }) : t('timeUp')}</span>
     </p>
   ) : null
 }

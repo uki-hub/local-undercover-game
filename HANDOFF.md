@@ -2,6 +2,8 @@
 
 **Implementation delivered.** Use [README](./README.md) for setup and [verification](./docs/evidence/verification.md) for test results, screenshots and remaining device checks. The following handoff preserves the original brief and pre-development inventory.
 
+**Party Studio — 4 November 2026:** Implemented the approved [visual redesign](./docs/visual-upgrade-proposal.md): white/blue/gray stages, compact setup, player edit sheets, persistent action dock, neutral ballots, countdown rings and finite event effects. Game rules, private handoffs and saved-match format remain unchanged. See [verification](./docs/evidence/verification.md#party-studio--4-november-2026).
+
 Latest setup: Pemain → Peran → Kata → Waktu, with clickable breadcrumb navigation and no “Pilihan mode” picker. UI explanations use shorter, casual Indonesian for teens. See the updated design specification and README for validation/navigation behavior.
 
 The production game now supports standalone installation, an offline soundtrack and public-event sounds. Install and audio controls live in **Pengaturan**. [Player instructions](./README.md#install-and-sound)

@@ -141,7 +141,7 @@ test('partner elimination summary names the player, role and cause', async ({ pa
   await expect(button(page, 'Lanjut')).toBeInViewport()
 })
 
-test('Fool vote ends play before revenge, keeps golden victory on reload and scores once', async ({ page }) => {
+test('Fool vote ends play before revenge, keeps victory on reload and scores once', async ({ page }) => {
   const m = fresh()
   m.players[0].role = 'fool'
   m.players[0].modifier = 'revenger'

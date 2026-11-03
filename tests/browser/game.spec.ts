@@ -121,13 +121,13 @@ test('classic match, sealed interruptions, cold offline reopen, rematch and Page
   await button(page, 'Pilih langkah berikutnya').click()
   for (let i = 0; i < 6; i++) {
     await handoff(page)
-    await expect(button(page, 'Pilih ini')).toHaveCount(0)
+    await expect(button(page, 'Pilih ini')).toBeDisabled()
     if (i === 0) {
       await shot(page, 'action-390')
       await button(page, /^Petunjuk lagi/).click()
       await resume(page)
       await handoff(page)
-      await expect(button(page, 'Pilih ini')).toHaveCount(0)
+      await expect(button(page, 'Pilih ini')).toBeDisabled()
     }
     await button(page, /^Voting Pilih/).click()
     await button(page, 'Pilih ini').click()
@@ -195,7 +195,10 @@ test('refresh private choices and wheel preserves sealed outcomes', async ({ pag
     expect((await snapshot(page)).revision).toBe(m.revision)
     await handoff(page)
     if (phase === 'guess') await expect(page.getByRole('textbox')).toHaveValue('')
-    else await expect(button(page, 'Pilih ini')).toHaveCount(0)
+    else {
+      await expect(button(page, 'Pilih ini')).toBeDisabled()
+      await expect(page.locator('.player-card[aria-pressed="true"], .action-choice[aria-pressed="true"]')).toHaveCount(0)
+    }
   }
   const m = fresh()
   m.phase = 'wheel'

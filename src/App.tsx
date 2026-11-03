@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from 'react'
 import { MotionConfig, motion, useReducedMotion } from 'motion/react'
 import { useTranslation } from 'react-i18next'
-import { Action, Footer, Icon, Portrait, Title } from './components/ui'
+import { Action, CharacterStage, Footer, Icon, Title } from './components/ui'
 import { Config, Customs, Roster, SetupNav, type SetupStep } from './screens/Setup'
 import { MatchScreen } from './screens/Match'
 import { useGame } from './store/session'
@@ -101,8 +101,25 @@ export function App() {
   const current = panel ?? screen,
     key = current === 'match' ? match?.id + '-' + match?.revision : current
   useEffect(() => {
+    const viewport = window.visualViewport
+    const resize = () => {
+      document.documentElement.style.setProperty('--app-height', `${viewport?.height ?? window.innerHeight}px`)
+      document.documentElement.style.setProperty('--keyboard-inset', `${Math.max(0, window.innerHeight - (viewport?.height ?? window.innerHeight) - (viewport?.offsetTop ?? 0))}px`)
+    }
+    resize()
+    viewport?.addEventListener('resize', resize)
+    viewport?.addEventListener('scroll', resize)
+    window.addEventListener('resize', resize)
+    return () => {
+      viewport?.removeEventListener('resize', resize)
+      viewport?.removeEventListener('scroll', resize)
+      window.removeEventListener('resize', resize)
+    }
+  }, [])
+  useEffect(() => {
     window.scrollTo(0, 0)
-    document.querySelector('main')?.focus({ preventScroll: true })
+    const focus = document.querySelector<HTMLElement>('[role="dialog"] input') ?? document.querySelector('main')
+    focus?.focus({ preventScroll: true })
   }, [key])
   return (
     <MotionConfig reducedMotion={reduced ? 'always' : 'never'}>
@@ -111,6 +128,7 @@ export function App() {
         className={'phone ' + (reduced ? 'reduce' : '')}
         data-screen={current}
         data-theme={current === 'match' && match ? matchTheme(match) : undefined}
+        data-phase={current === 'match' ? match?.phase : undefined}
         onClickCapture={(e) => {
           if (e.detail > 1) {
             e.preventDefault()
@@ -146,10 +164,10 @@ export function App() {
         <p className="landscape">{t('landscape')}</p>
         <motion.div
           className={'screen ' + current}
-          key={key}
-          initial={reduced ? false : { opacity: 0.8, y: 5 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: reduced ? 0 : 0.18 }}
+          key={current}
+          initial={reduced ? false : { opacity: 0.5 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: reduced ? 0 : 0.22 }}
         >
           {!panel && (screen === 'roster' || screen === 'roles' || screen === 'words' || screen === 'timers') && (
             <SetupNav step={screen} go={go} />
@@ -270,19 +288,7 @@ export function App() {
             </>
           ) : screen === 'home' ? (
             <>
-              <div className="home-stage">
-                <span className="orbit o1" />
-                <span className="orbit o2" />
-                <div className="home-badge">
-                  <Portrait person={{ avatar: 'cat' }} live selected />
-                </div>
-                <span className="satellite left">
-                  <Portrait person={{ avatar: 'chicken' }} />
-                </span>
-                <span className="satellite right">
-                  <Portrait person={{ avatar: 'raccoon' }} />
-                </span>
-              </div>
+              <div className="home-stage"><CharacterStage person={{ avatar: 'cat' }} group /></div>
               <Title title={t('game:homeTitle')} tag={t('game:homeTag')} sub={t('game:homeSub')} />
               <div className="home-meta">
                 <Icon name="people" size={17} />
@@ -319,6 +325,7 @@ export function App() {
           ) : (
             match && (
               <MatchScreen
+                key={key}
                 rematch={() => {
                   if (pack) launch(pack, match.players, match.settings)
                 }}

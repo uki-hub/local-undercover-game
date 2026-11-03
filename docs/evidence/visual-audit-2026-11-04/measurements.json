@@ -1,0 +1,164 @@
+{
+  "date": "2026-11-04",
+  "browser": "Desktop Chrome; touch emulation; normal motion",
+  "metrics": [
+    {
+      "screen": "current-home-390",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "documentHeight": 866,
+      "horizontalOverflow": false,
+      "canvasCount": 1,
+      "animations": 0,
+      "primary": [
+        {
+          "text": "Mulai bermain",
+          "top": 622,
+          "bottom": 678,
+          "inViewport": true
+        }
+      ]
+    },
+    {
+      "screen": "current-roster-390",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "documentHeight": 846,
+      "horizontalOverflow": false,
+      "canvasCount": 0,
+      "animations": 0,
+      "primary": [
+        {
+          "text": "Lanjut",
+          "top": 699,
+          "bottom": 760,
+          "inViewport": true
+        }
+      ]
+    },
+    {
+      "screen": "current-roles-390",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "documentHeight": 1326,
+      "horizontalOverflow": false,
+      "canvasCount": 0,
+      "animations": 0,
+      "primary": [
+        {
+          "text": "Lanjut",
+          "top": 1184,
+          "bottom": 1240,
+          "inViewport": false
+        }
+      ]
+    },
+    {
+      "screen": "current-roles-all-390",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "documentHeight": 1722,
+      "horizontalOverflow": false,
+      "canvasCount": 0,
+      "animations": 0,
+      "primary": [
+        {
+          "text": "Lanjut",
+          "top": 1580,
+          "bottom": 1636,
+          "inViewport": false
+        }
+      ]
+    },
+    {
+      "screen": "current-roster-20-390",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "documentHeight": 1687,
+      "horizontalOverflow": false,
+      "canvasCount": 0,
+      "animations": 0,
+      "primary": [
+        {
+          "text": "Lanjut",
+          "top": 1540,
+          "bottom": 1601,
+          "inViewport": false
+        }
+      ]
+    },
+    {
+      "screen": "current-clue-390",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "documentHeight": 844,
+      "horizontalOverflow": false,
+      "canvasCount": 1,
+      "animations": 0,
+      "primary": [
+        {
+          "text": "Lanjut",
+          "top": 702,
+          "bottom": 758,
+          "inViewport": true
+        }
+      ]
+    },
+    {
+      "screen": "current-action-390",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "documentHeight": 844,
+      "horizontalOverflow": false,
+      "canvasCount": 0,
+      "animations": 0,
+      "primary": []
+    },
+    {
+      "screen": "current-action-selected-390",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "documentHeight": 865,
+      "horizontalOverflow": false,
+      "canvasCount": 0,
+      "animations": 0,
+      "primary": [
+        {
+          "text": "Pilih ini",
+          "top": 717,
+          "bottom": 773,
+          "inViewport": true
+        }
+      ]
+    }
+  ],
+  "concept": {
+    "widths": [
+      320,
+      390,
+      736
+    ],
+    "screens": 6,
+    "holdRelease": true,
+    "blurConceal": true,
+    "sealedVote": true,
+    "overlayCleanup": true
+  },
+  "errors": []
+}

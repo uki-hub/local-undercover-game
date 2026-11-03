@@ -87,7 +87,13 @@
     ],
     "storageWarning": [],
     "resetScores": [],
-    "resetScoresConfirm": []
+    "resetScoresConfirm": [],
+    "increase": [
+      "name"
+    ],
+    "decrease": [
+      "name"
+    ]
   },
   "game": {
     "homeTitle": [],
@@ -418,7 +424,12 @@
       "count"
     ],
     "fixRoles": [],
-    "fixWords": []
+    "fixWords": [],
+    "studio": {
+      "rosterTitle": [],
+      "roleOptions": [],
+      "roleDetails": []
+    }
   },
   "roles": {
     "civilian": {
@@ -432,32 +443,38 @@
     "white": {
       "name": [],
       "hint": [],
-      "description": []
+      "description": [],
+      "short": []
     },
     "fool": {
       "name": [],
       "description": [],
       "noWordHint": [],
-      "hint": []
+      "hint": [],
+      "short": []
     },
     "couple": {
       "name": [],
       "hint": [],
-      "description": []
+      "description": [],
+      "short": []
     },
     "revenger": {
       "name": [],
       "hint": [],
-      "description": []
+      "description": [],
+      "short": []
     },
     "justice": {
       "name": [],
       "hint": [],
-      "description": []
+      "description": [],
+      "short": []
     },
     "mime": {
       "name": [],
-      "description": []
+      "description": [],
+      "short": []
     }
   },
   "rules": {
